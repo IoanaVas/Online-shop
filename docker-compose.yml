@@ -14,8 +14,6 @@ services:
       'auth'
     ports:
       - 8081:8080
-    links:
-      - mongo
   
   payments:
     build: ./microservices/payments
@@ -23,8 +21,6 @@ services:
       'payments'
     ports:
       - 8082:8080
-    links:
-      - mongo  
 
   products:
     build: ./microservices/products
@@ -32,8 +28,6 @@ services:
       'products'
     ports:
       - 8083:8080
-    links:
-      - mongo    
 
   reports:
     build: ./microservices/reports
@@ -41,8 +35,6 @@ services:
       'reports'
     ports:
       - 8084:8080
-    links:
-      - mongo 
 
   users:
     build: ./microservices/users
@@ -50,8 +42,6 @@ services:
       'users'
     ports:
       - 8085:8080
-    links:
-      - mongo    
 
   gateway:
     build: ./microservices/gateway
@@ -59,12 +49,3 @@ services:
       'gateway'
     ports:
       - 8080:8080
-    links:
-      - mongo
-      - auth
-      - payments
-      - products
-      - reports
-      - users
-
-  
