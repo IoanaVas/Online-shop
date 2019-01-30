@@ -2,7 +2,7 @@
 
 const { User } = require('../models')
 
-exports.default = async (req, res) => {
+const getUser = async (req, res) => {
   try {
     const users = await User.find({})
     res.status(200).json({ data: users })
@@ -10,3 +10,5 @@ exports.default = async (req, res) => {
     res.status(404).json({ error })
   }
 }
+
+exports.default = getUser

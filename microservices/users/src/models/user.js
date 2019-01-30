@@ -22,4 +22,6 @@ const schema = new mongoose.Schema({
   birthDate: Date
 })
 
-exports.default = mongoose.model('User', schema)
+const User = mongoose.model('User', schema)
+
+exports.default = User
