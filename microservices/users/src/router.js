@@ -14,6 +14,4 @@ const routeByQueryParameter = (param, noQueryFunction, queryFunction) =>
 
 router.get('/', routeByQueryParameter('id', getUsers, getUserById))
 
-module.exports = {
-  router
-}
+exports.default = router

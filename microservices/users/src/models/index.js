@@ -1,5 +1,5 @@
 'use strict'
 
-module.exports = {
+exports = {
   User: require('./user').default
 }
