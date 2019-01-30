@@ -22,8 +22,4 @@ const schema = new mongoose.Schema({
   birthDate: Date
 })
 
-const User = mongoose.model('User', schema)
-
-module.exports = {
-  User
-}
+exports.default = mongoose.model('User', schema)

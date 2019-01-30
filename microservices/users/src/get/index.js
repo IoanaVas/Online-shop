@@ -1,6 +1,6 @@
 'use strict'
 
 module.exports = {
-  getUsers: require('./users').getUsers,
-  getUserById: require('./userById').getUserById
+  getUsers: require('./users').default,
+  getUserById: require('./userById').default
 }
