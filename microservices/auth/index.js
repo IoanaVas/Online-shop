@@ -1,6 +1,14 @@
-const http = require('http')
+'use strict'
 
-http.createServer((req, res) => {
-  res.write('Hello World!')
-  res.end()
-}).listen(8080)
+const express = require('express')
+const bodyParser = require('body-parser')
+
+const { router } = require('./src').default
+// require('./src/database/database')
+
+const app = express()
+
+app.use(bodyParser.json())
+app.use('/sessions', router)
+
+app.listen(8080)
