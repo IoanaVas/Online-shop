@@ -2,26 +2,36 @@
 
 const mongoose = require('mongoose')
 
-const { emailRegex, passwordRegex } = require('../utils').default
+const { emailRegex, databasePasswordRegex } = require('../utils').default
 
 const schema = new mongoose.Schema({
   email: {
     type: String,
     required: true,
-    match: emailRegex
+    match: emailRegex,
+    unique: true
   },
   password: {
     type: String,
     required: true,
-    match: passwordRegex
+    match: databasePasswordRegex
   },
   username: {
     type: String,
     required: true
   },
-  firstName: String,
-  lastName: String,
-  birthDate: Date
+  firstName: {
+    type: String,
+    default: ''
+  },
+  lastName: {
+    type: String,
+    default: ''
+  },
+  birthDate: {
+    type: Date,
+    default: new Date()
+  }
 })
 
 const User = mongoose.model('User', schema)

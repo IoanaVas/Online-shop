@@ -5,10 +5,13 @@ const { User } = require('../../models').default
 const getUserById = async (req, res) => {
   try {
     const user = await User.findById(req.query.id)
-    res.status(200).json({ data: user })
+    if (user) {
+      res.status(200).json({ data: user })
+    } else {
+      res.status(404).json({ error: 'User not found' })
+    }
   } catch (error) {
-    console.log(error)
-    res.status(404).json({ error })
+    res.status(500).json({ error })
   }
 }
 

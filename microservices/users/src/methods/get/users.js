@@ -1,6 +1,6 @@
 'use strict'
 
-const { User } = require('../../models')
+const { User } = require('../../models').default
 
 const getUser = async (req, res) => {
   try {
@@ -8,7 +8,7 @@ const getUser = async (req, res) => {
     res.status(200).json({ data: users })
   } catch (error) {
     console.log(error)
-    res.status(404).json({ error })
+    res.status(500).json({ error })
   }
 }
 
