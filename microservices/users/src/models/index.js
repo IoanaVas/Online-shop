@@ -1,5 +1,5 @@
 'use strict'
 
-exports = {
+exports.default = {
   User: require('./user').default
 }

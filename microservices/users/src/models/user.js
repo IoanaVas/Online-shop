@@ -2,16 +2,18 @@
 
 const mongoose = require('mongoose')
 
+const { emailRegex, passwordRegex } = require('../utils').default
+
 const schema = new mongoose.Schema({
   email: {
     type: String,
     required: true,
-    match: /^[a-zA-Z0-9]+([_.-][a-zA-Z0-9]+)*[@][a-z]+[.][a-z]+$/
+    match: emailRegex
   },
   password: {
     type: String,
     required: true,
-    match: /^[a-z0-9]{64}$/
+    match: passwordRegex
   },
   username: {
     type: String,

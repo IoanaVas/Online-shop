@@ -1,5 +1,5 @@
 'use strict'
 
-exports = {
+exports.default = {
   router: require('./router').default
 }

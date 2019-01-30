@@ -2,16 +2,19 @@
 
 const { Router } = require('express')
 
-const { getUsers, getUserById } = require('./get')
+const { getUsers, getUserById } = require('./methods').default
 
 const router = Router()
 
-const routeByQueryParameter = (param, noQueryFunction, queryFunction) =>
+const routeByQueryParameter = list =>
   (req, res) =>
-    !req.query[param]
-      ? noQueryFunction(req, res)
-      : queryFunction(req, res)
+    list.find(item =>
+      item.params.every(parameter => req.query[parameter])
+    ).action(req, res)
 
-router.get('/', routeByQueryParameter('id', getUsers, getUserById))
+router.get('/', routeByQueryParameter([
+  { params: ['id'], action: getUserById },
+  { params: [], action: getUsers }
+]))
 
 exports.default = router
