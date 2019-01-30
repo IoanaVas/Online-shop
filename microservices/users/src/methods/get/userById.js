@@ -4,7 +4,8 @@ const { User } = require('../../models').default
 
 const getUserById = async (req, res) => {
   try {
-    const user = await User.findById(req.query.id)
+    const { id } = req.query
+    const user = await User.findById(id)
     if (user) {
       res.status(200).json({ data: user })
     } else {
