@@ -2,10 +2,11 @@
 
 const { Router } = require('express')
 
-const { postSession } = require('./methods').default
+const { postSession, deleteSession } = require('./methods').default
 
 const router = Router()
 
 router.post('/', postSession)
+router.delete('/', deleteSession)
 
 exports.default = router
