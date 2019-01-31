@@ -5,11 +5,13 @@ const mongoose = require('mongoose')
 const schema = new mongoose.Schema({
   accessToken: {
     type: String,
-    required: true
+    required: true,
+    unique: true
   },
   userId: {
     type: mongoose.Schema.Types.ObjectId,
-    required: true
+    required: true,
+    unique: true
   }
 })
 

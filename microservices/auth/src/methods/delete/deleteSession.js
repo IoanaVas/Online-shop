@@ -1,8 +1,8 @@
 const { Session } = require('../../models')
 
 const deleteSession = async (req, res) => {
-  const userId = req.query.id
-  const accessToken = req.body.accessToken
+  const accessToken = req.headers['authorization']
+  console.log('requestul', req)
 
   if (!accessToken) {
     res.status(400).json({ error: 'Access token missing.' })
@@ -11,7 +11,7 @@ const deleteSession = async (req, res) => {
 
   try {
     if (await Session.find({ accessToken })) {
-      await Session.deleteOne({ userId })
+      await Session.deleteOne({ accessToken })
       res.status(200).end()
     } else {
       res.status(404).end()
