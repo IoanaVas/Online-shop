@@ -2,7 +2,7 @@
 
 const { Router } = require('express')
 
-const { postSession } = require('./methods').default
+const { postSession, deleteSession } = require('./methods').default
 
 const router = Router()
 
@@ -14,6 +14,10 @@ const routeByQueryParameter = list =>
 
 router.post('/', routeByQueryParameter([
   { params: ['id'], action: postSession }
+]))
+
+router.delete('/', routeByQueryParameter([
+  { params: ['id'], action: deleteSession }
 ]))
 
 exports.default = router
