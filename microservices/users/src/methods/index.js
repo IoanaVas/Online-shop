@@ -2,5 +2,6 @@
 
 exports.default = {
   ...require('./get').default,
-  ...require('./post').default
+  ...require('./post').default,
+  ...require('./delete').default
 }

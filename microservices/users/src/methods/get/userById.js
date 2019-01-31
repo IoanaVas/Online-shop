@@ -6,6 +6,7 @@ const getUserById = async (req, res) => {
   try {
     const { id } = req.query
     const user = await User.findById(id)
+
     if (user) {
       res.status(200).json({ data: user })
     } else {
