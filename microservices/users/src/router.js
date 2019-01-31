@@ -2,7 +2,14 @@
 
 const { Router } = require('express')
 
-const { getUsers, getUserById, postUsers } = require('./methods').default
+const {
+  getUsers,
+  getUserById,
+  postUser,
+  putUser,
+  patchUser,
+  deleteUser
+} = require('./methods').default
 const { Session } = require('./models').default
 
 const router = Router()
@@ -25,11 +32,9 @@ router.get('/', routeByQueryParameter([
   { params: ['id'], action: getUserById },
   { params: [], action: getUsers }
 ]))
-router.post('/', routeByQueryParameter([
-  { params: [], action: postUsers }
-]))
-router.delete('/', checkIfAuthorized, routeByQueryParameter([
-  { params: [], action: (req, res) => res.status(200).end() }
-]))
+router.post('/', postUser)
+router.put('/', checkIfAuthorized, putUser)
+router.patch('/', checkIfAuthorized, patchUser)
+router.delete('/', checkIfAuthorized, deleteUser)
 
 exports.default = router

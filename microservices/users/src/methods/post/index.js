@@ -1,3 +1,3 @@
 exports.default = {
-  postUsers: require('./users').default
+  postUser: require('./user').default
 }
