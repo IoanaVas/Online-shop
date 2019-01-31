@@ -6,8 +6,6 @@ const {
   getUsers,
   getUserById,
   postUser,
-  putUser,
-  patchUser,
   deleteUser
 } = require('./methods').default
 const { Session } = require('./models').default
@@ -33,8 +31,6 @@ router.get('/', routeByQueryParameter([
   { params: [], action: getUsers }
 ]))
 router.post('/', postUser)
-router.put('/', checkIfAuthorized, putUser)
-router.patch('/', checkIfAuthorized, patchUser)
 router.delete('/', checkIfAuthorized, deleteUser)
 
 exports.default = router
