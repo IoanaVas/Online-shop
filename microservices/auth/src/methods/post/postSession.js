@@ -7,7 +7,6 @@ const { Session, User } = require('../../models')
 
 const postSession = async (req, res) => {
   const { email, password } = req.body
-  const userId = req.query.id
 
   if (!email || !password) {
     res.status(400).json({ error: 'No password or email' })
@@ -18,8 +17,12 @@ const postSession = async (req, res) => {
   const hash = crypto.createHash('sha256').update(password).digest('hex')
 
   try {
-    if (await User.find({ email, password: hash })) {
+    const user = await User.findOne({ email, password: hash })
+
+    if (user) {
+      const { _id: userId } = user
       const session = await Session.create({ userId, accessToken })
+      res.setHeader('Authorization', accessToken)
       res.status(200).json({ data: session })
     } else {
       res.status(404).end()

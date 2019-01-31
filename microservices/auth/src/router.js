@@ -13,7 +13,7 @@ const routeByQueryParameter = list =>
     ).action(req, res)
 
 router.post('/', routeByQueryParameter([
-  { params: ['id'], action: postSession }
+  { params: [], action: postSession }
 ]))
 
 exports.default = router
