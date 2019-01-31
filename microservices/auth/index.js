@@ -3,8 +3,8 @@
 const express = require('express')
 const bodyParser = require('body-parser')
 
-const { router } = require('./src').default
-// require('./src/database/database')
+const { router } = require('./src')
+require('./src/database/database')
 
 const app = express()
 
