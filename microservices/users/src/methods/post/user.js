@@ -19,22 +19,26 @@ const validate = (email, password, username) => {
   return error
 }
 
-const postUsers = async (req, res) => {
+const postUser = async (req, res) => {
   try {
-    const { email, password, username } = req.body
+    const {
+      email,
+      password,
+      username,
+      firstName,
+      lastName,
+      dateOfBirth
+    } = req.body
     const error = validate(email, password, username)
+    const hashedPassword = crypto.createHash('sha256').update(password).digest('hex')
     const user = await User.create({
       email,
-      password: crypto.createHash('sha256').update(password).digest('hex'),
-      username
-    }).then(data => ({
-      _id: data._id,
-      email: data.email,
-      username: data.username,
-      firstName: data.firstName,
-      lastName: data.lastName,
-      dateOfBirth: data.dateOfBirth
-    }))
+      password: hashedPassword,
+      username,
+      firstName,
+      lastName,
+      dateOfBirth
+    })
 
     if (!error) res.status(201).json({ data: user })
     else throw error
@@ -51,4 +55,4 @@ const postUsers = async (req, res) => {
   }
 }
 
-exports.default = postUsers
+exports.default = postUser
