@@ -2,7 +2,7 @@
 
 const { Router } = require('express')
 
-const { getUsers, getUserById, postUsers } = require('./methods').default
+const { getUsers, getUserById, postUsers, postResets } = require('./methods').default
 
 const router = Router()
 
@@ -18,6 +18,9 @@ router.get('/', routeByQueryParameter([
 ]))
 router.post('/', routeByQueryParameter([
   { params: [], action: postUsers }
+]))
+router.post('/resets', routeByQueryParameter([
+  { params: [], action: postResets }
 ]))
 
 exports.default = router

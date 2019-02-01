@@ -13,7 +13,7 @@ const deleteSession = async (req, res) => {
       await Session.deleteOne({ accessToken })
       res.status(200).end()
     } else {
-      res.status(404).end()
+      res.status(404).json({ error: 'AccessToken not found' })
     }
   } catch (error) {
     res.status(500).json({ error })
