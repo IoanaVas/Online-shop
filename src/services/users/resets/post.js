@@ -2,10 +2,10 @@
 
 const shortId = require('shortid')
 
-const { User, Reset } = require('../../models').default
-const { sendMail } = require('../../utils').default
+const { User, Reset } = require('../../../database/models').default
+const { sendMail } = require('../../../utils').default
 
-const postResets = async (req, res) => {
+const action = async (req, res) => {
   const email = req.body.email
   const resetToken = shortId.generate()
 
@@ -27,4 +27,4 @@ const postResets = async (req, res) => {
   }
 }
 
-exports.default = postResets
+exports.default = action

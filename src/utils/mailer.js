@@ -2,8 +2,6 @@
 
 const nodemailer = require('nodemailer')
 
-// var sgTransport = require('nodemailer-sendgrid-transport')
-
 const sendMail = async (email) => {
   const transporter = nodemailer.createTransport({
     host: 'smtp.gmail.com',

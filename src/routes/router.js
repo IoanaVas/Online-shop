@@ -26,6 +26,7 @@ router.post('/users/', users.post)
 router.put('/users/', CheckIfAuthorized, RetrieveUserByToken, users.put)
 router.patch('/users/', CheckIfAuthorized, RetrieveUserByToken, users.patch)
 router.delete('/users/', CheckIfAuthorized, RetrieveUserByToken, users.delete)
+router.post('/users/resets', users.resets.post)
 
 router.post('/sessions/', CheckIfAuthorized, sessions.post)
 router.delete('/sessions/', CheckIfAuthorized, sessions.delete)
