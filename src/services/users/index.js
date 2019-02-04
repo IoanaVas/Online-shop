@@ -1,3 +1,5 @@
+'use strict'
+
 exports.default = {
   get: require('./get').default,
   getById: require('./getById').default,

@@ -1,3 +1,5 @@
+'use strict'
+
 const { Session } = require('../../database/models')
 
 const action = async (req, res) => {
