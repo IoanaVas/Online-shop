@@ -5,6 +5,9 @@ npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
 
+# Secrets should not be available to source code users
+secrets.json
+
 # Runtime data
 pids
 *.pid

@@ -7,55 +7,12 @@ services:
     ports:
       - 27017:27017
 
-  auth:
-    build: ./microservices/auth
-    container_name: 'auth'
-    ports:
-      - 8081:8080
-    depends_on:
-      - mongo
-
-  payments:
-    build: ./microservices/payments
-    container_name: 'payments'
-    ports:
-      - 8082:8080
-    depends_on:
-      - mongo
-
-  products:
-    build: ./microservices/products
-    container_name: 'products'
-    ports:
-      - 8083:8080
-    depends_on:
-      - mongo
-
-  reports:
-    build: ./microservices/reports
-    container_name: 'reports'
-    ports:
-      - 8084:8080
-    depends_on:
-      - mongo
-
-  users:
-    build: ./microservices/users
-    container_name: 'users'
-    ports:
-      - 8085:8080
-    depends_on:
-      - mongo
-
-  gateway:
-    build: ./microservices/gateway
-    container_name: 'gateway'
+  app:
+    build: ./
+    container_name: 'app'
+    volumes:
+      - .:/code
     ports:
       - 8080:8080
     depends_on:
       - mongo
-      - auth
-      - payments
-      - products
-      - reports
-      - users
