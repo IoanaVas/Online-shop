@@ -2,18 +2,20 @@
 
 const nodemailer = require('nodemailer')
 
-var sgTransport = require('nodemailer-sendgrid-transport')
+// var sgTransport = require('nodemailer-sendgrid-transport')
 
 const sendMail = async (email) => {
-  const transporter = nodemailer.createTransport(sgTransport({
+  const transporter = nodemailer.createTransport({
+    host: 'smtp.gmail.com',
+    port: 465,
+    secure: true,
     auth: {
-      api_user: 'ioanavasiliu',
-      api_key: 'ioanavasiliu1'
+      user: 'ioana.vasiliu1995@gmail.com',
+      pass: 'ioana0401'
     }
-  }))
+  })
 
   const mailOptions = {
-    from: 'fn@yahoo.com',
     to: email,
     subject: 'First Mail',
     text: 'This is the first mail.'
@@ -21,6 +23,7 @@ const sendMail = async (email) => {
 
   try {
     await transporter.sendMail(mailOptions)
+    console.log('Email was send!')
   } catch (error) {
     console.log(error)
   }

@@ -5,7 +5,7 @@ const { Router } = require('express')
 const {
   getUsers,
   getUserById,
-  postUser,
+  postUsers,
   putUser,
   patchUser,
   deleteUser,
@@ -34,7 +34,7 @@ router.get('/', routeByQueryParameter([
   { params: ['id'], action: getUserById },
   { params: [], action: getUsers }
 ]))
-router.post('/', postUser)
+router.post('/', postUsers)
 router.post('/resets', postResets)
 router.put('/', checkIfAuthorized, putUser)
 router.patch('/', checkIfAuthorized, patchUser)
