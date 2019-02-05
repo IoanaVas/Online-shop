@@ -39,7 +39,7 @@ const action = async (req, res) => {
         })
 
         res.status(200).json({
-          data: stripProperties(['_id', 'userId'], session._doc)
+          data: stripProperties(['_id', 'userId', 'externalToken'], session._doc)
         })
 
         eventEmitter.emit('OAuthUser', session._doc)
