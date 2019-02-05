@@ -17,7 +17,7 @@ const action = async (req, res) => {
   try {
     if (await User.findOne({ email })) {
       const reset = await Reset.create({ resetToken, email })
-      await sendMail(email)
+      await sendMail(email, resetToken)
       res.status(201).json({ data: reset })
     } else {
       res.status(404).json({ error: 'Email not found' })
