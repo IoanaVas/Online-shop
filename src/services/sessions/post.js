@@ -24,11 +24,11 @@ const action = async (req, res) => {
       const { _id: userId } = user
       const session = await Session.create({ userId, accessToken })
 
-      res.status(200).json({
+      res.status(201).json({
         data: stripProperties(['_id', 'userId'], session._doc)
       })
     } else {
-      res.status(404).end()
+      res.status(404).json({ error: 'User not found.' })
     }
   } catch (error) {
     console.error(error)

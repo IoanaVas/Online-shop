@@ -35,7 +35,7 @@ const routeByQueryParameter = list => (req, res, next) => {
   const result = list.find(item =>
     item.params.every(parameter => req.query[parameter])
   )
-  result ? result.action(req, res) : next()
+  result ? result.action(req, res, next) : next()
 }
 
 const stripProperties = (properties, object) => {
