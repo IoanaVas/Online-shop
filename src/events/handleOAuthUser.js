@@ -5,6 +5,7 @@ const crypto = require('crypto')
 
 const eventEmitter = require('./eventEmitter').default
 const { Session, User } = require('../database/models').default
+const { GITHUB_API_URL } = require('../../config.json')
 
 const createUser = async user => {
   const names = user.name.match(/\w+/)
@@ -41,7 +42,7 @@ const eventHandler = async session => {
   try {
     switch (session.provider) {
       case 'github':
-        const user = await axios.get('https://api.github.com/user', {
+        const user = await axios.get(`${GITHUB_API_URL}/user`, {
           headers: {
             authorization: `Bearer ${session.externalToken}`
           }
