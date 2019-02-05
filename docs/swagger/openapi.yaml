@@ -1,0 +1,310 @@
+openapi: '3.0.0'
+info:
+  title: 'Online shop app'
+  description: 'An online shop API, built using Node, Express and MongoDB'
+  license:
+    name: 'MIT'
+    url: 'https://opensource.org/licenses/MIT'
+  version: '1.0.0'
+
+servers:
+  - url: 'http://localhost:{port}'
+    description: 'Local testing server'
+    variables:
+      port:
+        enum:
+          - '8000'
+        default: '8000'
+
+components:
+  schemas:
+    Error:
+      type: 'string'
+      format: 'string'
+    User:
+      type: 'object'
+      required:
+        - 'email'
+        - 'password'
+        - 'username'
+      properties:
+        _id:
+          type: 'string'
+          format: 'string'
+          example: '5c504bc1f53d482e0682c200'
+        firstName:
+          type: 'string'
+          format: 'string'
+          example: 'Mihai'
+        lastName:
+          type: 'string'
+          format: 'string'
+          example: 'Bojescu'
+        birthDate:
+          type: 'date'
+          format: 'date'
+          example: '2019-01-29T12:48:57.173Z'
+        email:
+          type: 'string'
+          format: 'email'
+          example: 'mihai.bojescu@thinslices.com'
+        password:
+          type: 'string'
+          format: 'password'
+          example: '********'
+        username:
+          type: 'string'
+          format: 'string'
+          example: 'MihaiBojescu'
+    Credentials:
+      type: 'object'
+      required:
+        - 'email'
+        - 'password'
+      properties:
+        email:
+          type: 'string'
+          format: 'email'
+          example: 'mihai.bojescu@thinslices.com'
+        password:
+          type: 'string'
+          format: 'string'
+          example: '********'
+    Session:
+      type: 'object'
+      properties:
+        accessToken:
+          type: 'string'
+          format: 'string'
+          example: '123456789'
+        provider:
+          type: 'string'
+          format: 'string'
+          example: 'github'
+
+paths:
+  /users:
+    get:
+      description: 'Returns all users from the API'
+      responses:
+        '200':
+          description: 'Response when there were no errors'
+          content:
+            application/json:
+              schema:
+                type: 'object'
+                properties:
+                  data:
+                    type: 'array'
+                    items:
+                      $ref: '#/components/schemas/User'
+        '500':
+          description: 'Response when something went wrong on the API side'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+    post:
+      description: 'Creates a new user and return it to the client'
+      responses:
+        '201':
+          description: 'Response when there were no errors'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+        '400':
+          description: 'Response when user already exists in the database'
+          content:
+            application/json:
+              schema:
+                $ref: '$/components/schemas/Error'
+        '500':
+          description: 'Response when something went wrong on the API side'
+          content:
+            application/json:
+              schema:
+                $ref: '$/components/schemas/Error'
+    put:
+      description: 'Updates the user identified by the provided authorization token and return it to the client'
+      parameters:
+        - in: 'header'
+          name: 'Authorization'
+          description: 'The authorization token'
+          required: true
+          schema:
+            type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/User'
+        required: true
+      responses:
+        '201':
+          description: 'Response when there were no errors'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+        '401':
+          description: 'Response when no authorization token was provided'
+          content:
+            application/json:
+              schema:
+                $ref: '$/components/schemas/Error'
+        '404':
+          description: "Response when user doesn't exist in the database"
+          content:
+            application/json:
+              schema:
+                $ref: '$/components/schemas/Error'
+        '500':
+          description: 'Response when something went wrong on the API side'
+          content:
+            application/json:
+              schema:
+                $ref: '$/components/schemas/Error'
+    delete:
+      description: 'Deletes the user identified by the authorization token and return it to the client'
+      parameters:
+        - in: 'header'
+          name: 'Authorization'
+          description: 'The authorization token'
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: 'Response when there were no errors'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+        '401':
+          description: 'Response when no authorization token was provided'
+          content:
+            application/json:
+              schema:
+                $ref: '$/components/schemas/Error'
+        '404':
+          description: "Response when user doesn't exist in the database"
+          content:
+            application/json:
+              schema:
+                $ref: '$/components/schemas/Error'
+        '500':
+          description: 'Response when something went wrong on the API side'
+          content:
+            application/json:
+              schema:
+                $ref: '$/components/schemas/Error'
+  /users?id=id:
+    get:
+      description: 'Returns the user with the specified identifier'
+      parameters:
+        - in: 'query'
+          name: 'id'
+          description: 'Searches for user with the specified id'
+          required: false
+          schema:
+            type: 'string'
+      responses:
+        '200':
+          description: 'Response when there were no errors'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+        '404':
+          description: "Response when user doesn't exist in the database"
+          content:
+            application/json:
+              schema:
+                $ref: '$/components/schemas/Error'
+        '500':
+          description: 'Response when something went wrong on the API side'
+          content:
+            application/json:
+              schema:
+                $ref: '$/components/schemas/Error'
+  /sessions:
+    post:
+      description: 'Creates a session for the user with the given credentials and returns it to the user'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Credentials'
+      responses:
+        '201':
+          description: 'Response when there were no errors'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Session'
+        '404':
+          description: "Response when the user with the specified credentials doesn't exist in the database"
+          content:
+            application/json:
+              schema:
+                $ref: '$/components/schemas/Error'
+        '500':
+          description: 'Response when something went wrong on the API side'
+          content:
+            application/json:
+              schema:
+                $ref: '$/components/schemas/Error'
+    delete:
+      description: 'Removes the session specified in the authorization header'
+      parameters:
+        - in: 'header'
+          name: 'Authorization'
+          description: 'The authorization token'
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: 'Response when there were no errors'
+        '401':
+          description: 'Response when no authorization token was provided'
+          content:
+            application/json:
+              schema:
+                $ref: '$/components/schemas/Error'
+        '500':
+          description: 'Response when something went wrong on the API side'
+          content:
+            application/json:
+              schema:
+                $ref: '$/components/schemas/Error'
+  /sessions/{provider}/oauth:
+    get:
+      description: 'Retrieves the created session for the specified provider OAuth request code'
+      parameters:
+        - in: 'header'
+          name: 'code'
+          description: 'The request code provided by the provider'
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: 'Response when there were no errors'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Session'
+        '400':
+          description: 'Response when no request code was provided or the request code was invalid/expired'
+          content:
+            application/json:
+              schema:
+                $ref: '$/components/schemas/Error'
+        '500':
+          description: 'Response when no authorization token was provided'
+          content:
+            application/json:
+              schema:
+                $ref: '$/components/schemas/Error'
