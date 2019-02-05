@@ -23,8 +23,11 @@ router.get(
   ])
 )
 router.post('/users/', users.post)
-router.put('/users/', CheckIfAuthorized, RetrieveUserByToken, users.put)
-router.patch('/users/', CheckIfAuthorized, RetrieveUserByToken, users.patch)
+router.put(
+  '/users/',
+  routeByQueryParameter([
+    { params: ['forgot'], action: users.putResetPassword }]),
+  CheckIfAuthorized, RetrieveUserByToken, users.put)
 router.delete('/users/', CheckIfAuthorized, RetrieveUserByToken, users.delete)
 router.post('/users/resets', users.resets.post)
 
