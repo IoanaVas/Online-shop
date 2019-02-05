@@ -31,10 +31,12 @@ const retrieveUserByToken = (User, Session) => async (req, res, next) => {
   }
 }
 
-const routeByQueryParameter = list => (req, res) =>
-  list
-    .find(item => item.params.every(parameter => req.query[parameter]))
-    .action(req, res)
+const routeByQueryParameter = list => (req, res, next) => {
+  const result = list.find(item =>
+    item.params.every(parameter => req.query[parameter])
+  )
+  result ? result.action(req, res, next) : next()
+}
 
 exports.default = {
   emailRegex,

@@ -1,3 +1,4 @@
 {
-  "CONNECTION_STRING": "mongodb://mongo:27017/onlineShopApp"
+  "CONNECTION_STRING": "mongodb://mongo:27017/onlineShopApp",
+  "RESET_LINK": "http://localhost:8080/users"
 }

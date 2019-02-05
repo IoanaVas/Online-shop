@@ -22,10 +22,9 @@ const action = async (req, res) => {
     if (user) {
       const { _id: userId } = user
       const session = await Session.create({ userId, accessToken })
-      res.setHeader('Authorization', accessToken)
-      res.status(200).json({ data: session })
+      res.status(201).json({ data: session })
     } else {
-      res.status(404).end()
+      res.status(404).json({ error: 'User not found.' })
     }
   } catch (error) {
     console.error(error)
