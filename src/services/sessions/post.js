@@ -3,7 +3,8 @@
 const crypto = require('crypto')
 const shortid = require('shortid')
 
-const { Session, User } = require('../../database/models')
+const { Session, User } = require('../../database/models').default
+const { stripProperties } = require('../../utils').default
 
 const action = async (req, res) => {
   const { email, password } = req.body
@@ -22,8 +23,10 @@ const action = async (req, res) => {
     if (user) {
       const { _id: userId } = user
       const session = await Session.create({ userId, accessToken })
-      res.setHeader('Authorization', accessToken)
-      res.status(200).json({ data: session })
+
+      res.status(200).json({
+        data: stripProperties(['_id', 'userId'], session._doc)
+      })
     } else {
       res.status(404).end()
     }

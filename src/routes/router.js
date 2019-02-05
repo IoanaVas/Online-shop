@@ -27,7 +27,8 @@ router.put('/users/', CheckIfAuthorized, RetrieveUserByToken, users.put)
 router.patch('/users/', CheckIfAuthorized, RetrieveUserByToken, users.patch)
 router.delete('/users/', CheckIfAuthorized, RetrieveUserByToken, users.delete)
 
-router.post('/sessions/', CheckIfAuthorized, sessions.post)
+router.post('/sessions/', sessions.post)
 router.delete('/sessions/', CheckIfAuthorized, sessions.delete)
+router.get('/sessions/github/sessions/', sessions.github.oauth.get)
 
 exports.default = router

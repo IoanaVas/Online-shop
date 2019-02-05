@@ -31,10 +31,23 @@ const retrieveUserByToken = (User, Session) => async (req, res, next) => {
   }
 }
 
-const routeByQueryParameter = list => (req, res) =>
-  list
-    .find(item => item.params.every(parameter => req.query[parameter]))
-    .action(req, res)
+const routeByQueryParameter = list => (req, res, next) => {
+  const result = list.find(item =>
+    item.params.every(parameter => req.query[parameter])
+  )
+  result ? result.action(req, res) : next()
+}
+
+const stripProperties = (properties, object) => {
+  let newObject = {}
+  Object.keys(object).forEach(key => {
+    newObject = {
+      ...newObject,
+      ...(!properties.find(element => element === key) && { [key]: object[key] })
+    }
+  })
+  return newObject
+}
 
 exports.default = {
   emailRegex,
@@ -42,5 +55,6 @@ exports.default = {
   clientPasswordRegex,
   checkIfAuthorized,
   retrieveUserByToken,
-  routeByQueryParameter
+  routeByQueryParameter,
+  stripProperties
 }
