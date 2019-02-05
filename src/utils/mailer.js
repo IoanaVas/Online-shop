@@ -5,7 +5,7 @@ const nodemailer = require('nodemailer')
 const { RESET_LINK } = require('../../config.json')
 const { SMTP_USER, SMTP_PASSWORD } = require('../../secrets.json')
 
-const sendEmail = async (email, resetToken) => {
+const sendMail = async (email, resetToken) => {
   const transporter = nodemailer.createTransport({
     host: 'smtp.gmail.com',
     port: 465,
@@ -15,7 +15,6 @@ const sendEmail = async (email, resetToken) => {
       pass: SMTP_PASSWORD
     }
   })
-
   const mailOptions = {
     to: email,
     subject: 'Change Password',
@@ -24,11 +23,11 @@ const sendEmail = async (email, resetToken) => {
   }
 
   try {
-    await transporter.sendEmail(mailOptions)
+    await transporter.sendMail(mailOptions, resetToken)
     console.log('The reset email was send!')
   } catch (error) {
     console.log(error)
   }
 }
 
-exports.default = sendEmail
+exports.default = sendMail

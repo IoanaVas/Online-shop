@@ -2,5 +2,5 @@
 
 exports.default = {
   ...require('./utils').default,
-  sendEmail: require('./mailer').default
+  sendMail: require('./mailer').default
 }
