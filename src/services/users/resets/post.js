@@ -20,7 +20,7 @@ const action = async (req, res) => {
       await sendMail(email, resetToken)
       res.status(201).json({ data: reset })
     } else {
-      res.status(404).json({ error: 'Email not found' })
+      res.status(404).json({ error: 'No user with the given email was found.' })
     }
   } catch (error) {
     res.status(500).json({ error })
