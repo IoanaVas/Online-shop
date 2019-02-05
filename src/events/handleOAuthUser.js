@@ -8,9 +8,9 @@ const { Session, User } = require('../database/models').default
 const { GITHUB_API_URL } = require('../../config.json')
 
 const createUser = async user => {
-  const names = user.name.match(/\w+/)
+  const names = user.name.match(/\w+/g)
   const firstName = names[0]
-  const lastName = names.splice(0, 1).join(' ')
+  const lastName = names.filter((_, index) => index !== 0).join(' ')
 
   return User.create({
     email: user.email,
