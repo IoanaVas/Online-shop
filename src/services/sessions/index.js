@@ -3,5 +3,6 @@
 exports.default = {
   post: require('./post').default,
   delete: require('./delete').default,
-  github: require('./github').default
+  github: require('./github').default,
+  google: require('./google').default
 }

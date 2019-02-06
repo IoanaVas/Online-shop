@@ -5,7 +5,7 @@ const crypto = require('crypto')
 
 const eventEmitter = require('./eventEmitter').default
 const { Session, User } = require('../database/models').default
-const { GITHUB_API_URL } = require('../../config.json')
+const { GITHUB_API_URL, GOOGLE_API_URL } = require('../../config.json')
 
 const createUser = async user => {
   const names = user.name.match(/\w+/g)
@@ -18,7 +18,7 @@ const createUser = async user => {
       .createHash('sha256')
       .update('' + Date.now())
       .digest('hex'),
-    username: user.login,
+    username: user.login || user.email,
     firstName,
     lastName
   })
@@ -38,24 +38,39 @@ const handleUser = async (session, user) => {
   }
 }
 
+const getGithubUserFlow = async session => {
+  const user = await axios.get(`${GITHUB_API_URL}/user`, {
+    headers: {
+      authorization: `Bearer ${session.externalToken}`
+    }
+  })
+  user.email = await axios
+    .get(`${GITHUB_API_URL}/user/emails`, {
+      headers: {
+        authorization: `Bearer ${session.externalToken}`
+      }
+    })
+    .then(response => response.data.find(item => item.primary).email)
+  return user.data
+}
+
+const getGoogleUserFlow = async session =>
+  axios
+    .get(
+      `${GOOGLE_API_URL}/oauth2/v1/userinfo?alt=json&access_token=${
+        session.externalToken
+      }`
+    )
+    .then(response => response.data)
+
 const eventHandler = async session => {
   try {
-    switch (session.provider) {
-      case 'github':
-        const user = await axios.get(`${GITHUB_API_URL}/user`, {
-          headers: {
-            authorization: `Bearer ${session.externalToken}`
-          }
-        })
-        user.email = await axios.get(`${GITHUB_API_URL}/user/emails`, {
-          headers: {
-            authorization: `Bearer ${session.externalToken}`
-          }
-        }).then(response => response.data.find(item => item.primary).email)
-        await handleUser(session, user.data)
-        break
-      default:
-        break
+    if (session.provider === 'github') {
+      const user = await getGithubUserFlow(session)
+      await handleUser(session, user)
+    } else if (session.provider === 'google') {
+      const user = await getGoogleUserFlow(session)
+      await handleUser(session, user)
     }
   } catch (error) {
     console.error(error)
