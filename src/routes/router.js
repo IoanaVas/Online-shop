@@ -2,7 +2,7 @@
 
 const { Router } = require('express')
 
-const { sessions, users } = require('../services').default
+const { sessions, users, oauth } = require('../services').default
 const {
   checkIfAuthorized,
   retrieveUserByToken,
@@ -33,5 +33,7 @@ router.post('/users/resets', users.resets.post)
 
 router.post('/sessions/', CheckIfAuthorized, sessions.post)
 router.delete('/sessions/', CheckIfAuthorized, sessions.delete)
+
+router.get('/oauth/redirect', oauth.get)
 
 exports.default = router
