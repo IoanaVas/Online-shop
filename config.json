@@ -1,4 +1,5 @@
 {
   "CONNECTION_STRING": "mongodb://mongo:27017/onlineShopApp",
-  "RESET_LINK": "http://localhost:8080/users"
+  "RESET_LINK": "http://localhost:8080/users",
+  "GITHUB_LINK": "https://api.github.com/user/emails?access_token="
 }

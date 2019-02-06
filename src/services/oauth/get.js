@@ -2,6 +2,7 @@
 
 const axios = require('axios')
 
+const { eventEmitter } = require('../../events').default
 const { CLIENT_ID, CLIENT_SECRET } = require('../../../secrets.json')
 
 const action = async (req, res) => {
@@ -12,7 +13,8 @@ const action = async (req, res) => {
     const response = await axios.post(url, null,
       { headers: { accept: 'application/json' } })
     const accessToken = response.data.access_token
-    // save accT in session table
+    await eventEmitter.emit('checkUser', accessToken)
+
     res.redirect(`/users?access_token=${accessToken}`)
   } catch (error) {
     console.error(error)
