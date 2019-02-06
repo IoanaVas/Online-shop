@@ -26,6 +26,10 @@ schemes:
   - http
   - https
 
+host: 'localhost:8000'
+
+basePath: '/'
+
 definitions:
   Error:
     type: 'object'
@@ -98,8 +102,11 @@ paths:
   /users:
     get:
       description: 'Returns all users from the API'
+      summary: 'Get all users'
       tags:
         - Users
+      produces:
+        - application/json
       responses:
         '200':
           description: 'Response when there were no errors'
@@ -112,16 +119,28 @@ paths:
                     type: 'array'
                     items:
                       $ref: '#/definitions/User'
+          schema:
+            type: 'object'
+            properties:
+              data:
+                type: 'array'
+                items:
+                  $ref: '#/definitions/User'
         '500':
           description: 'Response when something went wrong on the API side'
           content:
             application/json:
               schema:
                 $ref: '#/definitions/Error'
+          schema:
+            $ref: '#/definitions/Error'
     post:
       description: 'Creates a new user and return it to the client'
+      summary: 'Create user'
       tags:
         - Users
+      produces:
+        - application/json
       responses:
         '201':
           description: 'Response when there were no errors'
@@ -129,20 +148,27 @@ paths:
             application/json:
               schema:
                 $ref: '#/definitions/User'
+          schema:
+            $ref: '#/definitions/User'
         '400':
           description: 'Response when user already exists in the database'
           content:
             application/json:
               schema:
                 $ref: '#/definitions/Error'
+          schema:
+            $ref: '#/definitions/Error'
         '500':
           description: 'Response when something went wrong on the API side'
           content:
             application/json:
               schema:
                 $ref: '#/definitions/Error'
+          schema:
+            $ref: '#/definitions/Error'
     put:
       description: 'Updates the user identified by the provided authorization token and return it to the client'
+      summary: 'Edit user'
       tags:
         - Users
       parameters:
@@ -158,33 +184,44 @@ paths:
             schema:
               $ref: '#/definitions/User'
         required: true
+      produces:
+        - application/json
       responses:
-        '201':
+        '200':
           description: 'Response when there were no errors'
           content:
             application/json:
               schema:
                 $ref: '#/definitions/User'
+          schema:
+            $ref: '#/definitions/User'
         '401':
           description: 'Response when no authorization token was provided'
           content:
             application/json:
               schema:
                 $ref: '#/definitions/Error'
+          schema:
+            $ref: '#/definitions/Error'
         '404':
           description: "Response when user doesn't exist in the database"
           content:
             application/json:
               schema:
                 $ref: '#/definitions/Error'
+          schema:
+            $ref: '#/definitions/Error'
         '500':
           description: 'Response when something went wrong on the API side'
           content:
             application/json:
               schema:
                 $ref: '#/definitions/Error'
+          schema:
+            $ref: '#/definitions/Error'
     delete:
       description: 'Deletes the user identified by the authorization token and return it to the client'
+      summary: 'Delete user'
       tags:
         - Users
       parameters:
@@ -194,6 +231,8 @@ paths:
           required: true
           schema:
             type: string
+      produces:
+        - application/json
       responses:
         '200':
           description: 'Response when there were no errors'
@@ -207,21 +246,28 @@ paths:
             application/json:
               schema:
                 $ref: '#/definitions/Error'
+          schema:
+            $ref: '#/definitions/Error'
         '404':
           description: "Response when user doesn't exist in the database"
           content:
             application/json:
               schema:
                 $ref: '#/definitions/Error'
+          schema:
+            $ref: '#/definitions/Error'
         '500':
           description: 'Response when something went wrong on the API side'
           content:
             application/json:
               schema:
                 $ref: '#/definitions/Error'
+          schema:
+            $ref: '#/definitions/Error'
   /users?id=id:
     get:
       description: 'Returns the user with the specified identifier'
+      summary: 'Get user by ID'
       tags:
         - Users
       parameters:
@@ -231,6 +277,8 @@ paths:
           required: false
           schema:
             type: 'string'
+      produces:
+        - application/json
       responses:
         '200':
           description: 'Response when there were no errors'
@@ -238,21 +286,28 @@ paths:
             application/json:
               schema:
                 $ref: '#/definitions/User'
+          schema:
+            $ref: '#/definitions/User'
         '404':
           description: "Response when user doesn't exist in the database"
           content:
             application/json:
               schema:
                 $ref: '#/definitions/Error'
+          schema:
+            $ref: '#/definitions/Error'
         '500':
           description: 'Response when something went wrong on the API side'
           content:
             application/json:
               schema:
                 $ref: '#/definitions/Error'
+          schema:
+            $ref: '#/definitions/Error'
   /sessions:
     post:
       description: 'Creates a session for the user with the given credentials and returns it to the user'
+      summary: 'Create a session'
       tags:
         - Sessions
       requestBody:
@@ -260,6 +315,10 @@ paths:
           application/json:
             schema:
               $ref: '#/definitions/Credentials'
+        schema:
+          $ref: '#/definitions/Credentials'
+      produces:
+        - application/json
       responses:
         '201':
           description: 'Response when there were no errors'
@@ -267,20 +326,27 @@ paths:
             application/json:
               schema:
                 $ref: '#/definitions/Session'
+          schema:
+            $ref: '#/definitions/Session'
         '404':
           description: "Response when the user with the specified credentials doesn't exist in the database"
           content:
             application/json:
               schema:
                 $ref: '#/definitions/Error'
+          schema:
+            $ref: '#/definitions/Error'
         '500':
           description: 'Response when something went wrong on the API side'
           content:
             application/json:
               schema:
                 $ref: '#/definitions/Error'
+          schema:
+            $ref: '#/definitions/Error'
     delete:
       description: 'Removes the session specified in the authorization header'
+      summary: 'Delete session'
       tags:
         - Sessions
       parameters:
@@ -290,6 +356,8 @@ paths:
           required: true
           schema:
             type: string
+      produces:
+        - application/json
       responses:
         '200':
           description: 'Response when there were no errors'
@@ -299,14 +367,20 @@ paths:
             application/json:
               schema:
                 $ref: '#/definitions/Error'
+          schema:
+            $ref: '#/definitions/Error'
         '500':
           description: 'Response when something went wrong on the API side'
           content:
             application/json:
               schema:
                 $ref: '#/definitions/Error'
+          schema:
+            $ref: '#/definitions/Error'
   /sessions/{provider}/oauth:
     get:
+      description: 'Creates a session using the specified OAuth provider'
+      summary: 'Creates session using an OAuth provider'
       tags:
         - Sessions
       parameters:
@@ -322,22 +396,30 @@ paths:
           required: true
           schema:
             type: string
+      produces:
+        - application/json
       responses:
-        '200':
+        '201':
           description: 'Response when there were no errors'
           content:
             application/json:
               schema:
                 $ref: '#/definitions/Session'
+          schema:
+            $ref: '#/definitions/Session'
         '400':
           description: 'Response when no request code was provided or the request code was invalid/expired'
           content:
             application/json:
               schema:
                 $ref: '#/definitions/Error'
+          schema:
+            $ref: '#/definitions/Error'
         '500':
           description: 'Response when no authorization token was provided'
           content:
             application/json:
               schema:
                 $ref: '#/definitions/Error'
+          schema:
+            $ref: '#/definitions/Error'
