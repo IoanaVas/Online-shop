@@ -47,6 +47,11 @@ const eventHandler = async session => {
             authorization: `Bearer ${session.externalToken}`
           }
         })
+        user.email = await axios.get(`${GITHUB_API_URL}/user/emails`, {
+          headers: {
+            authorization: `Bearer ${session.externalToken}`
+          }
+        }).then(response => response.data.find(item => item.primary).email)
         await handleUser(session, user.data)
         break
       default:
