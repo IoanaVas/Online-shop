@@ -10,14 +10,21 @@ const action = async (req, res) => {
 
   try {
     if (resetToken) {
-      let { email } = await Reset.findOne({ resetToken })
-      const password = crypto.createHash('sha256').update(newPassword).digest('hex')
-      await User.findOneAndUpdate({ email }, { password })
-      await eventEmitter.emit('changedPassword', resetToken)
+      const reset = await Reset.findOne({ resetToken })
 
-      res.status(200).json({ data: 'Password successfuly changed!' })
+      if (reset) {
+        const { email } = reset
+        const password = crypto.createHash('sha256').update(newPassword).digest('hex')
+
+        await User.findOneAndUpdate({ email }, { password })
+        await eventEmitter.emit('changedPassword', resetToken)
+
+        res.status(200).json({ data: 'Password successfuly changed!' })
+      } else {
+        res.status(400).json({ error: "Reset request doesn't exist" })
+      }
     } else {
-      res.status(400).end()
+      res.status(400).json({ error: 'No reset request token was provided' })
     }
   } catch (error) {
     res.status(500).json({ error })

@@ -13,8 +13,8 @@ servers:
     variables:
       port:
         enum:
-          - '8000'
-        default: '8000'
+          - '8080'
+        default: '8080'
 
 tags:
   - name: Users
@@ -24,9 +24,8 @@ tags:
 
 schemes:
   - http
-  - https
 
-host: 'localhost:8000'
+host: 'localhost:8080'
 
 basePath: '/'
 
@@ -97,6 +96,23 @@ definitions:
         type: 'string'
         format: 'string'
         example: 'github'
+  ResetPasswordResponse:
+    type: 'object'
+    properties:
+      resetToken:
+        type: 'string'
+        format: 'string'
+        example: '123456789'
+      email:
+        type: 'string'
+        format: 'string'
+        example: 'mihai.bojescu@thinslices.com'
+  ResetPasswordRequest:
+    type: 'object'
+    properties:
+      email:
+        type: 'string'
+        format: 'email'
 
 paths:
   /users:
@@ -135,7 +151,7 @@ paths:
           schema:
             $ref: '#/definitions/Error'
     post:
-      description: 'Creates a new user and return it to the client'
+      description: 'Creates a new user and returns it to the client'
       summary: 'Create user'
       tags:
         - Users
@@ -167,7 +183,7 @@ paths:
           schema:
             $ref: '#/definitions/Error'
     put:
-      description: 'Updates the user identified by the provided authorization token and return it to the client'
+      description: 'Updates the user identified by the provided authorization token and returns it to the client'
       summary: 'Edit user'
       tags:
         - Users
@@ -178,6 +194,12 @@ paths:
           required: true
           schema:
             type: string
+        - in: 'body'
+          name: 'Body'
+          description: 'The body of this request'
+          required: true
+          schema:
+            $ref: '#/definitions/User'
       requestBody:
         content:
           application/json:
@@ -220,7 +242,7 @@ paths:
           schema:
             $ref: '#/definitions/Error'
     delete:
-      description: 'Deletes the user identified by the authorization token and return it to the client'
+      description: 'Deletes the user identified by the authorization token and returns it to the client'
       summary: 'Delete user'
       tags:
         - Users
@@ -274,9 +296,10 @@ paths:
         - in: 'query'
           name: 'id'
           description: 'Searches for user with the specified id'
-          required: false
+          required: true
           schema:
             type: 'string'
+            example: '1234'
       produces:
         - application/json
       responses:
@@ -304,12 +327,127 @@ paths:
                 $ref: '#/definitions/Error'
           schema:
             $ref: '#/definitions/Error'
+  /users?forgot=true:
+    put:
+      description: 'Updates the user identified by the provided authorization token and returns it to the client'
+      summary: "Edit user's password using a refresh token"
+      tags:
+        - Users
+      parameters:
+        - in: 'query'
+          name: 'forgot'
+          description: 'Is this a request for a password reset?'
+          required: true
+          schema:
+            type: 'string'
+            example: 'true'
+        - in: 'body'
+          name: 'Body'
+          description: 'The body of this request'
+          required: true
+          schema:
+            $ref: '#/definitions/ResetPasswordResponse'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/definitions/ResetPasswordResponse'
+        required: true
+      produces:
+        - application/json
+      responses:
+        '200':
+          description: 'Response when there were no errors'
+          content:
+            application/json:
+              schema:
+                type: 'object'
+                properties:
+                  data:
+                    type: 'string'
+                    example: 'Password successfully changed!'
+          schema:
+            type: 'object'
+            properties:
+              data:
+                type: 'string'
+                example: 'Password successfully changed!'
+        '400':
+          description: "Response when no reset token was provided or the provided reset token doesn't exist"
+          content:
+            application/json:
+              schema:
+                $ref: '#/definitions/Error'
+          schema:
+            $ref: '#/definitions/Error'
+        '500':
+          description: 'Response when something went wrong on the API side'
+          content:
+            application/json:
+              schema:
+                $ref: '#/definitions/Error'
+          schema:
+            $ref: '#/definitions/Error'
+  /users/resets:
+    post:
+      description: 'Request password resets for a specified user'
+      summary: 'Request password reset for user'
+      tags:
+        - Users
+      parameters:
+        - in: 'body'
+          name: 'Body'
+          description: 'The body of this request'
+          required: true
+          schema:
+            $ref: '#/definitions/ResetPasswordRequest'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/definitions/ResetPasswordRequest'
+        schema:
+          $ref: '#/definitions/ResetPasswordRequest'
+      produces:
+        - application/json
+      responses:
+        '201':
+          description: 'Response when there were no errors'
+          content:
+            application/json:
+              schema:
+                $ref: '#/definitions/ResetPasswordResponse'
+          schema:
+            $ref: '#/definitions/ResetPasswordResponse'
+        '404':
+          description: "Response when user doesn't exist in the database"
+          content:
+            application/json:
+              schema:
+                $ref: '#/definitions/Error'
+          schema:
+            $ref: '#/definitions/Error'
+        '500':
+          description: 'Response when something went wrong on the API side'
+          content:
+            application/json:
+              schema:
+                $ref: '#/definitions/Error'
+          schema:
+            $ref: '#/definitions/Error'
   /sessions:
     post:
       description: 'Creates a session for the user with the given credentials and returns it to the user'
       summary: 'Create a session'
       tags:
         - Sessions
+      parameters:
+        - in: 'body'
+          name: 'Body'
+          description: 'The body of this request'
+          required: true
+          schema:
+            $ref: '#/definitions/Credentials'
       requestBody:
         content:
           application/json:
