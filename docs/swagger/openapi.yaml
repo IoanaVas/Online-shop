@@ -16,76 +16,90 @@ servers:
           - '8000'
         default: '8000'
 
-components:
-  schemas:
-    Error:
-      type: 'string'
-      format: 'string'
-    User:
-      type: 'object'
-      required:
-        - 'email'
-        - 'password'
-        - 'username'
-      properties:
-        _id:
-          type: 'string'
-          format: 'string'
-          example: '5c504bc1f53d482e0682c200'
-        firstName:
-          type: 'string'
-          format: 'string'
-          example: 'Mihai'
-        lastName:
-          type: 'string'
-          format: 'string'
-          example: 'Bojescu'
-        birthDate:
-          type: 'date'
-          format: 'date'
-          example: '2019-01-29T12:48:57.173Z'
-        email:
-          type: 'string'
-          format: 'email'
-          example: 'mihai.bojescu@thinslices.com'
-        password:
-          type: 'string'
-          format: 'password'
-          example: '********'
-        username:
-          type: 'string'
-          format: 'string'
-          example: 'MihaiBojescu'
-    Credentials:
-      type: 'object'
-      required:
-        - 'email'
-        - 'password'
-      properties:
-        email:
-          type: 'string'
-          format: 'email'
-          example: 'mihai.bojescu@thinslices.com'
-        password:
-          type: 'string'
-          format: 'string'
-          example: '********'
-    Session:
-      type: 'object'
-      properties:
-        accessToken:
-          type: 'string'
-          format: 'string'
-          example: '123456789'
-        provider:
-          type: 'string'
-          format: 'string'
-          example: 'github'
+tags:
+  - name: Users
+    description: 'Manipulate users'
+  - name: Sessions
+    description: 'Manipulate sessions'
+
+schemes:
+  - http
+  - https
+
+definitions:
+  Error:
+    type: 'object'
+    properties:
+      error:
+        type: 'string'
+        format: 'string'
+  User:
+    type: 'object'
+    required:
+      - 'email'
+      - 'password'
+      - 'username'
+    properties:
+      _id:
+        type: 'string'
+        format: 'string'
+        example: '5c504bc1f53d482e0682c200'
+      firstName:
+        type: 'string'
+        format: 'string'
+        example: 'Mihai'
+      lastName:
+        type: 'string'
+        format: 'string'
+        example: 'Bojescu'
+      birthDate:
+        type: 'string'
+        format: 'date'
+        example: '2019-01-29T12:48:57.173Z'
+      email:
+        type: 'string'
+        format: 'email'
+        example: 'mihai.bojescu@thinslices.com'
+      password:
+        type: 'string'
+        format: 'password'
+        example: '********'
+      username:
+        type: 'string'
+        format: 'string'
+        example: 'MihaiBojescu'
+  Credentials:
+    type: 'object'
+    required:
+      - 'email'
+      - 'password'
+    properties:
+      email:
+        type: 'string'
+        format: 'email'
+        example: 'mihai.bojescu@thinslices.com'
+      password:
+        type: 'string'
+        format: 'string'
+        example: '********'
+  Session:
+    type: 'object'
+    properties:
+      accessToken:
+        type: 'string'
+        format: 'string'
+        example: '123456789'
+      provider:
+        type: 'string'
+        format: 'string'
+        example: 'github'
 
 paths:
   /users:
     get:
       description: 'Returns all users from the API'
+      tags:
+        - Users
       responses:
         '200':
           description: 'Response when there were no errors'
@@ -97,36 +111,40 @@ paths:
                   data:
                     type: 'array'
                     items:
-                      $ref: '#/components/schemas/User'
+                      $ref: '#/definitions/User'
         '500':
           description: 'Response when something went wrong on the API side'
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Error'
+                $ref: '#/definitions/Error'
     post:
       description: 'Creates a new user and return it to the client'
+      tags:
+        - Users
       responses:
         '201':
           description: 'Response when there were no errors'
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/User'
+                $ref: '#/definitions/User'
         '400':
           description: 'Response when user already exists in the database'
           content:
             application/json:
               schema:
-                $ref: '$/components/schemas/Error'
+                $ref: '#/definitions/Error'
         '500':
           description: 'Response when something went wrong on the API side'
           content:
             application/json:
               schema:
-                $ref: '$/components/schemas/Error'
+                $ref: '#/definitions/Error'
     put:
       description: 'Updates the user identified by the provided authorization token and return it to the client'
+      tags:
+        - Users
       parameters:
         - in: 'header'
           name: 'Authorization'
@@ -138,7 +156,7 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/User'
+              $ref: '#/definitions/User'
         required: true
       responses:
         '201':
@@ -146,27 +164,29 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/User'
+                $ref: '#/definitions/User'
         '401':
           description: 'Response when no authorization token was provided'
           content:
             application/json:
               schema:
-                $ref: '$/components/schemas/Error'
+                $ref: '#/definitions/Error'
         '404':
           description: "Response when user doesn't exist in the database"
           content:
             application/json:
               schema:
-                $ref: '$/components/schemas/Error'
+                $ref: '#/definitions/Error'
         '500':
           description: 'Response when something went wrong on the API side'
           content:
             application/json:
               schema:
-                $ref: '$/components/schemas/Error'
+                $ref: '#/definitions/Error'
     delete:
       description: 'Deletes the user identified by the authorization token and return it to the client'
+      tags:
+        - Users
       parameters:
         - in: 'header'
           name: 'Authorization'
@@ -180,28 +200,30 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/User'
+                $ref: '#/definitions/User'
         '401':
           description: 'Response when no authorization token was provided'
           content:
             application/json:
               schema:
-                $ref: '$/components/schemas/Error'
+                $ref: '#/definitions/Error'
         '404':
           description: "Response when user doesn't exist in the database"
           content:
             application/json:
               schema:
-                $ref: '$/components/schemas/Error'
+                $ref: '#/definitions/Error'
         '500':
           description: 'Response when something went wrong on the API side'
           content:
             application/json:
               schema:
-                $ref: '$/components/schemas/Error'
+                $ref: '#/definitions/Error'
   /users?id=id:
     get:
       description: 'Returns the user with the specified identifier'
+      tags:
+        - Users
       parameters:
         - in: 'query'
           name: 'id'
@@ -215,48 +237,52 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/User'
+                $ref: '#/definitions/User'
         '404':
           description: "Response when user doesn't exist in the database"
           content:
             application/json:
               schema:
-                $ref: '$/components/schemas/Error'
+                $ref: '#/definitions/Error'
         '500':
           description: 'Response when something went wrong on the API side'
           content:
             application/json:
               schema:
-                $ref: '$/components/schemas/Error'
+                $ref: '#/definitions/Error'
   /sessions:
     post:
       description: 'Creates a session for the user with the given credentials and returns it to the user'
+      tags:
+        - Sessions
       requestBody:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/Credentials'
+              $ref: '#/definitions/Credentials'
       responses:
         '201':
           description: 'Response when there were no errors'
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Session'
+                $ref: '#/definitions/Session'
         '404':
           description: "Response when the user with the specified credentials doesn't exist in the database"
           content:
             application/json:
               schema:
-                $ref: '$/components/schemas/Error'
+                $ref: '#/definitions/Error'
         '500':
           description: 'Response when something went wrong on the API side'
           content:
             application/json:
               schema:
-                $ref: '$/components/schemas/Error'
+                $ref: '#/definitions/Error'
     delete:
       description: 'Removes the session specified in the authorization header'
+      tags:
+        - Sessions
       parameters:
         - in: 'header'
           name: 'Authorization'
@@ -272,18 +298,25 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '$/components/schemas/Error'
+                $ref: '#/definitions/Error'
         '500':
           description: 'Response when something went wrong on the API side'
           content:
             application/json:
               schema:
-                $ref: '$/components/schemas/Error'
+                $ref: '#/definitions/Error'
   /sessions/{provider}/oauth:
     get:
-      description: 'Retrieves the created session for the specified provider OAuth request code'
+      tags:
+        - Sessions
       parameters:
-        - in: 'header'
+        - in: 'path'
+          name: 'provider'
+          schema:
+            type: 'string'
+          required: true
+          description: 'Uses the specified OAuth provider'
+        - in: 'query'
           name: 'code'
           description: 'The request code provided by the provider'
           required: true
@@ -295,16 +328,16 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Session'
+                $ref: '#/definitions/Session'
         '400':
           description: 'Response when no request code was provided or the request code was invalid/expired'
           content:
             application/json:
               schema:
-                $ref: '$/components/schemas/Error'
+                $ref: '#/definitions/Error'
         '500':
           description: 'Response when no authorization token was provided'
           content:
             application/json:
               schema:
-                $ref: '$/components/schemas/Error'
+                $ref: '#/definitions/Error'
