@@ -17,6 +17,11 @@ const schema = new mongoose.Schema({
     select: false,
     match: databasePasswordRegex
   },
+  passwordSalt: {
+    type: String,
+    required: true,
+    select: false
+  },
   username: {
     type: String,
     required: true
@@ -32,6 +37,11 @@ const schema = new mongoose.Schema({
   birthDate: {
     type: Date,
     default: new Date()
+  },
+  permission: {
+    type: String,
+    required: true,
+    default: 'user'
   }
 })
 

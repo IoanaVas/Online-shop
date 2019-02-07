@@ -1,6 +1,8 @@
 'use strict'
 
 const { validate } = require('../../utils').default
+const crypto = require('crypto')
+
 const { User } = require('../../database/models').default
 
 const action = async (req, res) => {
@@ -11,29 +13,34 @@ const action = async (req, res) => {
       username,
       firstName,
       lastName,
-      dateOfBirth
+      dateOfBirth,
+      permission
     } = req.body
     const { user } = req
 
     if (user) {
-      const error = validate(email, password, username)
-
-      if (error) {
-        res.status(400).json({ error })
-      } else {
-        await User.updateOne(
-          { _id: user._id },
-          {
-            ...(email && { email }),
-            ...(password && { password }),
-            ...(username && { username }),
-            ...(firstName && { firstName }),
-            ...(lastName && { lastName }),
-            ...(dateOfBirth && { dateOfBirth })
-          }
-        )
-        res.status(200).json({ data: user })
+      if (permission && user.permission !== 'admin') {
+        res.status(403).json({ error: "Can't change permission as a user" })
+        return
       }
+      await User.updateOne(
+        { _id: user._id },
+        {
+          ...(email && { email }),
+          ...(password && {
+            password: crypto
+              .createHash('sha256')
+              .update(password + user.passwordSalt)
+              .digest('hex')
+          }),
+          ...(username && { username }),
+          ...(firstName && { firstName }),
+          ...(lastName && { lastName }),
+          ...(dateOfBirth && { dateOfBirth }),
+          ...(permission && user.permission === 'admin' && { permission })
+        }
+      )
+      res.status(200).json({ data: user })
     } else {
       res.status(404).json({ error: 'User not found' })
     }

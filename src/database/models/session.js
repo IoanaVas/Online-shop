@@ -12,11 +12,11 @@ const schema = new mongoose.Schema({
     required: true
   },
   externalToken: {
-    type: String,
-    required: true
+    type: String
   },
   provider: {
     type: String,
+    default: ' ',
     required: true
   }
 })
