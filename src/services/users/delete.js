@@ -9,7 +9,7 @@ const action = async (req, res) => {
 
     if (user) {
       await User.deleteOne({ _id: user._id })
-      eventEmitter.emit('deleteUsers', user._id.toString().split(' '))
+      eventEmitter.emit('deleteUsers', [user._id.toString()])
 
       res.status(200).json({ data: user })
     } else {

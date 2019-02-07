@@ -13,17 +13,10 @@ const checkIfAuthorized = Session => async (req, res, next) => {
 }
 
 const checkUserPermission = (User, Session) => async (req, res, next) => {
-  const accessToken = req.headers.authorization
+  const { user } = req
 
-  try {
-    const { userId } = await Session.findOne({ accessToken })
-    const user = await User.findOne({ _id: userId })
-
-    if (user.permission === 'admin') next()
-    else res.status(403).json({ error: 'No permission' })
-  } catch (error) {
-    console.error(error)
-  }
+  if (user.permission === 'admin') next()
+  else res.status(403).json({ error: 'No permission' })
 }
 
 const retrieveUserByToken = (User, Session) => async (req, res, next) => {
