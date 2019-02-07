@@ -38,11 +38,23 @@ const routeByQueryParameter = list => (req, res, next) => {
   result ? result.action(req, res, next) : next()
 }
 
+const stripProperties = (properties, object) => {
+  let newObject = {}
+  Object.keys(object).forEach(key => {
+    newObject = {
+      ...newObject,
+      ...(!properties.find(element => element === key) && { [key]: object[key] })
+    }
+  })
+  return newObject
+}
+
 exports.default = {
   emailRegex,
   databasePasswordRegex,
   clientPasswordRegex,
   checkIfAuthorized,
   retrieveUserByToken,
-  routeByQueryParameter
+  routeByQueryParameter,
+  stripProperties
 }

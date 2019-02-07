@@ -18,12 +18,12 @@ const action = async (req, res) => {
       await User.updateOne(
         { _id: user._id },
         {
-          email,
-          password,
-          username,
-          firstName,
-          lastName,
-          dateOfBirth
+          ...(email && { email }),
+          ...(password && { password }),
+          ...(username && { username }),
+          ...(firstName && { firstName }),
+          ...(lastName && { lastName }),
+          ...(dateOfBirth && { dateOfBirth })
         }
       )
       res.status(200).json({ data: user })

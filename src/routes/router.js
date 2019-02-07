@@ -31,7 +31,9 @@ router.put(
 router.delete('/users/', CheckIfAuthorized, RetrieveUserByToken, users.delete)
 router.post('/users/resets', users.resets.post)
 
-router.post('/sessions/', CheckIfAuthorized, sessions.post)
+router.post('/sessions/', sessions.post)
 router.delete('/sessions/', CheckIfAuthorized, sessions.delete)
+router.get('/sessions/github/oauth/', sessions.github.oauth.get)
+router.get('/sessions/google/oauth/', sessions.google.oauth.get)
 
 exports.default = router

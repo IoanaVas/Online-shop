@@ -5,3 +5,4 @@ exports.default = {
 }
 
 require('./handleChangedPassword')
+require('./handleOAuthUser')

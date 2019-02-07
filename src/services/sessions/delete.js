@@ -3,20 +3,11 @@
 const { Session } = require('../../database/models')
 
 const action = async (req, res) => {
-  const accessToken = req.headers['authorization']
-
-  if (!accessToken) {
-    res.status(400).json({ error: 'Access token missing.' })
-    return
-  }
+  const { accessToken } = req.headers
 
   try {
-    if (await Session.find({ accessToken })) {
-      await Session.deleteOne({ accessToken })
-      res.status(200).end()
-    } else {
-      res.status(404).json({ error: 'AccessToken not found' })
-    }
+    await Session.deleteOne({ accessToken })
+    res.status(200).end()
   } catch (error) {
     console.error(error)
     res.status(500).end({ error: 'Something went wrong...' })

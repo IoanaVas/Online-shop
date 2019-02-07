@@ -1,4 +1,8 @@
 {
   "CONNECTION_STRING": "mongodb://mongo:27017/onlineShopApp",
+  "GITHUB_OAUTH_URL": "https://github.com/login/oauth/access_token",
+  "GITHUB_API_URL": "https://api.github.com",
+  "GOOGLE_OAUTH_URL": "https://www.googleapis.com/oauth2/v4/token",
+  "GOOGLE_API_URL": "https://www.googleapis.com",
   "RESET_LINK": "http://localhost:8080/users"
 }
