@@ -17,7 +17,7 @@ const action = async (req, res) => {
 
     if (user) {
       if (permission && user.permission !== 'admin') {
-        res.status(401).json({ error: "Can't change permission as a user" })
+        res.status(403).json({ error: "Can't change permission as a user" })
         return
       }
       await User.updateOne(
