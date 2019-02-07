@@ -3,8 +3,8 @@
 const crypto = require('crypto')
 const shortid = require('shortid')
 
-const { Session, User } = require('../../database/models').default
 const { stripProperties } = require('../../utils').default
+const { Session, User } = require('../../database/models').default
 
 const action = async (req, res) => {
   const { email, password } = req.body
@@ -14,19 +14,33 @@ const action = async (req, res) => {
     return
   }
 
-  const accessToken = shortid.generate()
-  const hash = crypto.createHash('sha256').update(password).digest('hex')
-
   try {
-    const user = await User.findOne({ email, password: hash })
+    const user = await User
+      .findOne({ email })
+      .select('+passwordSalt +password')
+      .exec()
 
     if (user) {
-      const { _id: userId } = user
-      const session = await Session.create({ userId, accessToken })
+      const hash = crypto
+        .createHash('sha256')
+        .update(password + user._doc.passwordSalt)
+        .digest('hex')
 
-      res.status(201).json({
-        data: stripProperties(['_id', 'userId', 'externalToken'], session._doc)
-      })
+      if (hash === user._doc.password) {
+        const { _id: userId } = user
+        const accessToken = shortid.generate()
+        const provider = 'shop'
+        const session = await Session.create({ userId, accessToken, provider })
+
+        res.status(201).json({
+          data: stripProperties(
+            ['_id', 'userId', 'externalToken'],
+            session._doc
+          )
+        })
+      } else {
+        res.status(404).json({ error: 'User not found.' })
+      }
     } else {
       res.status(404).json({ error: 'User not found.' })
     }

@@ -1,5 +1,7 @@
 'use strict'
 
+const crypto = require('crypto')
+
 const { User } = require('../../database/models').default
 
 const action = async (req, res) => {
@@ -24,7 +26,12 @@ const action = async (req, res) => {
         { _id: user._id },
         {
           ...(email && { email }),
-          ...(password && { password }),
+          ...(password && {
+            password: crypto
+              .createHash('sha256')
+              .update(password + user.passwordSalt)
+              .digest('hex')
+          }),
           ...(username && { username }),
           ...(firstName && { firstName }),
           ...(lastName && { lastName }),

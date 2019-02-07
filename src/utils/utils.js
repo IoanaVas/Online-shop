@@ -12,13 +12,6 @@ const checkIfAuthorized = Session => async (req, res, next) => {
   else res.status(400).json({ error: 'Unauthorized' })
 }
 
-const checkUserPermission = (User, Session) => async (req, res, next) => {
-  const { user } = req
-
-  if (user.permission === 'admin') next()
-  else res.status(403).json({ error: 'No permission' })
-}
-
 const retrieveUserByToken = (User, Session) => async (req, res, next) => {
   try {
     const accessToken = req.headers.authorization
@@ -55,6 +48,13 @@ const routeByQueryParameter = list => (req, res, next) => {
   }
 }
 
+const checkUserPermission = (User, Session) => async (req, res, next) => {
+  const { user } = req
+
+  if (user.permission === 'admin') next()
+  else res.status(403).json({ error: 'No permission' })
+}
+
 const stripProperties = (properties, object) => {
   let newObject = {}
   Object.keys(object).forEach(key => {
@@ -66,6 +66,20 @@ const stripProperties = (properties, object) => {
   return newObject
 }
 
+const validate = (email, password, username) => {
+  let error = ''
+
+  if (!email || (email && !emailRegex.test(email))) {
+    error += 'E-mail is invalid\n'
+  }
+  if (!password || (password && !clientPasswordRegex.test(password))) {
+    error += 'Password is invalid\n'
+  }
+  if (!username) error += 'Username is invalid\n'
+
+  return error
+}
+
 exports.default = {
   emailRegex,
   databasePasswordRegex,
@@ -73,6 +87,7 @@ exports.default = {
   checkIfAuthorized,
   retrieveUserByToken,
   routeByQueryParameter,
+  checkUserPermission,
   stripProperties,
-  checkUserPermission
+  validate
 }
