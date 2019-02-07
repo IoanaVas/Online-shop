@@ -1,0 +1,1965 @@
+<!doctype html>
+<html class="no-js" lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Online shop app | API Reference</title>
+    <link rel="stylesheet" href="stylesheets/foundation.min.css" />
+    <link rel="stylesheet" href="stylesheets/spectacle.min.css" />
+    <script src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
+    <!-- <script src="javascripts/foundation.js"></script> -->
+    <script src="javascripts/spectacle.min.js"></script>
+  </head>
+  <body id="spectacle">
+    <div id="page" class="drawer-layout drawer-slide-right-large">
+      <div id="sidebar">
+        <button class="close-button" aria-label="Close menu" type="button" data-drawer-close>
+          <span aria-hidden="true">×</span>
+        </button>
+        <nav id="nav" role="navigation">
+          <h5>Topics</h5>
+          <a href="#introduction">Introduction</a>
+          <h5>Operations</h5>
+          <section>
+            <a href="#tag-Users">Users</a>
+            <ul>
+              <li>
+                <a href="#operation--users-get"> Get all users </a>
+              </li>
+              <li>
+                <a href="#operation--users-post"> Create user </a>
+              </li>
+              <li>
+                <a href="#operation--users-put"> Edit user </a>
+              </li>
+              <li>
+                <a href="#operation--users-delete"> Delete user </a>
+              </li>
+              <li>
+                <a href="#operation--users-id-id-get"> Get user by ID </a>
+              </li>
+              <li>
+                <a href="#operation--users-forgot-true-put"> Edit user&#x27;s password using a refresh token </a>
+              </li>
+              <li>
+                <a href="#operation--users-resets-post"> Request password reset for user </a>
+              </li>
+            </ul>
+          </section>
+          <section>
+            <a href="#tag-Sessions">Sessions</a>
+            <ul>
+              <li>
+                <a href="#operation--sessions-post"> Create a session </a>
+              </li>
+              <li>
+                <a href="#operation--sessions-delete"> Delete session </a>
+              </li>
+              <li>
+                <a href="#operation--sessions--provider--oauth-get"> Creates session using an OAuth provider </a>
+              </li>
+            </ul>
+          </section>
+          <h5>Schema Definitions</h5>
+          <a href="#definition-Error"> Error </a>
+          <a href="#definition-User"> User </a>
+          <a href="#definition-Credentials"> Credentials </a>
+          <a href="#definition-Session"> Session </a>
+          <a href="#definition-ResetPasswordResponse"> ResetPasswordResponse </a>
+          <a href="#definition-ResetPasswordRequest"> ResetPasswordRequest </a>
+        </nav>
+      </div>
+      <div id="docs" class="row collapse expanded drawer" data-drawer>
+        <button class="floating-menu-icon" type="button" data-drawer-slide="right">
+          <span class="hamburger"></span>
+        </button>
+        <div class="example-box doc-content"></div>
+        <article>
+          <h1 class="doc-title">Online shop app
+            <span>API Reference</span>
+          </h1>
+          <div id="introduction" data-traverse-target="introduction">
+            <div class="doc-row">
+              <div class="doc-copy">
+                <p>An online shop API, built using Node, Express and MongoDB</p>
+              </div>
+              <div class="doc-examples">
+                <section>
+                  <h5>API Endpoint</h5>
+                  <!-- <div class="hljs"> --><pre><code>http://localhost:8080/</code></pre>
+                  <!-- </div> -->
+                  <h5>Schemes:
+                    <span>http</span>
+                  </h5>
+                  <h5>Version:
+                    <span>1.0.0</span>
+                  </h5>
+                </section>
+              </div>
+            </div>
+          </div>
+          <h1 id="tag-Users" class="swagger-summary-tag" data-traverse-target="tag-Users">Users</h1>
+          <div class="tag-description doc-row">
+            <div class="doc-copy">
+              <p>Manipulate users</p>
+            </div>
+          </div>
+          <div id="operation--users-get" class="operation panel" data-traverse-target="operation--users-get">
+            <!-- <section class="operation-tags row"> -->
+            <!-- <div class="doc-copy"> -->
+            <div class="operation-tags">
+              <a class="label" href="#tag-Users">Users</a>
+              <!---->
+            </div>
+            <!-- </div> -->
+            <!-- </section> -->
+            <h2 class="operation-title">
+              <span class="operation-summary">Get all users</span>
+            </h2>
+            <div class="doc-row">
+              <div class="doc-copy">
+                <section class="swagger-operation-path">
+                  <span class="operation-method">GET</span>
+                  <span class="operation-path">/users</span>
+                </section>
+              </div>
+            </div>
+            <div class="doc-row">
+              <div class="doc-copy">
+                <section class="swagger-operation-description">
+                  <p>Returns all users from the API</p>
+                </section>
+              </div>
+            </div>
+            <div class="doc-row">
+              <div class="doc-copy"> </div>
+              <div class="doc-examples"></div>
+            </div>
+            <div class="doc-row">
+              <div class="doc-copy">
+                <section class="swagger-responses">
+                  <div class="prop-row prop-group">
+                    <div class="prop-name">
+                      <div class="prop-title">200 OK</div>
+                      <div class="prop-ref"></div>
+                      <!-- <span class="swagger-global"></span> <span class="json-schema-reference"><a href=""></a></span> -->
+                    </div>
+                    <div class="prop-value">
+                      <p>Response when there were no errors</p>
+                    </div>
+                  </div>
+                  <div class="prop-row prop-inner">
+                    <div class="prop-name">type</div>
+                    <div class="prop-value">
+                      <span class="json-property-type">object</span>
+                      <span class="json-property-range" title="Value limits"></span>
+                    </div>
+                  </div>
+                  <div class="prop-row prop-group">
+                    <div class="prop-name">
+                      <div class="prop-title">500 Internal Server Error</div>
+                      <div class="prop-ref">
+                        <span class="">
+                          <a class="json-schema-ref" href="#/definitions/Error">Error</a>
+                        </span>
+                      </div>
+                      <!-- <span class="swagger-global"></span> <span class="json-schema-reference"><a href=""></a></span> -->
+                    </div>
+                    <div class="prop-value">
+                      <p>Response when something went wrong on the API side</p>
+                    </div>
+                  </div>
+                </section>
+              </div>
+              <div class="doc-examples">
+                <h5>Response Content-Types:
+                  <span>application/json</span>
+                </h5>
+                <section>
+                  <h5>Response Example
+                    <span>(200 OK)</span>
+                  </h5>
+                  <!-- <div class="hljs"> -->
+                  <html>
+                  <head></head>
+                  <body><pre><code class="hljs language-json">{
+  <span class="hljs-attr">&quot;data&quot;</span>: [
+    {
+      <span class="hljs-attr">&quot;_id&quot;</span>: <span class="hljs-string">&quot;5c504bc1f53d482e0682c200&quot;</span>,
+      <span class="hljs-attr">&quot;firstName&quot;</span>: <span class="hljs-string">&quot;Mihai&quot;</span>,
+      <span class="hljs-attr">&quot;lastName&quot;</span>: <span class="hljs-string">&quot;Bojescu&quot;</span>,
+      <span class="hljs-attr">&quot;birthDate&quot;</span>: <span class="hljs-string">&quot;2019-01-29T12:48:57.173Z&quot;</span>,
+      <span class="hljs-attr">&quot;email&quot;</span>: <span class="hljs-string">&quot;mihai.bojescu@thinslices.com&quot;</span>,
+      <span class="hljs-attr">&quot;password&quot;</span>: <span class="hljs-string">&quot;********&quot;</span>,
+      <span class="hljs-attr">&quot;username&quot;</span>: <span class="hljs-string">&quot;MihaiBojescu&quot;</span>
+    }
+  ]
+}
+</code></pre> </body>
+                  </html>
+                  <!-- </div> -->
+                </section>
+                <section>
+                  <h5>Response Example
+                    <span>(500 Internal Server Error)</span>
+                  </h5>
+                  <!-- <div class="hljs"> -->
+                  <html>
+                  <head></head>
+                  <body><pre><code class="hljs language-json">{
+  <span class="hljs-attr">&quot;error&quot;</span>: <span class="hljs-string">&quot;string (string)&quot;</span>
+}
+</code></pre> </body>
+                  </html>
+                  <!-- </div> -->
+                </section>
+              </div>
+            </div>
+          </div>
+          <div id="operation--users-post" class="operation panel" data-traverse-target="operation--users-post">
+            <!-- <section class="operation-tags row"> -->
+            <!-- <div class="doc-copy"> -->
+            <div class="operation-tags">
+              <a class="label" href="#tag-Users">Users</a>
+              <!---->
+            </div>
+            <!-- </div> -->
+            <!-- </section> -->
+            <h2 class="operation-title">
+              <span class="operation-summary">Create user</span>
+            </h2>
+            <div class="doc-row">
+              <div class="doc-copy">
+                <section class="swagger-operation-path">
+                  <span class="operation-method">POST</span>
+                  <span class="operation-path">/users</span>
+                </section>
+              </div>
+            </div>
+            <div class="doc-row">
+              <div class="doc-copy">
+                <section class="swagger-operation-description">
+                  <p>Creates a new user and returns it to the client</p>
+                </section>
+              </div>
+            </div>
+            <div class="doc-row">
+              <div class="doc-copy"> </div>
+              <div class="doc-examples"></div>
+            </div>
+            <div class="doc-row">
+              <div class="doc-copy">
+                <section class="swagger-responses">
+                  <div class="prop-row prop-group">
+                    <div class="prop-name">
+                      <div class="prop-title">201 Created</div>
+                      <div class="prop-ref">
+                        <span class="">
+                          <a class="json-schema-ref" href="#/definitions/User">User</a>
+                        </span>
+                      </div>
+                      <!-- <span class="swagger-global"></span> <span class="json-schema-reference"><a href=""></a></span> -->
+                    </div>
+                    <div class="prop-value">
+                      <p>Response when there were no errors</p>
+                    </div>
+                  </div>
+                  <div class="prop-row prop-group">
+                    <div class="prop-name">
+                      <div class="prop-title">400 Bad Request</div>
+                      <div class="prop-ref">
+                        <span class="">
+                          <a class="json-schema-ref" href="#/definitions/Error">Error</a>
+                        </span>
+                      </div>
+                      <!-- <span class="swagger-global"></span> <span class="json-schema-reference"><a href=""></a></span> -->
+                    </div>
+                    <div class="prop-value">
+                      <p>Response when user already exists in the database</p>
+                    </div>
+                  </div>
+                  <div class="prop-row prop-group">
+                    <div class="prop-name">
+                      <div class="prop-title">500 Internal Server Error</div>
+                      <div class="prop-ref">
+                        <span class="">
+                          <a class="json-schema-ref" href="#/definitions/Error">Error</a>
+                        </span>
+                      </div>
+                      <!-- <span class="swagger-global"></span> <span class="json-schema-reference"><a href=""></a></span> -->
+                    </div>
+                    <div class="prop-value">
+                      <p>Response when something went wrong on the API side</p>
+                    </div>
+                  </div>
+                </section>
+              </div>
+              <div class="doc-examples">
+                <h5>Response Content-Types:
+                  <span>application/json</span>
+                </h5>
+                <section>
+                  <h5>Response Example
+                    <span>(201 Created)</span>
+                  </h5>
+                  <!-- <div class="hljs"> -->
+                  <html>
+                  <head></head>
+                  <body><pre><code class="hljs language-json">{
+  <span class="hljs-attr">&quot;_id&quot;</span>: <span class="hljs-string">&quot;5c504bc1f53d482e0682c200&quot;</span>,
+  <span class="hljs-attr">&quot;firstName&quot;</span>: <span class="hljs-string">&quot;Mihai&quot;</span>,
+  <span class="hljs-attr">&quot;lastName&quot;</span>: <span class="hljs-string">&quot;Bojescu&quot;</span>,
+  <span class="hljs-attr">&quot;birthDate&quot;</span>: <span class="hljs-string">&quot;2019-01-29T12:48:57.173Z&quot;</span>,
+  <span class="hljs-attr">&quot;email&quot;</span>: <span class="hljs-string">&quot;mihai.bojescu@thinslices.com&quot;</span>,
+  <span class="hljs-attr">&quot;password&quot;</span>: <span class="hljs-string">&quot;********&quot;</span>,
+  <span class="hljs-attr">&quot;username&quot;</span>: <span class="hljs-string">&quot;MihaiBojescu&quot;</span>
+}
+</code></pre> </body>
+                  </html>
+                  <!-- </div> -->
+                </section>
+                <section>
+                  <h5>Response Example
+                    <span>(400 Bad Request)</span>
+                  </h5>
+                  <!-- <div class="hljs"> -->
+                  <html>
+                  <head></head>
+                  <body><pre><code class="hljs language-json">{
+  <span class="hljs-attr">&quot;error&quot;</span>: <span class="hljs-string">&quot;string (string)&quot;</span>
+}
+</code></pre> </body>
+                  </html>
+                  <!-- </div> -->
+                </section>
+                <section>
+                  <h5>Response Example
+                    <span>(500 Internal Server Error)</span>
+                  </h5>
+                  <!-- <div class="hljs"> -->
+                  <html>
+                  <head></head>
+                  <body><pre><code class="hljs language-json">{
+  <span class="hljs-attr">&quot;error&quot;</span>: <span class="hljs-string">&quot;string (string)&quot;</span>
+}
+</code></pre> </body>
+                  </html>
+                  <!-- </div> -->
+                </section>
+              </div>
+            </div>
+          </div>
+          <div id="operation--users-put" class="operation panel" data-traverse-target="operation--users-put">
+            <!-- <section class="operation-tags row"> -->
+            <!-- <div class="doc-copy"> -->
+            <div class="operation-tags">
+              <a class="label" href="#tag-Users">Users</a>
+              <!---->
+            </div>
+            <!-- </div> -->
+            <!-- </section> -->
+            <h2 class="operation-title">
+              <span class="operation-summary">Edit user</span>
+            </h2>
+            <div class="doc-row">
+              <div class="doc-copy">
+                <section class="swagger-operation-path">
+                  <span class="operation-method">PUT</span>
+                  <span class="operation-path">/users</span>
+                </section>
+              </div>
+            </div>
+            <div class="doc-row">
+              <div class="doc-copy">
+                <section class="swagger-operation-description">
+                  <p>Updates the user identified by the provided authorization token and returns it to the client</p>
+                </section>
+              </div>
+            </div>
+            <div class="doc-row">
+              <div class="doc-copy">
+                <section class="swagger-request-body">
+                  <div class="prop-row">
+                    <div class="prop-name">
+                      <div class="swagger-request-model">
+                        <span class="">
+                          <a class="json-schema-ref" href="#/definitions/User">User</a>
+                        </span>
+                      </div>
+                    </div>
+                    <div class="prop-value columns small-6">
+                      <!-- <div class="swagger-request-description"> -->
+                      <p>The body of this request</p>
+                      <!-- </div> -->
+                    </div>
+                  </div>
+                </section>
+                <section class="swagger-request-params">
+                  <div class="prop-row prop-group">
+                    <div class="prop-name">
+                      <div class="prop-title">Authorization:
+                        <span class="prop-type">
+                          <span class="json-property-type">object</span>
+                          <span class="json-property-range" title="Value limits"></span>
+                        </span>
+                      </div>
+                      <span class="json-property-required"></span>
+                      <div class="prop-subtitle"> in header </div>
+                    </div>
+                    <div class="prop-value">
+                      <p>The authorization token</p>
+                    </div>
+                  </div>
+                </section>
+              </div>
+              <div class="doc-examples">
+                <section>
+                  <h5>Request Example</h5>
+                  <!-- <div class="hljs"> -->
+                  <html>
+                  <head></head>
+                  <body><pre><code class="hljs language-json">{
+  <span class="hljs-attr">&quot;_id&quot;</span>: <span class="hljs-string">&quot;5c504bc1f53d482e0682c200&quot;</span>,
+  <span class="hljs-attr">&quot;firstName&quot;</span>: <span class="hljs-string">&quot;Mihai&quot;</span>,
+  <span class="hljs-attr">&quot;lastName&quot;</span>: <span class="hljs-string">&quot;Bojescu&quot;</span>,
+  <span class="hljs-attr">&quot;birthDate&quot;</span>: <span class="hljs-string">&quot;2019-01-29T12:48:57.173Z&quot;</span>,
+  <span class="hljs-attr">&quot;email&quot;</span>: <span class="hljs-string">&quot;mihai.bojescu@thinslices.com&quot;</span>,
+  <span class="hljs-attr">&quot;password&quot;</span>: <span class="hljs-string">&quot;********&quot;</span>,
+  <span class="hljs-attr">&quot;username&quot;</span>: <span class="hljs-string">&quot;MihaiBojescu&quot;</span>
+}
+</code></pre> </body>
+                  </html>
+                  <!-- </div> -->
+                </section>
+              </div>
+            </div>
+            <div class="doc-row">
+              <div class="doc-copy">
+                <section class="swagger-responses">
+                  <div class="prop-row prop-group">
+                    <div class="prop-name">
+                      <div class="prop-title">200 OK</div>
+                      <div class="prop-ref">
+                        <span class="">
+                          <a class="json-schema-ref" href="#/definitions/User">User</a>
+                        </span>
+                      </div>
+                      <!-- <span class="swagger-global"></span> <span class="json-schema-reference"><a href=""></a></span> -->
+                    </div>
+                    <div class="prop-value">
+                      <p>Response when there were no errors</p>
+                    </div>
+                  </div>
+                  <div class="prop-row prop-group">
+                    <div class="prop-name">
+                      <div class="prop-title">401 Unauthorized</div>
+                      <div class="prop-ref">
+                        <span class="">
+                          <a class="json-schema-ref" href="#/definitions/Error">Error</a>
+                        </span>
+                      </div>
+                      <!-- <span class="swagger-global"></span> <span class="json-schema-reference"><a href=""></a></span> -->
+                    </div>
+                    <div class="prop-value">
+                      <p>Response when no authorization token was provided</p>
+                    </div>
+                  </div>
+                  <div class="prop-row prop-group">
+                    <div class="prop-name">
+                      <div class="prop-title">404 Not Found</div>
+                      <div class="prop-ref">
+                        <span class="">
+                          <a class="json-schema-ref" href="#/definitions/Error">Error</a>
+                        </span>
+                      </div>
+                      <!-- <span class="swagger-global"></span> <span class="json-schema-reference"><a href=""></a></span> -->
+                    </div>
+                    <div class="prop-value">
+                      <p>Response when user doesn&#39;t exist in the database</p>
+                    </div>
+                  </div>
+                  <div class="prop-row prop-group">
+                    <div class="prop-name">
+                      <div class="prop-title">500 Internal Server Error</div>
+                      <div class="prop-ref">
+                        <span class="">
+                          <a class="json-schema-ref" href="#/definitions/Error">Error</a>
+                        </span>
+                      </div>
+                      <!-- <span class="swagger-global"></span> <span class="json-schema-reference"><a href=""></a></span> -->
+                    </div>
+                    <div class="prop-value">
+                      <p>Response when something went wrong on the API side</p>
+                    </div>
+                  </div>
+                </section>
+              </div>
+              <div class="doc-examples">
+                <h5>Response Content-Types:
+                  <span>application/json</span>
+                </h5>
+                <section>
+                  <h5>Response Example
+                    <span>(200 OK)</span>
+                  </h5>
+                  <!-- <div class="hljs"> -->
+                  <html>
+                  <head></head>
+                  <body><pre><code class="hljs language-json">{
+  <span class="hljs-attr">&quot;_id&quot;</span>: <span class="hljs-string">&quot;5c504bc1f53d482e0682c200&quot;</span>,
+  <span class="hljs-attr">&quot;firstName&quot;</span>: <span class="hljs-string">&quot;Mihai&quot;</span>,
+  <span class="hljs-attr">&quot;lastName&quot;</span>: <span class="hljs-string">&quot;Bojescu&quot;</span>,
+  <span class="hljs-attr">&quot;birthDate&quot;</span>: <span class="hljs-string">&quot;2019-01-29T12:48:57.173Z&quot;</span>,
+  <span class="hljs-attr">&quot;email&quot;</span>: <span class="hljs-string">&quot;mihai.bojescu@thinslices.com&quot;</span>,
+  <span class="hljs-attr">&quot;password&quot;</span>: <span class="hljs-string">&quot;********&quot;</span>,
+  <span class="hljs-attr">&quot;username&quot;</span>: <span class="hljs-string">&quot;MihaiBojescu&quot;</span>
+}
+</code></pre> </body>
+                  </html>
+                  <!-- </div> -->
+                </section>
+                <section>
+                  <h5>Response Example
+                    <span>(401 Unauthorized)</span>
+                  </h5>
+                  <!-- <div class="hljs"> -->
+                  <html>
+                  <head></head>
+                  <body><pre><code class="hljs language-json">{
+  <span class="hljs-attr">&quot;error&quot;</span>: <span class="hljs-string">&quot;string (string)&quot;</span>
+}
+</code></pre> </body>
+                  </html>
+                  <!-- </div> -->
+                </section>
+                <section>
+                  <h5>Response Example
+                    <span>(404 Not Found)</span>
+                  </h5>
+                  <!-- <div class="hljs"> -->
+                  <html>
+                  <head></head>
+                  <body><pre><code class="hljs language-json">{
+  <span class="hljs-attr">&quot;error&quot;</span>: <span class="hljs-string">&quot;string (string)&quot;</span>
+}
+</code></pre> </body>
+                  </html>
+                  <!-- </div> -->
+                </section>
+                <section>
+                  <h5>Response Example
+                    <span>(500 Internal Server Error)</span>
+                  </h5>
+                  <!-- <div class="hljs"> -->
+                  <html>
+                  <head></head>
+                  <body><pre><code class="hljs language-json">{
+  <span class="hljs-attr">&quot;error&quot;</span>: <span class="hljs-string">&quot;string (string)&quot;</span>
+}
+</code></pre> </body>
+                  </html>
+                  <!-- </div> -->
+                </section>
+              </div>
+            </div>
+          </div>
+          <div id="operation--users-delete" class="operation panel" data-traverse-target="operation--users-delete">
+            <!-- <section class="operation-tags row"> -->
+            <!-- <div class="doc-copy"> -->
+            <div class="operation-tags">
+              <a class="label" href="#tag-Users">Users</a>
+              <!---->
+            </div>
+            <!-- </div> -->
+            <!-- </section> -->
+            <h2 class="operation-title">
+              <span class="operation-summary">Delete user</span>
+            </h2>
+            <div class="doc-row">
+              <div class="doc-copy">
+                <section class="swagger-operation-path">
+                  <span class="operation-method">DELETE</span>
+                  <span class="operation-path">/users</span>
+                </section>
+              </div>
+            </div>
+            <div class="doc-row">
+              <div class="doc-copy">
+                <section class="swagger-operation-description">
+                  <p>Deletes the user identified by the authorization token and returns it to the client</p>
+                </section>
+              </div>
+            </div>
+            <div class="doc-row">
+              <div class="doc-copy">
+                <section class="swagger-request-params">
+                  <div class="prop-row prop-group">
+                    <div class="prop-name">
+                      <div class="prop-title">Authorization:
+                        <span class="prop-type">
+                          <span class="json-property-type">object</span>
+                          <span class="json-property-range" title="Value limits"></span>
+                        </span>
+                      </div>
+                      <span class="json-property-required"></span>
+                      <div class="prop-subtitle"> in header </div>
+                    </div>
+                    <div class="prop-value">
+                      <p>The authorization token</p>
+                    </div>
+                  </div>
+                </section>
+              </div>
+              <div class="doc-examples"></div>
+            </div>
+            <div class="doc-row">
+              <div class="doc-copy">
+                <section class="swagger-responses">
+                  <div class="prop-row prop-group">
+                    <div class="prop-name">
+                      <div class="prop-title">200 OK</div>
+                    </div>
+                    <div class="prop-value">
+                      <p>Response when there were no errors</p>
+                    </div>
+                  </div>
+                  <div class="prop-row prop-group">
+                    <div class="prop-name">
+                      <div class="prop-title">401 Unauthorized</div>
+                      <div class="prop-ref">
+                        <span class="">
+                          <a class="json-schema-ref" href="#/definitions/Error">Error</a>
+                        </span>
+                      </div>
+                      <!-- <span class="swagger-global"></span> <span class="json-schema-reference"><a href=""></a></span> -->
+                    </div>
+                    <div class="prop-value">
+                      <p>Response when no authorization token was provided</p>
+                    </div>
+                  </div>
+                  <div class="prop-row prop-group">
+                    <div class="prop-name">
+                      <div class="prop-title">404 Not Found</div>
+                      <div class="prop-ref">
+                        <span class="">
+                          <a class="json-schema-ref" href="#/definitions/Error">Error</a>
+                        </span>
+                      </div>
+                      <!-- <span class="swagger-global"></span> <span class="json-schema-reference"><a href=""></a></span> -->
+                    </div>
+                    <div class="prop-value">
+                      <p>Response when user doesn&#39;t exist in the database</p>
+                    </div>
+                  </div>
+                  <div class="prop-row prop-group">
+                    <div class="prop-name">
+                      <div class="prop-title">500 Internal Server Error</div>
+                      <div class="prop-ref">
+                        <span class="">
+                          <a class="json-schema-ref" href="#/definitions/Error">Error</a>
+                        </span>
+                      </div>
+                      <!-- <span class="swagger-global"></span> <span class="json-schema-reference"><a href=""></a></span> -->
+                    </div>
+                    <div class="prop-value">
+                      <p>Response when something went wrong on the API side</p>
+                    </div>
+                  </div>
+                </section>
+              </div>
+              <div class="doc-examples">
+                <h5>Response Content-Types:
+                  <span>application/json</span>
+                </h5>
+                <section>
+                  <h5>Response Example
+                    <span>(401 Unauthorized)</span>
+                  </h5>
+                  <!-- <div class="hljs"> -->
+                  <html>
+                  <head></head>
+                  <body><pre><code class="hljs language-json">{
+  <span class="hljs-attr">&quot;error&quot;</span>: <span class="hljs-string">&quot;string (string)&quot;</span>
+}
+</code></pre> </body>
+                  </html>
+                  <!-- </div> -->
+                </section>
+                <section>
+                  <h5>Response Example
+                    <span>(404 Not Found)</span>
+                  </h5>
+                  <!-- <div class="hljs"> -->
+                  <html>
+                  <head></head>
+                  <body><pre><code class="hljs language-json">{
+  <span class="hljs-attr">&quot;error&quot;</span>: <span class="hljs-string">&quot;string (string)&quot;</span>
+}
+</code></pre> </body>
+                  </html>
+                  <!-- </div> -->
+                </section>
+                <section>
+                  <h5>Response Example
+                    <span>(500 Internal Server Error)</span>
+                  </h5>
+                  <!-- <div class="hljs"> -->
+                  <html>
+                  <head></head>
+                  <body><pre><code class="hljs language-json">{
+  <span class="hljs-attr">&quot;error&quot;</span>: <span class="hljs-string">&quot;string (string)&quot;</span>
+}
+</code></pre> </body>
+                  </html>
+                  <!-- </div> -->
+                </section>
+              </div>
+            </div>
+          </div>
+          <div id="operation--users-id-id-get" class="operation panel" data-traverse-target="operation--users-id-id-get">
+            <!-- <section class="operation-tags row"> -->
+            <!-- <div class="doc-copy"> -->
+            <div class="operation-tags">
+              <a class="label" href="#tag-Users">Users</a>
+              <!---->
+            </div>
+            <!-- </div> -->
+            <!-- </section> -->
+            <h2 class="operation-title">
+              <span class="operation-summary">Get user by ID</span>
+            </h2>
+            <div class="doc-row">
+              <div class="doc-copy">
+                <section class="swagger-operation-path">
+                  <span class="operation-method">GET</span>
+                  <span class="operation-path">/users?id&#x3D;id</span>
+                </section>
+              </div>
+            </div>
+            <div class="doc-row">
+              <div class="doc-copy">
+                <section class="swagger-operation-description">
+                  <p>Returns the user with the specified identifier</p>
+                </section>
+              </div>
+            </div>
+            <div class="doc-row">
+              <div class="doc-copy">
+                <section class="swagger-request-params">
+                  <div class="prop-row prop-group">
+                    <div class="prop-name">
+                      <div class="prop-title">id:
+                        <span class="prop-type">
+                          <span class="json-property-type">object</span>
+                          <span class="json-property-range" title="Value limits"></span>
+                        </span>
+                      </div>
+                      <span class="json-property-required"></span>
+                      <div class="prop-subtitle"> in query </div>
+                    </div>
+                    <div class="prop-value">
+                      <p>Searches for user with the specified id</p>
+                    </div>
+                  </div>
+                </section>
+              </div>
+              <div class="doc-examples"></div>
+            </div>
+            <div class="doc-row">
+              <div class="doc-copy">
+                <section class="swagger-responses">
+                  <div class="prop-row prop-group">
+                    <div class="prop-name">
+                      <div class="prop-title">200 OK</div>
+                      <div class="prop-ref">
+                        <span class="">
+                          <a class="json-schema-ref" href="#/definitions/User">User</a>
+                        </span>
+                      </div>
+                      <!-- <span class="swagger-global"></span> <span class="json-schema-reference"><a href=""></a></span> -->
+                    </div>
+                    <div class="prop-value">
+                      <p>Response when there were no errors</p>
+                    </div>
+                  </div>
+                  <div class="prop-row prop-group">
+                    <div class="prop-name">
+                      <div class="prop-title">404 Not Found</div>
+                      <div class="prop-ref">
+                        <span class="">
+                          <a class="json-schema-ref" href="#/definitions/Error">Error</a>
+                        </span>
+                      </div>
+                      <!-- <span class="swagger-global"></span> <span class="json-schema-reference"><a href=""></a></span> -->
+                    </div>
+                    <div class="prop-value">
+                      <p>Response when user doesn&#39;t exist in the database</p>
+                    </div>
+                  </div>
+                  <div class="prop-row prop-group">
+                    <div class="prop-name">
+                      <div class="prop-title">500 Internal Server Error</div>
+                      <div class="prop-ref">
+                        <span class="">
+                          <a class="json-schema-ref" href="#/definitions/Error">Error</a>
+                        </span>
+                      </div>
+                      <!-- <span class="swagger-global"></span> <span class="json-schema-reference"><a href=""></a></span> -->
+                    </div>
+                    <div class="prop-value">
+                      <p>Response when something went wrong on the API side</p>
+                    </div>
+                  </div>
+                </section>
+              </div>
+              <div class="doc-examples">
+                <h5>Response Content-Types:
+                  <span>application/json</span>
+                </h5>
+                <section>
+                  <h5>Response Example
+                    <span>(200 OK)</span>
+                  </h5>
+                  <!-- <div class="hljs"> -->
+                  <html>
+                  <head></head>
+                  <body><pre><code class="hljs language-json">{
+  <span class="hljs-attr">&quot;_id&quot;</span>: <span class="hljs-string">&quot;5c504bc1f53d482e0682c200&quot;</span>,
+  <span class="hljs-attr">&quot;firstName&quot;</span>: <span class="hljs-string">&quot;Mihai&quot;</span>,
+  <span class="hljs-attr">&quot;lastName&quot;</span>: <span class="hljs-string">&quot;Bojescu&quot;</span>,
+  <span class="hljs-attr">&quot;birthDate&quot;</span>: <span class="hljs-string">&quot;2019-01-29T12:48:57.173Z&quot;</span>,
+  <span class="hljs-attr">&quot;email&quot;</span>: <span class="hljs-string">&quot;mihai.bojescu@thinslices.com&quot;</span>,
+  <span class="hljs-attr">&quot;password&quot;</span>: <span class="hljs-string">&quot;********&quot;</span>,
+  <span class="hljs-attr">&quot;username&quot;</span>: <span class="hljs-string">&quot;MihaiBojescu&quot;</span>
+}
+</code></pre> </body>
+                  </html>
+                  <!-- </div> -->
+                </section>
+                <section>
+                  <h5>Response Example
+                    <span>(404 Not Found)</span>
+                  </h5>
+                  <!-- <div class="hljs"> -->
+                  <html>
+                  <head></head>
+                  <body><pre><code class="hljs language-json">{
+  <span class="hljs-attr">&quot;error&quot;</span>: <span class="hljs-string">&quot;string (string)&quot;</span>
+}
+</code></pre> </body>
+                  </html>
+                  <!-- </div> -->
+                </section>
+                <section>
+                  <h5>Response Example
+                    <span>(500 Internal Server Error)</span>
+                  </h5>
+                  <!-- <div class="hljs"> -->
+                  <html>
+                  <head></head>
+                  <body><pre><code class="hljs language-json">{
+  <span class="hljs-attr">&quot;error&quot;</span>: <span class="hljs-string">&quot;string (string)&quot;</span>
+}
+</code></pre> </body>
+                  </html>
+                  <!-- </div> -->
+                </section>
+              </div>
+            </div>
+          </div>
+          <div id="operation--users-forgot-true-put" class="operation panel" data-traverse-target="operation--users-forgot-true-put">
+            <!-- <section class="operation-tags row"> -->
+            <!-- <div class="doc-copy"> -->
+            <div class="operation-tags">
+              <a class="label" href="#tag-Users">Users</a>
+              <!---->
+            </div>
+            <!-- </div> -->
+            <!-- </section> -->
+            <h2 class="operation-title">
+              <span class="operation-summary">Edit user&apos;s password using a refresh token</span>
+            </h2>
+            <div class="doc-row">
+              <div class="doc-copy">
+                <section class="swagger-operation-path">
+                  <span class="operation-method">PUT</span>
+                  <span class="operation-path">/users?forgot&#x3D;true</span>
+                </section>
+              </div>
+            </div>
+            <div class="doc-row">
+              <div class="doc-copy">
+                <section class="swagger-operation-description">
+                  <p>Updates the user identified by the provided authorization token and returns it to the client</p>
+                </section>
+              </div>
+            </div>
+            <div class="doc-row">
+              <div class="doc-copy">
+                <section class="swagger-request-body">
+                  <div class="prop-row">
+                    <div class="prop-name">
+                      <div class="swagger-request-model">
+                        <span class="">
+                          <a class="json-schema-ref" href="#/definitions/ResetPasswordResponse">ResetPasswordResponse</a>
+                        </span>
+                      </div>
+                    </div>
+                    <div class="prop-value columns small-6">
+                      <!-- <div class="swagger-request-description"> -->
+                      <p>The body of this request</p>
+                      <!-- </div> -->
+                    </div>
+                  </div>
+                </section>
+                <section class="swagger-request-params">
+                  <div class="prop-row prop-group">
+                    <div class="prop-name">
+                      <div class="prop-title">forgot:
+                        <span class="prop-type">
+                          <span class="json-property-type">object</span>
+                          <span class="json-property-range" title="Value limits"></span>
+                        </span>
+                      </div>
+                      <span class="json-property-required"></span>
+                      <div class="prop-subtitle"> in query </div>
+                    </div>
+                    <div class="prop-value">
+                      <p>Is this a request for a password reset?</p>
+                    </div>
+                  </div>
+                </section>
+              </div>
+              <div class="doc-examples">
+                <section>
+                  <h5>Request Example</h5>
+                  <!-- <div class="hljs"> -->
+                  <html>
+                  <head></head>
+                  <body><pre><code class="hljs language-json">{
+  <span class="hljs-attr">&quot;resetToken&quot;</span>: <span class="hljs-string">&quot;123456789&quot;</span>,
+  <span class="hljs-attr">&quot;email&quot;</span>: <span class="hljs-string">&quot;mihai.bojescu@thinslices.com&quot;</span>
+}
+</code></pre> </body>
+                  </html>
+                  <!-- </div> -->
+                </section>
+              </div>
+            </div>
+            <div class="doc-row">
+              <div class="doc-copy">
+                <section class="swagger-responses">
+                  <div class="prop-row prop-group">
+                    <div class="prop-name">
+                      <div class="prop-title">200 OK</div>
+                      <div class="prop-ref"></div>
+                      <!-- <span class="swagger-global"></span> <span class="json-schema-reference"><a href=""></a></span> -->
+                    </div>
+                    <div class="prop-value">
+                      <p>Response when there were no errors</p>
+                    </div>
+                  </div>
+                  <div class="prop-row prop-inner">
+                    <div class="prop-name">type</div>
+                    <div class="prop-value">
+                      <span class="json-property-type">object</span>
+                      <span class="json-property-range" title="Value limits"></span>
+                    </div>
+                  </div>
+                  <div class="prop-row prop-group">
+                    <div class="prop-name">
+                      <div class="prop-title">400 Bad Request</div>
+                      <div class="prop-ref">
+                        <span class="">
+                          <a class="json-schema-ref" href="#/definitions/Error">Error</a>
+                        </span>
+                      </div>
+                      <!-- <span class="swagger-global"></span> <span class="json-schema-reference"><a href=""></a></span> -->
+                    </div>
+                    <div class="prop-value">
+                      <p>Response when no reset token was provided or the provided reset token doesn&#39;t exist</p>
+                    </div>
+                  </div>
+                  <div class="prop-row prop-group">
+                    <div class="prop-name">
+                      <div class="prop-title">500 Internal Server Error</div>
+                      <div class="prop-ref">
+                        <span class="">
+                          <a class="json-schema-ref" href="#/definitions/Error">Error</a>
+                        </span>
+                      </div>
+                      <!-- <span class="swagger-global"></span> <span class="json-schema-reference"><a href=""></a></span> -->
+                    </div>
+                    <div class="prop-value">
+                      <p>Response when something went wrong on the API side</p>
+                    </div>
+                  </div>
+                </section>
+              </div>
+              <div class="doc-examples">
+                <h5>Response Content-Types:
+                  <span>application/json</span>
+                </h5>
+                <section>
+                  <h5>Response Example
+                    <span>(200 OK)</span>
+                  </h5>
+                  <!-- <div class="hljs"> -->
+                  <html>
+                  <head></head>
+                  <body><pre><code class="hljs language-json">{
+  <span class="hljs-attr">&quot;data&quot;</span>: <span class="hljs-string">&quot;Password successfully changed!&quot;</span>
+}
+</code></pre> </body>
+                  </html>
+                  <!-- </div> -->
+                </section>
+                <section>
+                  <h5>Response Example
+                    <span>(400 Bad Request)</span>
+                  </h5>
+                  <!-- <div class="hljs"> -->
+                  <html>
+                  <head></head>
+                  <body><pre><code class="hljs language-json">{
+  <span class="hljs-attr">&quot;error&quot;</span>: <span class="hljs-string">&quot;string (string)&quot;</span>
+}
+</code></pre> </body>
+                  </html>
+                  <!-- </div> -->
+                </section>
+                <section>
+                  <h5>Response Example
+                    <span>(500 Internal Server Error)</span>
+                  </h5>
+                  <!-- <div class="hljs"> -->
+                  <html>
+                  <head></head>
+                  <body><pre><code class="hljs language-json">{
+  <span class="hljs-attr">&quot;error&quot;</span>: <span class="hljs-string">&quot;string (string)&quot;</span>
+}
+</code></pre> </body>
+                  </html>
+                  <!-- </div> -->
+                </section>
+              </div>
+            </div>
+          </div>
+          <div id="operation--users-resets-post" class="operation panel" data-traverse-target="operation--users-resets-post">
+            <!-- <section class="operation-tags row"> -->
+            <!-- <div class="doc-copy"> -->
+            <div class="operation-tags">
+              <a class="label" href="#tag-Users">Users</a>
+              <!---->
+            </div>
+            <!-- </div> -->
+            <!-- </section> -->
+            <h2 class="operation-title">
+              <span class="operation-summary">Request password reset for user</span>
+            </h2>
+            <div class="doc-row">
+              <div class="doc-copy">
+                <section class="swagger-operation-path">
+                  <span class="operation-method">POST</span>
+                  <span class="operation-path">/users/resets</span>
+                </section>
+              </div>
+            </div>
+            <div class="doc-row">
+              <div class="doc-copy">
+                <section class="swagger-operation-description">
+                  <p>Request password resets for a specified user</p>
+                </section>
+              </div>
+            </div>
+            <div class="doc-row">
+              <div class="doc-copy">
+                <section class="swagger-request-body">
+                  <div class="prop-row">
+                    <div class="prop-name">
+                      <div class="swagger-request-model">
+                        <span class="">
+                          <a class="json-schema-ref" href="#/definitions/ResetPasswordRequest">ResetPasswordRequest</a>
+                        </span>
+                      </div>
+                    </div>
+                    <div class="prop-value columns small-6">
+                      <!-- <div class="swagger-request-description"> -->
+                      <p>The body of this request</p>
+                      <!-- </div> -->
+                    </div>
+                  </div>
+                </section>
+              </div>
+              <div class="doc-examples">
+                <section>
+                  <h5>Request Example</h5>
+                  <!-- <div class="hljs"> -->
+                  <html>
+                  <head></head>
+                  <body><pre><code class="hljs language-json">{
+  <span class="hljs-attr">&quot;email&quot;</span>: <span class="hljs-string">&quot;string (email)&quot;</span>
+}
+</code></pre> </body>
+                  </html>
+                  <!-- </div> -->
+                </section>
+              </div>
+            </div>
+            <div class="doc-row">
+              <div class="doc-copy">
+                <section class="swagger-responses">
+                  <div class="prop-row prop-group">
+                    <div class="prop-name">
+                      <div class="prop-title">201 Created</div>
+                      <div class="prop-ref">
+                        <span class="">
+                          <a class="json-schema-ref" href="#/definitions/ResetPasswordResponse">ResetPasswordResponse</a>
+                        </span>
+                      </div>
+                      <!-- <span class="swagger-global"></span> <span class="json-schema-reference"><a href=""></a></span> -->
+                    </div>
+                    <div class="prop-value">
+                      <p>Response when there were no errors</p>
+                    </div>
+                  </div>
+                  <div class="prop-row prop-group">
+                    <div class="prop-name">
+                      <div class="prop-title">404 Not Found</div>
+                      <div class="prop-ref">
+                        <span class="">
+                          <a class="json-schema-ref" href="#/definitions/Error">Error</a>
+                        </span>
+                      </div>
+                      <!-- <span class="swagger-global"></span> <span class="json-schema-reference"><a href=""></a></span> -->
+                    </div>
+                    <div class="prop-value">
+                      <p>Response when user doesn&#39;t exist in the database</p>
+                    </div>
+                  </div>
+                  <div class="prop-row prop-group">
+                    <div class="prop-name">
+                      <div class="prop-title">500 Internal Server Error</div>
+                      <div class="prop-ref">
+                        <span class="">
+                          <a class="json-schema-ref" href="#/definitions/Error">Error</a>
+                        </span>
+                      </div>
+                      <!-- <span class="swagger-global"></span> <span class="json-schema-reference"><a href=""></a></span> -->
+                    </div>
+                    <div class="prop-value">
+                      <p>Response when something went wrong on the API side</p>
+                    </div>
+                  </div>
+                </section>
+              </div>
+              <div class="doc-examples">
+                <h5>Response Content-Types:
+                  <span>application/json</span>
+                </h5>
+                <section>
+                  <h5>Response Example
+                    <span>(201 Created)</span>
+                  </h5>
+                  <!-- <div class="hljs"> -->
+                  <html>
+                  <head></head>
+                  <body><pre><code class="hljs language-json">{
+  <span class="hljs-attr">&quot;resetToken&quot;</span>: <span class="hljs-string">&quot;123456789&quot;</span>,
+  <span class="hljs-attr">&quot;email&quot;</span>: <span class="hljs-string">&quot;mihai.bojescu@thinslices.com&quot;</span>
+}
+</code></pre> </body>
+                  </html>
+                  <!-- </div> -->
+                </section>
+                <section>
+                  <h5>Response Example
+                    <span>(404 Not Found)</span>
+                  </h5>
+                  <!-- <div class="hljs"> -->
+                  <html>
+                  <head></head>
+                  <body><pre><code class="hljs language-json">{
+  <span class="hljs-attr">&quot;error&quot;</span>: <span class="hljs-string">&quot;string (string)&quot;</span>
+}
+</code></pre> </body>
+                  </html>
+                  <!-- </div> -->
+                </section>
+                <section>
+                  <h5>Response Example
+                    <span>(500 Internal Server Error)</span>
+                  </h5>
+                  <!-- <div class="hljs"> -->
+                  <html>
+                  <head></head>
+                  <body><pre><code class="hljs language-json">{
+  <span class="hljs-attr">&quot;error&quot;</span>: <span class="hljs-string">&quot;string (string)&quot;</span>
+}
+</code></pre> </body>
+                  </html>
+                  <!-- </div> -->
+                </section>
+              </div>
+            </div>
+          </div>
+          <h1 id="tag-Sessions" class="swagger-summary-tag" data-traverse-target="tag-Sessions">Sessions</h1>
+          <div class="tag-description doc-row">
+            <div class="doc-copy">
+              <p>Manipulate sessions</p>
+            </div>
+          </div>
+          <div id="operation--sessions-post" class="operation panel" data-traverse-target="operation--sessions-post">
+            <!-- <section class="operation-tags row"> -->
+            <!-- <div class="doc-copy"> -->
+            <div class="operation-tags">
+              <a class="label" href="#tag-Sessions">Sessions</a>
+              <!---->
+            </div>
+            <!-- </div> -->
+            <!-- </section> -->
+            <h2 class="operation-title">
+              <span class="operation-summary">Create a session</span>
+            </h2>
+            <div class="doc-row">
+              <div class="doc-copy">
+                <section class="swagger-operation-path">
+                  <span class="operation-method">POST</span>
+                  <span class="operation-path">/sessions</span>
+                </section>
+              </div>
+            </div>
+            <div class="doc-row">
+              <div class="doc-copy">
+                <section class="swagger-operation-description">
+                  <p>Creates a session for the user with the given credentials and returns it to the user</p>
+                </section>
+              </div>
+            </div>
+            <div class="doc-row">
+              <div class="doc-copy">
+                <section class="swagger-request-body">
+                  <div class="prop-row">
+                    <div class="prop-name">
+                      <div class="swagger-request-model">
+                        <span class="">
+                          <a class="json-schema-ref" href="#/definitions/Credentials">Credentials</a>
+                        </span>
+                      </div>
+                    </div>
+                    <div class="prop-value columns small-6">
+                      <!-- <div class="swagger-request-description"> -->
+                      <p>The body of this request</p>
+                      <!-- </div> -->
+                    </div>
+                  </div>
+                </section>
+              </div>
+              <div class="doc-examples">
+                <section>
+                  <h5>Request Example</h5>
+                  <!-- <div class="hljs"> -->
+                  <html>
+                  <head></head>
+                  <body><pre><code class="hljs language-json">{
+  <span class="hljs-attr">&quot;email&quot;</span>: <span class="hljs-string">&quot;mihai.bojescu@thinslices.com&quot;</span>,
+  <span class="hljs-attr">&quot;password&quot;</span>: <span class="hljs-string">&quot;********&quot;</span>
+}
+</code></pre> </body>
+                  </html>
+                  <!-- </div> -->
+                </section>
+              </div>
+            </div>
+            <div class="doc-row">
+              <div class="doc-copy">
+                <section class="swagger-responses">
+                  <div class="prop-row prop-group">
+                    <div class="prop-name">
+                      <div class="prop-title">201 Created</div>
+                      <div class="prop-ref">
+                        <span class="">
+                          <a class="json-schema-ref" href="#/definitions/Session">Session</a>
+                        </span>
+                      </div>
+                      <!-- <span class="swagger-global"></span> <span class="json-schema-reference"><a href=""></a></span> -->
+                    </div>
+                    <div class="prop-value">
+                      <p>Response when there were no errors</p>
+                    </div>
+                  </div>
+                  <div class="prop-row prop-group">
+                    <div class="prop-name">
+                      <div class="prop-title">404 Not Found</div>
+                      <div class="prop-ref">
+                        <span class="">
+                          <a class="json-schema-ref" href="#/definitions/Error">Error</a>
+                        </span>
+                      </div>
+                      <!-- <span class="swagger-global"></span> <span class="json-schema-reference"><a href=""></a></span> -->
+                    </div>
+                    <div class="prop-value">
+                      <p>Response when the user with the specified credentials doesn&#39;t exist in the database</p>
+                    </div>
+                  </div>
+                  <div class="prop-row prop-group">
+                    <div class="prop-name">
+                      <div class="prop-title">500 Internal Server Error</div>
+                      <div class="prop-ref">
+                        <span class="">
+                          <a class="json-schema-ref" href="#/definitions/Error">Error</a>
+                        </span>
+                      </div>
+                      <!-- <span class="swagger-global"></span> <span class="json-schema-reference"><a href=""></a></span> -->
+                    </div>
+                    <div class="prop-value">
+                      <p>Response when something went wrong on the API side</p>
+                    </div>
+                  </div>
+                </section>
+              </div>
+              <div class="doc-examples">
+                <h5>Response Content-Types:
+                  <span>application/json</span>
+                </h5>
+                <section>
+                  <h5>Response Example
+                    <span>(201 Created)</span>
+                  </h5>
+                  <!-- <div class="hljs"> -->
+                  <html>
+                  <head></head>
+                  <body><pre><code class="hljs language-json">{
+  <span class="hljs-attr">&quot;accessToken&quot;</span>: <span class="hljs-string">&quot;123456789&quot;</span>,
+  <span class="hljs-attr">&quot;provider&quot;</span>: <span class="hljs-string">&quot;github&quot;</span>
+}
+</code></pre> </body>
+                  </html>
+                  <!-- </div> -->
+                </section>
+                <section>
+                  <h5>Response Example
+                    <span>(404 Not Found)</span>
+                  </h5>
+                  <!-- <div class="hljs"> -->
+                  <html>
+                  <head></head>
+                  <body><pre><code class="hljs language-json">{
+  <span class="hljs-attr">&quot;error&quot;</span>: <span class="hljs-string">&quot;string (string)&quot;</span>
+}
+</code></pre> </body>
+                  </html>
+                  <!-- </div> -->
+                </section>
+                <section>
+                  <h5>Response Example
+                    <span>(500 Internal Server Error)</span>
+                  </h5>
+                  <!-- <div class="hljs"> -->
+                  <html>
+                  <head></head>
+                  <body><pre><code class="hljs language-json">{
+  <span class="hljs-attr">&quot;error&quot;</span>: <span class="hljs-string">&quot;string (string)&quot;</span>
+}
+</code></pre> </body>
+                  </html>
+                  <!-- </div> -->
+                </section>
+              </div>
+            </div>
+          </div>
+          <div id="operation--sessions-delete" class="operation panel" data-traverse-target="operation--sessions-delete">
+            <!-- <section class="operation-tags row"> -->
+            <!-- <div class="doc-copy"> -->
+            <div class="operation-tags">
+              <a class="label" href="#tag-Sessions">Sessions</a>
+              <!---->
+            </div>
+            <!-- </div> -->
+            <!-- </section> -->
+            <h2 class="operation-title">
+              <span class="operation-summary">Delete session</span>
+            </h2>
+            <div class="doc-row">
+              <div class="doc-copy">
+                <section class="swagger-operation-path">
+                  <span class="operation-method">DELETE</span>
+                  <span class="operation-path">/sessions</span>
+                </section>
+              </div>
+            </div>
+            <div class="doc-row">
+              <div class="doc-copy">
+                <section class="swagger-operation-description">
+                  <p>Removes the session specified in the authorization header</p>
+                </section>
+              </div>
+            </div>
+            <div class="doc-row">
+              <div class="doc-copy">
+                <section class="swagger-request-params">
+                  <div class="prop-row prop-group">
+                    <div class="prop-name">
+                      <div class="prop-title">Authorization:
+                        <span class="prop-type">
+                          <span class="json-property-type">object</span>
+                          <span class="json-property-range" title="Value limits"></span>
+                        </span>
+                      </div>
+                      <span class="json-property-required"></span>
+                      <div class="prop-subtitle"> in header </div>
+                    </div>
+                    <div class="prop-value">
+                      <p>The authorization token</p>
+                    </div>
+                  </div>
+                </section>
+              </div>
+              <div class="doc-examples"></div>
+            </div>
+            <div class="doc-row">
+              <div class="doc-copy">
+                <section class="swagger-responses">
+                  <div class="prop-row prop-group">
+                    <div class="prop-name">
+                      <div class="prop-title">200 OK</div>
+                    </div>
+                    <div class="prop-value">
+                      <p>Response when there were no errors</p>
+                    </div>
+                  </div>
+                  <div class="prop-row prop-group">
+                    <div class="prop-name">
+                      <div class="prop-title">401 Unauthorized</div>
+                      <div class="prop-ref">
+                        <span class="">
+                          <a class="json-schema-ref" href="#/definitions/Error">Error</a>
+                        </span>
+                      </div>
+                      <!-- <span class="swagger-global"></span> <span class="json-schema-reference"><a href=""></a></span> -->
+                    </div>
+                    <div class="prop-value">
+                      <p>Response when no authorization token was provided</p>
+                    </div>
+                  </div>
+                  <div class="prop-row prop-group">
+                    <div class="prop-name">
+                      <div class="prop-title">500 Internal Server Error</div>
+                      <div class="prop-ref">
+                        <span class="">
+                          <a class="json-schema-ref" href="#/definitions/Error">Error</a>
+                        </span>
+                      </div>
+                      <!-- <span class="swagger-global"></span> <span class="json-schema-reference"><a href=""></a></span> -->
+                    </div>
+                    <div class="prop-value">
+                      <p>Response when something went wrong on the API side</p>
+                    </div>
+                  </div>
+                </section>
+              </div>
+              <div class="doc-examples">
+                <h5>Response Content-Types:
+                  <span>application/json</span>
+                </h5>
+                <section>
+                  <h5>Response Example
+                    <span>(401 Unauthorized)</span>
+                  </h5>
+                  <!-- <div class="hljs"> -->
+                  <html>
+                  <head></head>
+                  <body><pre><code class="hljs language-json">{
+  <span class="hljs-attr">&quot;error&quot;</span>: <span class="hljs-string">&quot;string (string)&quot;</span>
+}
+</code></pre> </body>
+                  </html>
+                  <!-- </div> -->
+                </section>
+                <section>
+                  <h5>Response Example
+                    <span>(500 Internal Server Error)</span>
+                  </h5>
+                  <!-- <div class="hljs"> -->
+                  <html>
+                  <head></head>
+                  <body><pre><code class="hljs language-json">{
+  <span class="hljs-attr">&quot;error&quot;</span>: <span class="hljs-string">&quot;string (string)&quot;</span>
+}
+</code></pre> </body>
+                  </html>
+                  <!-- </div> -->
+                </section>
+              </div>
+            </div>
+          </div>
+          <div id="operation--sessions--provider--oauth-get" class="operation panel" data-traverse-target="operation--sessions--provider--oauth-get">
+            <!-- <section class="operation-tags row"> -->
+            <!-- <div class="doc-copy"> -->
+            <div class="operation-tags">
+              <a class="label" href="#tag-Sessions">Sessions</a>
+              <!---->
+            </div>
+            <!-- </div> -->
+            <!-- </section> -->
+            <h2 class="operation-title">
+              <span class="operation-summary">Creates session using an OAuth provider</span>
+            </h2>
+            <div class="doc-row">
+              <div class="doc-copy">
+                <section class="swagger-operation-path">
+                  <span class="operation-method">GET</span>
+                  <span class="operation-path">/sessions/{provider}/oauth</span>
+                </section>
+              </div>
+            </div>
+            <div class="doc-row">
+              <div class="doc-copy">
+                <section class="swagger-operation-description">
+                  <p>Creates a session using the specified OAuth provider</p>
+                </section>
+              </div>
+            </div>
+            <div class="doc-row">
+              <div class="doc-copy">
+                <section class="swagger-request-params">
+                  <div class="prop-row prop-group">
+                    <div class="prop-name">
+                      <div class="prop-title">provider:
+                        <span class="prop-type">
+                          <span class="json-property-type">object</span>
+                          <span class="json-property-range" title="Value limits"></span>
+                        </span>
+                      </div>
+                      <span class="json-property-required"></span>
+                      <div class="prop-subtitle"> in path </div>
+                    </div>
+                    <div class="prop-value">
+                      <p>Uses the specified OAuth provider</p>
+                    </div>
+                  </div>
+                  <div class="prop-row prop-group">
+                    <div class="prop-name">
+                      <div class="prop-title">code:
+                        <span class="prop-type">
+                          <span class="json-property-type">object</span>
+                          <span class="json-property-range" title="Value limits"></span>
+                        </span>
+                      </div>
+                      <span class="json-property-required"></span>
+                      <div class="prop-subtitle"> in query </div>
+                    </div>
+                    <div class="prop-value">
+                      <p>The request code provided by the provider</p>
+                    </div>
+                  </div>
+                </section>
+              </div>
+              <div class="doc-examples"></div>
+            </div>
+            <div class="doc-row">
+              <div class="doc-copy">
+                <section class="swagger-responses">
+                  <div class="prop-row prop-group">
+                    <div class="prop-name">
+                      <div class="prop-title">201 Created</div>
+                      <div class="prop-ref">
+                        <span class="">
+                          <a class="json-schema-ref" href="#/definitions/Session">Session</a>
+                        </span>
+                      </div>
+                      <!-- <span class="swagger-global"></span> <span class="json-schema-reference"><a href=""></a></span> -->
+                    </div>
+                    <div class="prop-value">
+                      <p>Response when there were no errors</p>
+                    </div>
+                  </div>
+                  <div class="prop-row prop-group">
+                    <div class="prop-name">
+                      <div class="prop-title">400 Bad Request</div>
+                      <div class="prop-ref">
+                        <span class="">
+                          <a class="json-schema-ref" href="#/definitions/Error">Error</a>
+                        </span>
+                      </div>
+                      <!-- <span class="swagger-global"></span> <span class="json-schema-reference"><a href=""></a></span> -->
+                    </div>
+                    <div class="prop-value">
+                      <p>Response when no request code was provided or the request code was invalid/expired</p>
+                    </div>
+                  </div>
+                  <div class="prop-row prop-group">
+                    <div class="prop-name">
+                      <div class="prop-title">500 Internal Server Error</div>
+                      <div class="prop-ref">
+                        <span class="">
+                          <a class="json-schema-ref" href="#/definitions/Error">Error</a>
+                        </span>
+                      </div>
+                      <!-- <span class="swagger-global"></span> <span class="json-schema-reference"><a href=""></a></span> -->
+                    </div>
+                    <div class="prop-value">
+                      <p>Response when no authorization token was provided</p>
+                    </div>
+                  </div>
+                </section>
+              </div>
+              <div class="doc-examples">
+                <h5>Response Content-Types:
+                  <span>application/json</span>
+                </h5>
+                <section>
+                  <h5>Response Example
+                    <span>(201 Created)</span>
+                  </h5>
+                  <!-- <div class="hljs"> -->
+                  <html>
+                  <head></head>
+                  <body><pre><code class="hljs language-json">{
+  <span class="hljs-attr">&quot;accessToken&quot;</span>: <span class="hljs-string">&quot;123456789&quot;</span>,
+  <span class="hljs-attr">&quot;provider&quot;</span>: <span class="hljs-string">&quot;github&quot;</span>
+}
+</code></pre> </body>
+                  </html>
+                  <!-- </div> -->
+                </section>
+                <section>
+                  <h5>Response Example
+                    <span>(400 Bad Request)</span>
+                  </h5>
+                  <!-- <div class="hljs"> -->
+                  <html>
+                  <head></head>
+                  <body><pre><code class="hljs language-json">{
+  <span class="hljs-attr">&quot;error&quot;</span>: <span class="hljs-string">&quot;string (string)&quot;</span>
+}
+</code></pre> </body>
+                  </html>
+                  <!-- </div> -->
+                </section>
+                <section>
+                  <h5>Response Example
+                    <span>(500 Internal Server Error)</span>
+                  </h5>
+                  <!-- <div class="hljs"> -->
+                  <html>
+                  <head></head>
+                  <body><pre><code class="hljs language-json">{
+  <span class="hljs-attr">&quot;error&quot;</span>: <span class="hljs-string">&quot;string (string)&quot;</span>
+}
+</code></pre> </body>
+                  </html>
+                  <!-- </div> -->
+                </section>
+              </div>
+            </div>
+          </div>
+          <h1>Schema Definitions</h1>
+          <div id="definition-Error" class="definition panel" data-traverse-target="definition-Error">
+            <h2 class="panel-title">
+              <a name="/definitions/Error"></a>Error: object
+              <!-- <span class="json-property-type"><span class="json-property-type">object</span>
+              <span class="json-property-range" title="Value limits"></span>
+              
+              
+              </span> -->
+            </h2>
+            <div class="doc-row">
+              <div class="doc-copy">
+                <section class="json-schema-properties">
+                  <dl>
+                    <dt data-property-name="error">
+                      <span class="json-property-name">error:</span>
+                      <span class="json-property-type">string</span>
+                      <span class="json-property-format">(string)</span>
+                      <span class="json-property-range" title="Value limits"></span>
+                    </dt>
+                  </dl>
+                </section>
+              </div>
+              <div class="doc-examples">
+                <section>
+                  <h5>Example</h5>
+                  <!-- <div class="hljs"> -->
+                  <html>
+                  <head></head>
+                  <body><pre><code class="hljs language-json">{
+  <span class="hljs-attr">&quot;error&quot;</span>: <span class="hljs-string">&quot;string (string)&quot;</span>
+}
+</code></pre> </body>
+                  </html>
+                  <!-- </div> -->
+                </section>
+              </div>
+            </div>
+          </div>
+          <div id="definition-User" class="definition panel" data-traverse-target="definition-User">
+            <h2 class="panel-title">
+              <a name="/definitions/User"></a>User: object
+              <!-- <span class="json-property-type"><span class="json-property-type">object</span>
+              <span class="json-property-range" title="Value limits"></span>
+              
+              
+              </span> -->
+            </h2>
+            <div class="doc-row">
+              <div class="doc-copy">
+                <section class="json-schema-properties">
+                  <dl>
+                    <dt data-property-name="_id">
+                      <span class="json-property-name">_id:</span>
+                      <span class="json-property-type">string</span>
+                      <span class="json-property-format">(string)</span>
+                      <span class="json-property-range" title="Value limits"></span>
+                    </dt>
+                    <dt data-property-name="firstName">
+                      <span class="json-property-name">firstName:</span>
+                      <span class="json-property-type">string</span>
+                      <span class="json-property-format">(string)</span>
+                      <span class="json-property-range" title="Value limits"></span>
+                    </dt>
+                    <dt data-property-name="lastName">
+                      <span class="json-property-name">lastName:</span>
+                      <span class="json-property-type">string</span>
+                      <span class="json-property-format">(string)</span>
+                      <span class="json-property-range" title="Value limits"></span>
+                    </dt>
+                    <dt data-property-name="birthDate">
+                      <span class="json-property-name">birthDate:</span>
+                      <span class="json-property-type">string</span>
+                      <span class="json-property-format">(date)</span>
+                      <span class="json-property-range" title="Value limits"></span>
+                    </dt>
+                    <dt data-property-name="email">
+                      <span class="json-property-name">email:</span>
+                      <span class="json-property-type">string</span>
+                      <span class="json-property-format">(email)</span>
+                      <span class="json-property-range" title="Value limits"></span>
+                      <span class="json-property-required"></span>
+                    </dt>
+                    <dt data-property-name="password">
+                      <span class="json-property-name">password:</span>
+                      <span class="json-property-type">string</span>
+                      <span class="json-property-format">(password)</span>
+                      <span class="json-property-range" title="Value limits"></span>
+                      <span class="json-property-required"></span>
+                    </dt>
+                    <dt data-property-name="username">
+                      <span class="json-property-name">username:</span>
+                      <span class="json-property-type">string</span>
+                      <span class="json-property-format">(string)</span>
+                      <span class="json-property-range" title="Value limits"></span>
+                      <span class="json-property-required"></span>
+                    </dt>
+                  </dl>
+                </section>
+              </div>
+              <div class="doc-examples">
+                <section>
+                  <h5>Example</h5>
+                  <!-- <div class="hljs"> -->
+                  <html>
+                  <head></head>
+                  <body><pre><code class="hljs language-json">{
+  <span class="hljs-attr">&quot;_id&quot;</span>: <span class="hljs-string">&quot;5c504bc1f53d482e0682c200&quot;</span>,
+  <span class="hljs-attr">&quot;firstName&quot;</span>: <span class="hljs-string">&quot;Mihai&quot;</span>,
+  <span class="hljs-attr">&quot;lastName&quot;</span>: <span class="hljs-string">&quot;Bojescu&quot;</span>,
+  <span class="hljs-attr">&quot;birthDate&quot;</span>: <span class="hljs-string">&quot;2019-01-29T12:48:57.173Z&quot;</span>,
+  <span class="hljs-attr">&quot;email&quot;</span>: <span class="hljs-string">&quot;mihai.bojescu@thinslices.com&quot;</span>,
+  <span class="hljs-attr">&quot;password&quot;</span>: <span class="hljs-string">&quot;********&quot;</span>,
+  <span class="hljs-attr">&quot;username&quot;</span>: <span class="hljs-string">&quot;MihaiBojescu&quot;</span>
+}
+</code></pre> </body>
+                  </html>
+                  <!-- </div> -->
+                </section>
+              </div>
+            </div>
+          </div>
+          <div id="definition-Credentials" class="definition panel" data-traverse-target="definition-Credentials">
+            <h2 class="panel-title">
+              <a name="/definitions/Credentials"></a>Credentials: object
+              <!-- <span class="json-property-type"><span class="json-property-type">object</span>
+              <span class="json-property-range" title="Value limits"></span>
+              
+              
+              </span> -->
+            </h2>
+            <div class="doc-row">
+              <div class="doc-copy">
+                <section class="json-schema-properties">
+                  <dl>
+                    <dt data-property-name="email">
+                      <span class="json-property-name">email:</span>
+                      <span class="json-property-type">string</span>
+                      <span class="json-property-format">(email)</span>
+                      <span class="json-property-range" title="Value limits"></span>
+                      <span class="json-property-required"></span>
+                    </dt>
+                    <dt data-property-name="password">
+                      <span class="json-property-name">password:</span>
+                      <span class="json-property-type">string</span>
+                      <span class="json-property-format">(string)</span>
+                      <span class="json-property-range" title="Value limits"></span>
+                      <span class="json-property-required"></span>
+                    </dt>
+                  </dl>
+                </section>
+              </div>
+              <div class="doc-examples">
+                <section>
+                  <h5>Example</h5>
+                  <!-- <div class="hljs"> -->
+                  <html>
+                  <head></head>
+                  <body><pre><code class="hljs language-json">{
+  <span class="hljs-attr">&quot;email&quot;</span>: <span class="hljs-string">&quot;mihai.bojescu@thinslices.com&quot;</span>,
+  <span class="hljs-attr">&quot;password&quot;</span>: <span class="hljs-string">&quot;********&quot;</span>
+}
+</code></pre> </body>
+                  </html>
+                  <!-- </div> -->
+                </section>
+              </div>
+            </div>
+          </div>
+          <div id="definition-Session" class="definition panel" data-traverse-target="definition-Session">
+            <h2 class="panel-title">
+              <a name="/definitions/Session"></a>Session: object
+              <!-- <span class="json-property-type"><span class="json-property-type">object</span>
+              <span class="json-property-range" title="Value limits"></span>
+              
+              
+              </span> -->
+            </h2>
+            <div class="doc-row">
+              <div class="doc-copy">
+                <section class="json-schema-properties">
+                  <dl>
+                    <dt data-property-name="accessToken">
+                      <span class="json-property-name">accessToken:</span>
+                      <span class="json-property-type">string</span>
+                      <span class="json-property-format">(string)</span>
+                      <span class="json-property-range" title="Value limits"></span>
+                    </dt>
+                    <dt data-property-name="provider">
+                      <span class="json-property-name">provider:</span>
+                      <span class="json-property-type">string</span>
+                      <span class="json-property-format">(string)</span>
+                      <span class="json-property-range" title="Value limits"></span>
+                    </dt>
+                  </dl>
+                </section>
+              </div>
+              <div class="doc-examples">
+                <section>
+                  <h5>Example</h5>
+                  <!-- <div class="hljs"> -->
+                  <html>
+                  <head></head>
+                  <body><pre><code class="hljs language-json">{
+  <span class="hljs-attr">&quot;accessToken&quot;</span>: <span class="hljs-string">&quot;123456789&quot;</span>,
+  <span class="hljs-attr">&quot;provider&quot;</span>: <span class="hljs-string">&quot;github&quot;</span>
+}
+</code></pre> </body>
+                  </html>
+                  <!-- </div> -->
+                </section>
+              </div>
+            </div>
+          </div>
+          <div id="definition-ResetPasswordResponse" class="definition panel" data-traverse-target="definition-ResetPasswordResponse">
+            <h2 class="panel-title">
+              <a name="/definitions/ResetPasswordResponse"></a>ResetPasswordResponse: object
+              <!-- <span class="json-property-type"><span class="json-property-type">object</span>
+              <span class="json-property-range" title="Value limits"></span>
+              
+              
+              </span> -->
+            </h2>
+            <div class="doc-row">
+              <div class="doc-copy">
+                <section class="json-schema-properties">
+                  <dl>
+                    <dt data-property-name="resetToken">
+                      <span class="json-property-name">resetToken:</span>
+                      <span class="json-property-type">string</span>
+                      <span class="json-property-format">(string)</span>
+                      <span class="json-property-range" title="Value limits"></span>
+                    </dt>
+                    <dt data-property-name="email">
+                      <span class="json-property-name">email:</span>
+                      <span class="json-property-type">string</span>
+                      <span class="json-property-format">(string)</span>
+                      <span class="json-property-range" title="Value limits"></span>
+                    </dt>
+                  </dl>
+                </section>
+              </div>
+              <div class="doc-examples">
+                <section>
+                  <h5>Example</h5>
+                  <!-- <div class="hljs"> -->
+                  <html>
+                  <head></head>
+                  <body><pre><code class="hljs language-json">{
+  <span class="hljs-attr">&quot;resetToken&quot;</span>: <span class="hljs-string">&quot;123456789&quot;</span>,
+  <span class="hljs-attr">&quot;email&quot;</span>: <span class="hljs-string">&quot;mihai.bojescu@thinslices.com&quot;</span>
+}
+</code></pre> </body>
+                  </html>
+                  <!-- </div> -->
+                </section>
+              </div>
+            </div>
+          </div>
+          <div id="definition-ResetPasswordRequest" class="definition panel" data-traverse-target="definition-ResetPasswordRequest">
+            <h2 class="panel-title">
+              <a name="/definitions/ResetPasswordRequest"></a>ResetPasswordRequest: object
+              <!-- <span class="json-property-type"><span class="json-property-type">object</span>
+              <span class="json-property-range" title="Value limits"></span>
+              
+              
+              </span> -->
+            </h2>
+            <div class="doc-row">
+              <div class="doc-copy">
+                <section class="json-schema-properties">
+                  <dl>
+                    <dt data-property-name="email">
+                      <span class="json-property-name">email:</span>
+                      <span class="json-property-type">string</span>
+                      <span class="json-property-format">(email)</span>
+                      <span class="json-property-range" title="Value limits"></span>
+                    </dt>
+                  </dl>
+                </section>
+              </div>
+              <div class="doc-examples">
+                <section>
+                  <h5>Example</h5>
+                  <!-- <div class="hljs"> -->
+                  <html>
+                  <head></head>
+                  <body><pre><code class="hljs language-json">{
+  <span class="hljs-attr">&quot;email&quot;</span>: <span class="hljs-string">&quot;string (email)&quot;</span>
+}
+</code></pre> </body>
+                  </html>
+                  <!-- </div> -->
+                </section>
+              </div>
+            </div>
+          </div>
+          <div class="doc-row no-margin">
+            <div class="doc-copy doc-separator">
+              <a class="powered-by" href="https://sourcey.com/spectacle">Documentation by
+                <span>Spectacle</span>
+              </a>
+            </div>
+          </div>
+        </article>
+      </div>
+    </div>
+  </body>
+</html>

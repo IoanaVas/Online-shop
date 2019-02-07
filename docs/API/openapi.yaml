@@ -1,0 +1,563 @@
+openapi: '3.0.0'
+info:
+  title: 'Online shop app'
+  description: 'An online shop API, built using Node, Express and MongoDB'
+  license:
+    name: 'MIT'
+    url: 'https://opensource.org/licenses/MIT'
+  version: '1.0.0'
+
+servers:
+  - url: 'http://localhost:{port}'
+    description: 'Local testing server'
+    variables:
+      port:
+        enum:
+          - '8080'
+        default: '8080'
+
+tags:
+  - name: Users
+    description: 'Manipulate users'
+  - name: Sessions
+    description: 'Manipulate sessions'
+
+schemes:
+  - http
+
+host: 'localhost:8080'
+
+basePath: '/'
+
+definitions:
+  Error:
+    type: 'object'
+    properties:
+      error:
+        type: 'string'
+        format: 'string'
+  User:
+    type: 'object'
+    required:
+      - 'email'
+      - 'password'
+      - 'username'
+    properties:
+      _id:
+        type: 'string'
+        format: 'string'
+        example: '5c504bc1f53d482e0682c200'
+      firstName:
+        type: 'string'
+        format: 'string'
+        example: 'Mihai'
+      lastName:
+        type: 'string'
+        format: 'string'
+        example: 'Bojescu'
+      birthDate:
+        type: 'string'
+        format: 'date'
+        example: '2019-01-29T12:48:57.173Z'
+      email:
+        type: 'string'
+        format: 'email'
+        example: 'mihai.bojescu@thinslices.com'
+      password:
+        type: 'string'
+        format: 'password'
+        example: '********'
+      username:
+        type: 'string'
+        format: 'string'
+        example: 'MihaiBojescu'
+  Credentials:
+    type: 'object'
+    required:
+      - 'email'
+      - 'password'
+    properties:
+      email:
+        type: 'string'
+        format: 'email'
+        example: 'mihai.bojescu@thinslices.com'
+      password:
+        type: 'string'
+        format: 'string'
+        example: '********'
+  Session:
+    type: 'object'
+    properties:
+      accessToken:
+        type: 'string'
+        format: 'string'
+        example: '123456789'
+      provider:
+        type: 'string'
+        format: 'string'
+        example: 'github'
+  ResetPasswordResponse:
+    type: 'object'
+    properties:
+      resetToken:
+        type: 'string'
+        format: 'string'
+        example: '123456789'
+      email:
+        type: 'string'
+        format: 'string'
+        example: 'mihai.bojescu@thinslices.com'
+  ResetPasswordRequest:
+    type: 'object'
+    properties:
+      email:
+        type: 'string'
+        format: 'email'
+
+paths:
+  /users:
+    get:
+      description: 'Returns all users from the API'
+      summary: 'Get all users'
+      tags:
+        - Users
+      produces:
+        - application/json
+      responses:
+        '200':
+          description: 'Response when there were no errors'
+          content:
+            application/json:
+              schema:
+                type: 'object'
+                properties:
+                  data:
+                    type: 'array'
+                    items:
+                      $ref: '#/definitions/User'
+          schema:
+            type: 'object'
+            properties:
+              data:
+                type: 'array'
+                items:
+                  $ref: '#/definitions/User'
+        '500':
+          description: 'Response when something went wrong on the API side'
+          content:
+            application/json:
+              schema:
+                $ref: '#/definitions/Error'
+          schema:
+            $ref: '#/definitions/Error'
+    post:
+      description: 'Creates a new user and returns it to the client'
+      summary: 'Create user'
+      tags:
+        - Users
+      produces:
+        - application/json
+      responses:
+        '201':
+          description: 'Response when there were no errors'
+          content:
+            application/json:
+              schema:
+                $ref: '#/definitions/User'
+          schema:
+            $ref: '#/definitions/User'
+        '400':
+          description: 'Response when user already exists in the database'
+          content:
+            application/json:
+              schema:
+                $ref: '#/definitions/Error'
+          schema:
+            $ref: '#/definitions/Error'
+        '500':
+          description: 'Response when something went wrong on the API side'
+          content:
+            application/json:
+              schema:
+                $ref: '#/definitions/Error'
+          schema:
+            $ref: '#/definitions/Error'
+    put:
+      description: 'Updates the user identified by the provided authorization token and returns it to the client'
+      summary: 'Edit user'
+      tags:
+        - Users
+      parameters:
+        - in: 'header'
+          name: 'Authorization'
+          description: 'The authorization token'
+          required: true
+          schema:
+            type: string
+        - in: 'body'
+          name: 'Body'
+          description: 'The body of this request'
+          required: true
+          schema:
+            $ref: '#/definitions/User'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/definitions/User'
+        required: true
+      produces:
+        - application/json
+      responses:
+        '200':
+          description: 'Response when there were no errors'
+          content:
+            application/json:
+              schema:
+                $ref: '#/definitions/User'
+          schema:
+            $ref: '#/definitions/User'
+        '401':
+          description: 'Response when no authorization token was provided'
+          content:
+            application/json:
+              schema:
+                $ref: '#/definitions/Error'
+          schema:
+            $ref: '#/definitions/Error'
+        '404':
+          description: "Response when user doesn't exist in the database"
+          content:
+            application/json:
+              schema:
+                $ref: '#/definitions/Error'
+          schema:
+            $ref: '#/definitions/Error'
+        '500':
+          description: 'Response when something went wrong on the API side'
+          content:
+            application/json:
+              schema:
+                $ref: '#/definitions/Error'
+          schema:
+            $ref: '#/definitions/Error'
+    delete:
+      description: 'Deletes the user identified by the authorization token and returns it to the client'
+      summary: 'Delete user'
+      tags:
+        - Users
+      parameters:
+        - in: 'header'
+          name: 'Authorization'
+          description: 'The authorization token'
+          required: true
+          schema:
+            type: string
+      produces:
+        - application/json
+      responses:
+        '200':
+          description: 'Response when there were no errors'
+          content:
+            application/json:
+              schema:
+                $ref: '#/definitions/User'
+        '401':
+          description: 'Response when no authorization token was provided'
+          content:
+            application/json:
+              schema:
+                $ref: '#/definitions/Error'
+          schema:
+            $ref: '#/definitions/Error'
+        '404':
+          description: "Response when user doesn't exist in the database"
+          content:
+            application/json:
+              schema:
+                $ref: '#/definitions/Error'
+          schema:
+            $ref: '#/definitions/Error'
+        '500':
+          description: 'Response when something went wrong on the API side'
+          content:
+            application/json:
+              schema:
+                $ref: '#/definitions/Error'
+          schema:
+            $ref: '#/definitions/Error'
+  /users?id=id:
+    get:
+      description: 'Returns the user with the specified identifier'
+      summary: 'Get user by ID'
+      tags:
+        - Users
+      parameters:
+        - in: 'query'
+          name: 'id'
+          description: 'Searches for user with the specified id'
+          required: true
+          schema:
+            type: 'string'
+            example: '1234'
+      produces:
+        - application/json
+      responses:
+        '200':
+          description: 'Response when there were no errors'
+          content:
+            application/json:
+              schema:
+                $ref: '#/definitions/User'
+          schema:
+            $ref: '#/definitions/User'
+        '404':
+          description: "Response when user doesn't exist in the database"
+          content:
+            application/json:
+              schema:
+                $ref: '#/definitions/Error'
+          schema:
+            $ref: '#/definitions/Error'
+        '500':
+          description: 'Response when something went wrong on the API side'
+          content:
+            application/json:
+              schema:
+                $ref: '#/definitions/Error'
+          schema:
+            $ref: '#/definitions/Error'
+  /users?forgot=true:
+    put:
+      description: 'Updates the user identified by the provided authorization token and returns it to the client'
+      summary: "Edit user's password using a refresh token"
+      tags:
+        - Users
+      parameters:
+        - in: 'query'
+          name: 'forgot'
+          description: 'Is this a request for a password reset?'
+          required: true
+          schema:
+            type: 'string'
+            example: 'true'
+        - in: 'body'
+          name: 'Body'
+          description: 'The body of this request'
+          required: true
+          schema:
+            $ref: '#/definitions/ResetPasswordResponse'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/definitions/ResetPasswordResponse'
+        required: true
+      produces:
+        - application/json
+      responses:
+        '200':
+          description: 'Response when there were no errors'
+          content:
+            application/json:
+              schema:
+                type: 'object'
+                properties:
+                  data:
+                    type: 'string'
+                    example: 'Password successfully changed!'
+          schema:
+            type: 'object'
+            properties:
+              data:
+                type: 'string'
+                example: 'Password successfully changed!'
+        '400':
+          description: "Response when no reset token was provided or the provided reset token doesn't exist"
+          content:
+            application/json:
+              schema:
+                $ref: '#/definitions/Error'
+          schema:
+            $ref: '#/definitions/Error'
+        '500':
+          description: 'Response when something went wrong on the API side'
+          content:
+            application/json:
+              schema:
+                $ref: '#/definitions/Error'
+          schema:
+            $ref: '#/definitions/Error'
+  /users/resets:
+    post:
+      description: 'Request password resets for a specified user'
+      summary: 'Request password reset for user'
+      tags:
+        - Users
+      parameters:
+        - in: 'body'
+          name: 'Body'
+          description: 'The body of this request'
+          required: true
+          schema:
+            $ref: '#/definitions/ResetPasswordRequest'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/definitions/ResetPasswordRequest'
+        schema:
+          $ref: '#/definitions/ResetPasswordRequest'
+      produces:
+        - application/json
+      responses:
+        '201':
+          description: 'Response when there were no errors'
+          content:
+            application/json:
+              schema:
+                $ref: '#/definitions/ResetPasswordResponse'
+          schema:
+            $ref: '#/definitions/ResetPasswordResponse'
+        '404':
+          description: "Response when user doesn't exist in the database"
+          content:
+            application/json:
+              schema:
+                $ref: '#/definitions/Error'
+          schema:
+            $ref: '#/definitions/Error'
+        '500':
+          description: 'Response when something went wrong on the API side'
+          content:
+            application/json:
+              schema:
+                $ref: '#/definitions/Error'
+          schema:
+            $ref: '#/definitions/Error'
+  /sessions:
+    post:
+      description: 'Creates a session for the user with the given credentials and returns it to the user'
+      summary: 'Create a session'
+      tags:
+        - Sessions
+      parameters:
+        - in: 'body'
+          name: 'Body'
+          description: 'The body of this request'
+          required: true
+          schema:
+            $ref: '#/definitions/Credentials'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/definitions/Credentials'
+        schema:
+          $ref: '#/definitions/Credentials'
+      produces:
+        - application/json
+      responses:
+        '201':
+          description: 'Response when there were no errors'
+          content:
+            application/json:
+              schema:
+                $ref: '#/definitions/Session'
+          schema:
+            $ref: '#/definitions/Session'
+        '404':
+          description: "Response when the user with the specified credentials doesn't exist in the database"
+          content:
+            application/json:
+              schema:
+                $ref: '#/definitions/Error'
+          schema:
+            $ref: '#/definitions/Error'
+        '500':
+          description: 'Response when something went wrong on the API side'
+          content:
+            application/json:
+              schema:
+                $ref: '#/definitions/Error'
+          schema:
+            $ref: '#/definitions/Error'
+    delete:
+      description: 'Removes the session specified in the authorization header'
+      summary: 'Delete session'
+      tags:
+        - Sessions
+      parameters:
+        - in: 'header'
+          name: 'Authorization'
+          description: 'The authorization token'
+          required: true
+          schema:
+            type: string
+      produces:
+        - application/json
+      responses:
+        '200':
+          description: 'Response when there were no errors'
+        '401':
+          description: 'Response when no authorization token was provided'
+          content:
+            application/json:
+              schema:
+                $ref: '#/definitions/Error'
+          schema:
+            $ref: '#/definitions/Error'
+        '500':
+          description: 'Response when something went wrong on the API side'
+          content:
+            application/json:
+              schema:
+                $ref: '#/definitions/Error'
+          schema:
+            $ref: '#/definitions/Error'
+  /sessions/{provider}/oauth:
+    get:
+      description: 'Creates a session using the specified OAuth provider'
+      summary: 'Creates session using an OAuth provider'
+      tags:
+        - Sessions
+      parameters:
+        - in: 'path'
+          name: 'provider'
+          schema:
+            type: 'string'
+          required: true
+          description: 'Uses the specified OAuth provider'
+        - in: 'query'
+          name: 'code'
+          description: 'The request code provided by the provider'
+          required: true
+          schema:
+            type: string
+      produces:
+        - application/json
+      responses:
+        '201':
+          description: 'Response when there were no errors'
+          content:
+            application/json:
+              schema:
+                $ref: '#/definitions/Session'
+          schema:
+            $ref: '#/definitions/Session'
+        '400':
+          description: 'Response when no request code was provided or the request code was invalid/expired'
+          content:
+            application/json:
+              schema:
+                $ref: '#/definitions/Error'
+          schema:
+            $ref: '#/definitions/Error'
+        '500':
+          description: 'Response when no authorization token was provided'
+          content:
+            application/json:
+              schema:
+                $ref: '#/definitions/Error'
+          schema:
+            $ref: '#/definitions/Error'
