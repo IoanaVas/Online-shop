@@ -12,11 +12,13 @@ const checkIfAuthorized = Session => async (req, res, next) => {
   else res.status(400).json({ error: 'Unauthorized' })
 }
 
-const checkUserPermissions = User => async (req, res, next) => {
+const checkUserPermission = (User, Session) => async (req, res, next) => {
   const accessToken = req.headers.authorization
 
   try {
-    const user = await User.findOne({ accessToken })
+    const { userId } = await Session.findOne({ accessToken })
+    const user = await User.findOne({ _id: userId })
+
     if (user.permission === 'admin') next()
     else res.status(403).json({ error: 'No permission' })
   } catch (error) {
@@ -44,16 +46,20 @@ const retrieveUserByToken = (User, Session) => async (req, res, next) => {
 }
 
 const routeByQueryParameter = list => (req, res, next) => {
-  let index = 0
-  const nextInList = () => {
-    index++
-    list.actions[index](req, res, nextInList)
-  }
   const result = list.find(item =>
     item.params.every(parameter => req.query[parameter])
   )
 
-  result ? result.actions[index](action => action(req, res, nextInList)) : next()
+  if (result) {
+    let index = 0
+    const nextInList = () => {
+      index++
+      result.actions[index](req, res, nextInList)
+    }
+    result.actions[index](req, res, nextInList)
+  } else {
+    next()
+  }
 }
 
 const stripProperties = (properties, object) => {
@@ -75,5 +81,5 @@ exports.default = {
   retrieveUserByToken,
   routeByQueryParameter,
   stripProperties,
-  checkUserPermissions
+  checkUserPermission
 }

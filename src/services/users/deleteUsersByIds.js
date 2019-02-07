@@ -3,11 +3,10 @@
 const { User } = require('../../database/models').default
 
 const action = async (req, res) => {
-  const { ids } = req.query
-  console.log('ids', typeof ids)
+  const ids = req.query.ids.split(',')
 
   try {
-    User.deleteMany({ userId: { $in: ids } })
+    await User.deleteMany({ _id: { $in: ids } })
     res.status(200).json('Users successfully deleted!')
   } catch (error) {
     console.error(error)
