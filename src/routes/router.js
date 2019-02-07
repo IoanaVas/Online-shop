@@ -6,7 +6,8 @@ const { sessions, users } = require('../services').default
 const {
   checkIfAuthorized,
   retrieveUserByToken,
-  routeByQueryParameter
+  routeByQueryParameter,
+  checkUserPermissions
 } = require('../utils').default
 const { Session, User } = require('../database/models').default
 
@@ -14,21 +15,30 @@ const router = Router()
 
 const CheckIfAuthorized = checkIfAuthorized(Session)
 const RetrieveUserByToken = retrieveUserByToken(User, Session)
+const CheckUserPermissions = checkUserPermissions(User)
 
 router.get(
   '/users/',
   routeByQueryParameter([
-    { params: ['id'], action: users.getById },
-    { params: [], action: users.get }
+    { params: ['id'], action: [users.getById] },
+    { params: [], action: [users.get] }
   ])
 )
 router.post('/users/', users.post)
 router.put(
   '/users/',
   routeByQueryParameter([
-    { params: ['forgot'], action: users.putResetPassword }]),
+    { params: ['forgot'], action: [users.putResetPassword] }]),
   CheckIfAuthorized, RetrieveUserByToken, users.put)
-router.delete('/users/', CheckIfAuthorized, RetrieveUserByToken, users.delete)
+router.delete(
+  '/users',
+  CheckIfAuthorized,
+  RetrieveUserByToken,
+  routeByQueryParameter([
+    { params: ['ids'],
+      action: [CheckUserPermissions, users.deleteUsers] }]),
+  users.delete
+)
 router.post('/users/resets', users.resets.post)
 
 router.post('/sessions/', sessions.post)
