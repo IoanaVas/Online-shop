@@ -1,5 +1,6 @@
 'use strict'
 
 exports.default = {
-  router: require('./router').default
+  session: require('./session').default,
+  user: require('./user').default
 }

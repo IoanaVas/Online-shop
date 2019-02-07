@@ -2,7 +2,7 @@
 
 const { Router } = require('express')
 
-const { sessions, users } = require('../services').default
+const { users } = require('../services').default
 const {
   checkIfAuthorized,
   retrieveUserByToken,
@@ -11,26 +11,26 @@ const {
 } = require('../utils').default
 const { Session, User } = require('../database/models').default
 
-const router = Router()
+const user = Router()
 
 const CheckIfAuthorized = checkIfAuthorized(Session)
 const RetrieveUserByToken = retrieveUserByToken(User, Session)
 const CheckUserPermission = checkUserPermission(User, Session)
 
-router.get(
-  '/users/',
+user.get(
+  '/users',
   routeByQueryParameter([
     { params: ['id'], actions: [users.getById] },
     { params: [], actions: [users.get] }
   ])
 )
-router.post('/users/', users.post)
-router.put(
-  '/users/',
+user.post('/users', users.post)
+user.put(
+  '/users',
   routeByQueryParameter([
     { params: ['forgot'], actions: [users.putResetPassword] }]),
   CheckIfAuthorized, RetrieveUserByToken, users.put)
-router.delete(
+user.delete(
   '/users',
   CheckIfAuthorized,
   RetrieveUserByToken,
@@ -39,11 +39,6 @@ router.delete(
       actions: [CheckUserPermission, users.deleteUsersByIds] }]),
   users.delete
 )
-router.post('/users/resets', users.resets.post)
+user.post('/users/resets', users.resets.post)
 
-router.post('/sessions/', sessions.post)
-router.delete('/sessions/', CheckIfAuthorized, sessions.delete)
-router.get('/sessions/github/oauth/', sessions.github.oauth.get)
-router.get('/sessions/google/oauth/', sessions.google.oauth.get)
-
-exports.default = router
+exports.default = user
