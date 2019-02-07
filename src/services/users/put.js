@@ -11,13 +11,13 @@ const action = async (req, res) => {
       firstName,
       lastName,
       dateOfBirth,
-      permissions
+      permission
     } = req.body
     const { user } = req
 
     if (user) {
-      if (permissions && user.permissions !== 'admin') {
-        res.status(401).json({ error: "Can't change permissions as a user" })
+      if (permission && user.permission !== 'admin') {
+        res.status(401).json({ error: "Can't change permission as a user" })
         return
       }
       await User.updateOne(
@@ -29,7 +29,7 @@ const action = async (req, res) => {
           ...(firstName && { firstName }),
           ...(lastName && { lastName }),
           ...(dateOfBirth && { dateOfBirth }),
-          ...(permissions && user.permissions === 'admin' && { permissions })
+          ...(permission && user.permission === 'admin' && { permission })
         }
       )
       res.status(200).json({ data: user })

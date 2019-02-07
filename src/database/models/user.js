@@ -33,7 +33,7 @@ const schema = new mongoose.Schema({
     type: Date,
     default: new Date()
   },
-  permissions: {
+  permission: {
     type: String,
     default: 'user'
   }
