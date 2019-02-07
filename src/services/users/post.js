@@ -2,22 +2,8 @@
 
 const crypto = require('crypto')
 
+const { validate } = require('../../utils').default
 const { User } = require('../../database/models').default
-const { emailRegex, clientPasswordRegex } = require('../../utils').default
-
-const validate = (email, password, username) => {
-  let error = ''
-
-  if (!email || (email && !emailRegex.test(email))) {
-    error += 'E-mail is invalid\n'
-  }
-  if (!password || (password && !clientPasswordRegex.test(password))) {
-    error += 'Password is invalid\n'
-  }
-  if (!username) error += 'Username is invalid\n'
-
-  return error
-}
 
 const action = async (req, res) => {
   try {

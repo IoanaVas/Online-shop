@@ -49,6 +49,20 @@ const stripProperties = (properties, object) => {
   return newObject
 }
 
+const validate = (email, password, username) => {
+  let error = ''
+
+  if (!email || (email && !emailRegex.test(email))) {
+    error += 'E-mail is invalid\n'
+  }
+  if (!password || (password && !clientPasswordRegex.test(password))) {
+    error += 'Password is invalid\n'
+  }
+  if (!username) error += 'Username is invalid\n'
+
+  return error
+}
+
 exports.default = {
   emailRegex,
   databasePasswordRegex,
@@ -56,5 +70,6 @@ exports.default = {
   checkIfAuthorized,
   retrieveUserByToken,
   routeByQueryParameter,
-  stripProperties
+  stripProperties,
+  validate
 }

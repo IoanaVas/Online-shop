@@ -4,7 +4,8 @@
   "description": "A shop app based on a microservice architecture. Every microservice runs containerised",
   "main": "index.js",
   "scripts": {
-    "test": "standard --fix /src",
+    "test": "env TEST_ENVIROMENT=1 mocha tests/",
+    "lint": "standard --fix /src",
     "start": "node .",
     "develop": "nodemon ."
   },
@@ -33,11 +34,12 @@
   },
   "husky": {
     "hooks": {
-      "pre-commit": "npm test"
+      "pre-commit": "npm run lint"
     }
   },
   "devDependencies": {
     "husky": "^1.3.1",
+    "mocha": "^5.2.0",
     "nodemon": "^1.18.9"
   }
 }
