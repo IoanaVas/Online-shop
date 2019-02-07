@@ -30,18 +30,22 @@ const action = async (req, res) => {
       dateOfBirth
     } = req.body
     const error = validate(email, password, username)
-    const hashedPassword = crypto.createHash('sha256').update(password).digest('hex')
-    const user = await User.create({
-      email,
-      password: hashedPassword,
-      username,
-      firstName,
-      lastName,
-      dateOfBirth
-    })
 
-    if (!error) res.status(201).json({ data: user })
-    else throw error
+    if (error) {
+      res.status(400).json({ error })
+    } else {
+      const hashedPassword = crypto.createHash('sha256').update(password).digest('hex')
+      const user = await User.create({
+        email,
+        password: hashedPassword,
+        username,
+        firstName,
+        lastName,
+        dateOfBirth
+      })
+
+      res.status(201).json({ data: user })
+    }
   } catch (error) {
     switch (error.code) {
       case 11000:
