@@ -35,6 +35,7 @@ const schema = new mongoose.Schema({
   },
   permission: {
     type: String,
+    required: true,
     default: 'user'
   }
 })

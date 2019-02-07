@@ -17,7 +17,7 @@ const action = async (req, res) => {
         const password = crypto.createHash('sha256').update(newPassword).digest('hex')
 
         await User.findOneAndUpdate({ email }, { password })
-        await eventEmitter.emit('changedPassword', resetToken)
+        eventEmitter.emit('changedPassword', resetToken)
 
         res.status(200).json({ data: 'Password successfuly changed!' })
       } else {
