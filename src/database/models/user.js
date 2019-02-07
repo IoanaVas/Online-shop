@@ -17,6 +17,11 @@ const schema = new mongoose.Schema({
     select: false,
     match: databasePasswordRegex
   },
+  passwordSalt: {
+    type: String,
+    required: true,
+    select: false
+  },
   username: {
     type: String,
     required: true

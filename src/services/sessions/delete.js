@@ -1,6 +1,6 @@
 'use strict'
 
-const { Session } = require('../../database/models')
+const { Session } = require('../../database/models').default
 
 const action = async (req, res) => {
   const { accessToken } = req.headers
