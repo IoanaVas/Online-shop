@@ -35,7 +35,24 @@ const routeByQueryParameter = list => (req, res, next) => {
   const result = list.find(item =>
     item.params.every(parameter => req.query[parameter])
   )
-  result ? result.action(req, res, next) : next()
+
+  if (result) {
+    let index = 0
+    const nextInList = () => {
+      index++
+      result.actions[index](req, res, nextInList)
+    }
+    result.actions[index](req, res, nextInList)
+  } else {
+    next()
+  }
+}
+
+const checkUserPermission = (User, Session) => async (req, res, next) => {
+  const { user } = req
+
+  if (user.permission === 'admin') next()
+  else res.status(403).json({ error: 'No permission' })
 }
 
 const stripProperties = (properties, object) => {
@@ -70,6 +87,7 @@ exports.default = {
   checkIfAuthorized,
   retrieveUserByToken,
   routeByQueryParameter,
+  checkUserPermission,
   stripProperties,
   validate
 }

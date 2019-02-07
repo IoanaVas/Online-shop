@@ -14,7 +14,8 @@ const action = async (req, res) => {
       username,
       firstName,
       lastName,
-      dateOfBirth
+      dateOfBirth,
+      permission
     } = req.body
     const error = validate(email, password, username)
 
@@ -33,7 +34,8 @@ const action = async (req, res) => {
         username,
         firstName,
         lastName,
-        dateOfBirth
+        dateOfBirth,
+        permission
       })
 
       res.status(201).json({

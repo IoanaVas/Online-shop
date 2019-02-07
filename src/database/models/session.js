@@ -16,6 +16,7 @@ const schema = new mongoose.Schema({
   },
   provider: {
     type: String,
+    default: ' ',
     required: true
   }
 })

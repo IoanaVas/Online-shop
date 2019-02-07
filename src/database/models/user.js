@@ -37,6 +37,11 @@ const schema = new mongoose.Schema({
   birthDate: {
     type: Date,
     default: new Date()
+  },
+  permission: {
+    type: String,
+    required: true,
+    default: 'user'
   }
 })
 
