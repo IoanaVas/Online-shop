@@ -17,6 +17,10 @@ const schema = new mongoose.Schema({
   quantity: {
     type: Number,
     default: 0
+  },
+  description: {
+    type: String,
+    default: 'No description.'
   }
 })
 

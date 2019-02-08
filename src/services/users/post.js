@@ -3,22 +3,28 @@
 const crypto = require('crypto')
 const shortid = require('shortid')
 
-const { validate, stripProperties } = require('../../utils').default
+const {
+  validate,
+  stripProperties,
+  emailRegex,
+  clientPasswordRegex
+} = require('../../utils').default
 const { User } = require('../../database/models').default
 
 const action = async (req, res) => {
-  try {
-    const {
-      email,
-      password,
-      username,
-      firstName,
-      lastName,
-      dateOfBirth,
-      permission
-    } = req.body
-    const error = validate(email, password, username)
+  const {
+    email,
+    password,
+    username,
+    firstName,
+    lastName,
+    dateOfBirth,
+    permission
+  } = req.body
 
+  const error = `${validate('E-mail', email, emailRegex)}${validate('Password', password, clientPasswordRegex)}`
+
+  try {
     if (error) {
       res.status(400).json({ error })
     } else {

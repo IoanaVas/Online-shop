@@ -2,7 +2,7 @@
 
 const { Router } = require('express')
 
-const { products } = require('../services/products').default
+const { products } = require('../services').default
 const { User, Session } = require('../database/models').default
 const {
   checkIfAuthorized,
