@@ -3,6 +3,7 @@
 const emailRegex = /^[a-zA-Z0-9]+([_.-][a-zA-Z0-9]+)*[@][a-z]+[.][a-z]+$/
 const databasePasswordRegex = /^[a-z0-9]{64}$/
 const clientPasswordRegex = /^[a-zA-Z0-9._]{8,}$/
+const priceRegex = /^(0|[1-9][0-9]{0,2})(,[0-9]{3})*([.][0-9]{1,2})*[ ]([$€£]|RON)$/
 
 const checkIfAuthorized = Session => async (req, res, next) => {
   const session = await Session.findOne({
@@ -66,24 +67,19 @@ const stripProperties = (properties, object) => {
   return newObject
 }
 
-const validate = (email, password, username) => {
-  let error = ''
-
-  if (!email || (email && !emailRegex.test(email))) {
-    error += 'E-mail is invalid\n'
+const validate = (variabileName, value, regex) => {
+  if (!value || (value && !regex.test(value))) {
+    const error = `${variabileName} is invalid\n`
+    return error
   }
-  if (!password || (password && !clientPasswordRegex.test(password))) {
-    error += 'Password is invalid\n'
-  }
-  if (!username) error += 'Username is invalid\n'
-
-  return error
+  return ''
 }
 
 exports.default = {
   emailRegex,
   databasePasswordRegex,
   clientPasswordRegex,
+  priceRegex,
   checkIfAuthorized,
   retrieveUserByToken,
   routeByQueryParameter,

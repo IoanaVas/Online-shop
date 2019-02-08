@@ -1,24 +1,28 @@
 'use strict'
 
-const { validate } = require('../../utils').default
 const crypto = require('crypto')
 
 const { User } = require('../../database/models').default
+const { validate, emailRegex, clientPasswordRegex } = require('../../utils').default
 
 const action = async (req, res) => {
-  try {
-    const {
-      email,
-      password,
-      username,
-      firstName,
-      lastName,
-      dateOfBirth,
-      permission
-    } = req.body
-    const { user } = req
+  const {
+    email,
+    password,
+    username,
+    firstName,
+    lastName,
+    dateOfBirth,
+    permission
+  } = req.body
+  const { user } = req
 
-    if (user) {
+  const error = `${validate('E-mail', email, emailRegex)}${validate('Password', password, clientPasswordRegex)}`
+
+  try {
+    if (error) {
+      res.status(400).json({ error })
+    } else if (user) {
       if (permission && user.permission !== 'admin') {
         res.status(403).json({ error: "Can't change permission as a user" })
         return
