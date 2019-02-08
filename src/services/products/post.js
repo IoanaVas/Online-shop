@@ -11,7 +11,7 @@ const action = async (req, res) => {
     description
   } = req.body
 
-  const error = await validate('Price', price, priceRegex)
+  const error = validate('Price', price, priceRegex)
 
   try {
     if (error) {

@@ -21,6 +21,7 @@ product.post(
   CheckIfAuthorized,
   RetrieveUserByToken,
   CheckUserPermission,
-  products.post)
+  products.post
+)
 
 exports.default = product
