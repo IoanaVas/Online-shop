@@ -3,12 +3,13 @@
 const express = require('express')
 const bodyParser = require('body-parser')
 
-const { router } = require('./src/routes').default
+const { user, session } = require('./src/routes').default
 require('./src/database/config')
 
 const app = express()
 
 app.use(bodyParser.json())
-app.use(router)
+app.use(user)
+app.use(session)
 
 app.listen(8080)
