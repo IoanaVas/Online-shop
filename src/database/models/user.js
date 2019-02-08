@@ -23,8 +23,7 @@ const schema = new mongoose.Schema({
     select: false
   },
   username: {
-    type: String,
-    required: true
+    type: String
   },
   firstName: {
     type: String,
