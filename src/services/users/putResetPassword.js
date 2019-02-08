@@ -9,7 +9,7 @@ const action = async (req, res) => {
   const { resetToken, newPassword } = req.body
 
   try {
-    if (resetToken) {
+    if (resetToken && newPassword) {
       const reset = await Reset.findOne({ resetToken })
 
       if (reset) {
@@ -24,7 +24,7 @@ const action = async (req, res) => {
         res.status(400).json({ error: "Reset request doesn't exist" })
       }
     } else {
-      res.status(400).json({ error: 'No reset request token was provided' })
+      res.status(400).json({ error: 'No reset request token / password was provided' })
     }
   } catch (error) {
     res.status(500).json({ error })

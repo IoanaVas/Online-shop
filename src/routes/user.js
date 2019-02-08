@@ -7,7 +7,9 @@ const {
   checkIfAuthorized,
   retrieveUserByToken,
   routeByQueryParameter,
-  checkUserPermission
+  checkUsersAreEqual,
+  checkUserPermission,
+  routeNotFound
 } = require('../utils').default
 const { Session, User } = require('../database/models').default
 
@@ -17,27 +19,36 @@ const CheckIfAuthorized = checkIfAuthorized(Session)
 const RetrieveUserByToken = retrieveUserByToken(User, Session)
 const CheckUserPermission = checkUserPermission(User, Session)
 
-user.get(
-  '/users',
-  routeByQueryParameter([
-    { params: ['id'], actions: [users.getById] },
-    { params: [], actions: [users.get] }
-  ])
-)
+user.get('/users', users.get)
+user.get('/users/:id', users.getById)
 user.post('/users', users.post)
+user.put(
+  '/users/:id',
+  CheckIfAuthorized,
+  RetrieveUserByToken,
+  checkUsersAreEqual,
+  users.put
+)
 user.put(
   '/users',
   routeByQueryParameter([
-    { params: ['forgot'], actions: [users.putResetPassword] }]),
-  CheckIfAuthorized, RetrieveUserByToken, users.put)
+    { params: ['forgot'], actions: [users.putResetPassword] },
+    { params: [], actions: [routeNotFound] }
+  ])
+)
+user.delete(
+  '/users/:id',
+  CheckIfAuthorized,
+  RetrieveUserByToken,
+  checkUsersAreEqual,
+  users.delete
+)
 user.delete(
   '/users',
   CheckIfAuthorized,
   RetrieveUserByToken,
-  routeByQueryParameter([
-    { params: ['ids'],
-      actions: [CheckUserPermission, users.deleteUsersByIds] }]),
-  users.delete
+  CheckUserPermission,
+  users.deleteUsersByIds
 )
 user.post('/users/resets', users.resets.post)
 
