@@ -1,5 +1,6 @@
 'use strict'
 
+const { validate } = require('../../utils').default
 const crypto = require('crypto')
 
 const { User } = require('../../database/models').default
