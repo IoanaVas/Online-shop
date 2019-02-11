@@ -8,6 +8,7 @@ const action = async (req, res) => {
   try {
     if (!(await Product.findById(id))) {
       res.status(400).json({ error: 'Product not found' })
+      return
     }
 
     const product = await Product.findOneAndDelete({ _id: id })
