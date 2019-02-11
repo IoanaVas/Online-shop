@@ -219,151 +219,29 @@ describe('Utils', function () {
     })
   })
 
-  describe('Validate input', function () {
-    it('Should pass when the input is valid', function (done) {
+  describe('Validate input function', function () {
+    it('Should return no error when input is correct', function (done) {
       // Arrange
       const email = 'mihai.bojescu@thinslices.com'
-      const password = '12345678'
-      const username = 'MihaiBojescu'
+      const regex = emailRegex
       const expected = ''
 
       // Act
-      const result = validate(email, password, username)
+      const result = validate('E-mail', email, regex)
 
       // Assert
       assert.equal(result, expected)
       done()
     })
 
-    it('Should return that e-mail is invalid when it is invalid', function (done) {
+    it('Should return an error when input is invalid', function (done) {
       // Arrange
       const email = 'mihai.bojescu@thinslices'
-      const password = '12345678'
-      const username = 'MihaiBojescu'
+      const regex = emailRegex
       const expected = 'E-mail is invalid\n'
 
       // Act
-      const result = validate(email, password, username)
-
-      // Assert
-      assert.equal(result, expected)
-      done()
-    })
-
-    it('Should return that e-mail is invalid when it is missing', function (done) {
-      // Arrange
-      const email = ''
-      const password = '12345678'
-      const username = 'MihaiBojescu'
-      const expected = 'E-mail is invalid\n'
-
-      // Act
-      const result = validate(email, password, username)
-
-      // Assert
-      assert.equal(result, expected)
-      done()
-    })
-
-    it('Should return that password is invalid when it is invalid', function (done) {
-      // Arrange
-      const email = 'mihai.bojescu@thinslices.com'
-      const password = '123'
-      const username = 'MihaiBojescu'
-      const expected = 'Password is invalid\n'
-
-      // Act
-      const result = validate(email, password, username)
-
-      // Assert
-      assert.equal(result, expected)
-      done()
-    })
-
-    it('Should return that password is invalid when it is missing', function (done) {
-      // Arrange
-      const email = 'mihai.bojescu@thinslices.com'
-      const password = ''
-      const username = 'MihaiBojescu'
-      const expected = 'Password is invalid\n'
-
-      // Act
-      const result = validate(email, password, username)
-
-      // Assert
-      assert.equal(result, expected)
-      done()
-    })
-
-    it('Should return that username is invalid when it is missing', function (done) {
-      // Arrange
-      const email = 'mihai.bojescu@thinslices.com'
-      const password = '12345678'
-      const username = ''
-      const expected = 'Username is invalid\n'
-
-      // Act
-      const result = validate(email, password, username)
-
-      // Assert
-      assert.equal(result, expected)
-      done()
-    })
-
-    it('Should return that e-mail and password are invalid when they are invalid', function (done) {
-      // Arrange
-      const email = 'mihai.bojescu@thinslices'
-      const password = '123'
-      const username = 'MihaiBojescu'
-      const expected = 'E-mail is invalid\nPassword is invalid\n'
-
-      // Act
-      const result = validate(email, password, username)
-
-      // Assert
-      assert.equal(result, expected)
-      done()
-    })
-
-    it('Should return that e-mail and username are invalid when they are invalid', function (done) {
-      // Arrange
-      const email = 'mihai.bojescu@thinslices'
-      const password = '12345678'
-      const username = ''
-      const expected = 'E-mail is invalid\nUsername is invalid\n'
-
-      // Act
-      const result = validate(email, password, username)
-
-      // Assert
-      assert.equal(result, expected)
-      done()
-    })
-
-    it('Should return that password and username are invalid when they are invalid', function (done) {
-      // Arrange
-      const email = 'mihai.bojescu@thinslices.com'
-      const password = '123'
-      const username = ''
-      const expected = 'Password is invalid\nUsername is invalid\n'
-
-      // Act
-      const result = validate(email, password, username)
-
-      // Assert
-      assert.equal(result, expected)
-      done()
-    })
-
-    it('Should return that e-mail, password and username are invalid when they are invalid', function (done) {
-      // Arrange
-      const email = 'mihai.bojescu@thinslices'
-      const password = '123'
-      const username = ''
-      const expected = 'E-mail is invalid\nPassword is invalid\nUsername is invalid\n'
-
-      // Act
-      const result = validate(email, password, username)
+      const result = validate('E-mail', email, regex)
 
       // Assert
       assert.equal(result, expected)
