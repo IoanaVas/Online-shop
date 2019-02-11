@@ -3,7 +3,7 @@
 const shortId = require('shortid')
 
 const { User, Reset } = require('../../../database/models').default
-const { sendMail } = require('../../../utils').default
+const { stripProperties, sendMail } = require('../../../utils').default
 
 const action = async (req, res) => {
   const email = req.body.email
@@ -18,7 +18,7 @@ const action = async (req, res) => {
     if (await User.findOne({ email })) {
       const reset = await Reset.create({ resetToken, email })
       await sendMail(email, resetToken)
-      res.status(201).json({ data: reset })
+      res.status(201).json({ data: stripProperties(['resetToken'], reset._doc) })
     } else {
       res.status(404).json({ error: 'No user with the given email was found.' })
     }

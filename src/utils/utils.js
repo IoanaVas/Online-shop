@@ -23,8 +23,7 @@ const retrieveUserByToken = (User, Session) => async (req, res, next) => {
       req.user = user
       next()
     } else {
-      req.user = null
-      next()
+      res.end(400).json({ error: 'Auth token not associated with any user' })
     }
   } catch (error) {
     console.error(error)
@@ -49,6 +48,17 @@ const routeByQueryParameter = list => (req, res, next) => {
   }
 }
 
+const checkUsersAreEqual = async (req, res, next) => {
+  const { user } = req
+  const { id } = req.params
+
+  if (user._id.toString() === id) {
+    next()
+  } else {
+    res.status(403).json({ error: 'No permission' })
+  }
+}
+
 const checkUserPermission = (User, Session) => async (req, res, next) => {
   const { user } = req
 
@@ -56,12 +66,18 @@ const checkUserPermission = (User, Session) => async (req, res, next) => {
   else res.status(403).json({ error: 'No permission' })
 }
 
+const routeNotFound = (req, res) => {
+  res.status(404).json({ error: `Route ${req.method} ${req.url} not found` })
+}
+
 const stripProperties = (properties, object) => {
   let newObject = {}
   Object.keys(object).forEach(key => {
     newObject = {
       ...newObject,
-      ...(!properties.find(element => element === key) && { [key]: object[key] })
+      ...(!properties.find(element => element === key) && {
+        [key]: object[key]
+      })
     }
   })
   return newObject
@@ -83,7 +99,9 @@ exports.default = {
   checkIfAuthorized,
   retrieveUserByToken,
   routeByQueryParameter,
+  checkUsersAreEqual,
   checkUserPermission,
+  routeNotFound,
   stripProperties,
   validate
 }
