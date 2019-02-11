@@ -15,7 +15,7 @@ const action = async (req, res) => {
     const error =
       validate('Name', name) +
       validate('Price', price, priceRegex) +
-      validate('Quantity', '' + quantity, /([0]|[1-9][0-9]*)/) +
+      validate('Quantity', '' + quantity, /^([0]|[1-9][0-9]*)$/) +
       validate('Description', description)
 
     if (error) {
