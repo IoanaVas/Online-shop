@@ -23,6 +23,13 @@ product.post(
   CheckUserPermission,
   products.post
 )
+product.put(
+  '/products/:id',
+  CheckIfAuthorized,
+  RetrieveUserByToken,
+  CheckUserPermission,
+  products.put
+)
 product.delete(
   '/products/:id',
   CheckIfAuthorized,

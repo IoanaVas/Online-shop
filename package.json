@@ -4,7 +4,7 @@
   "description": "A shop app based on a microservice architecture. Every microservice runs containerised",
   "main": "index.js",
   "scripts": {
-    "test": "envgit  mocha tests/",
+    "test": "mocha tests/",
     "lint": "standard --fix /src",
     "start": "node .",
     "develop": "nodemon ."
