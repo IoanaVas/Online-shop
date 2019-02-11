@@ -32,8 +32,7 @@ user.put(
 user.put(
   '/users',
   routeByQueryParameter([
-    { params: ['forgot'], actions: [users.putResetPassword] },
-    { params: [], actions: [routeNotFound] }
+    { params: ['forgot'], actions: [users.putResetPassword] }
   ])
 )
 user.delete(
