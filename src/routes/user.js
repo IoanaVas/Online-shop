@@ -8,8 +8,7 @@ const {
   retrieveUserByToken,
   routeByQueryParameter,
   checkUsersAreEqual,
-  checkUserPermission,
-  routeNotFound
+  checkUserPermission
 } = require('../utils').default
 const { Session, User } = require('../database/models').default
 
