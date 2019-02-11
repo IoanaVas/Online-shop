@@ -8,10 +8,20 @@ const action = async (req, res) => {
   try {
     const result = await Product.findOne({ _id: id })
 
+    if (!result) {
+      res.status(404).json(`The product with id ${id} was not found`)
+      return
+    }
+
     res.status(200).json({ data: result })
   } catch (error) {
-    console.error(error)
-    res.status(500).json({ error })
+    if (error.name === 'CastError') {
+      res.status(400).json({ error: 'The product id is invalid.' })
+    } else {
+      console.error(error)
+
+      res.status(500).json({ error })
+    }
   }
 }
 
