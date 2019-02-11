@@ -38,5 +38,12 @@ product.put(
   CheckUserPermission,
   products.put
 )
+product.delete(
+  '/products/:id',
+  CheckIfAuthorized,
+  RetrieveUserByToken,
+  CheckUserPermission,
+  products.delete
+)
 
 exports.default = product

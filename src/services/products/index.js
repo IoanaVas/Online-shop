@@ -5,5 +5,6 @@ exports.default = {
   getProduct: require('./getProduct').default,
   getProducts: require('./getProducts').default,
   post: require('./post').default,
-  put: require('./put').default
+  put: require('./put').default,
+  delete: require('./delete').default
 }
