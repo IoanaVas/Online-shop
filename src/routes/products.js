@@ -23,5 +23,12 @@ product.post(
   CheckUserPermission,
   products.post
 )
+product.delete(
+  '/products/:id',
+  CheckIfAuthorized,
+  RetrieveUserByToken,
+  CheckUserPermission,
+  products.delete
+)
 
 exports.default = product
