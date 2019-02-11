@@ -8,7 +8,7 @@ const action = async (req, res) => {
 
   try {
     if (!(await Product.findById(id))) {
-      res.status(400).json({ error: 'Product was not found' })
+      res.status(404).json({ error: 'Product was not found' })
       return
     }
 
