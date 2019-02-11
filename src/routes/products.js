@@ -23,5 +23,12 @@ product.post(
   CheckUserPermission,
   products.post
 )
+product.put(
+  '/products/:id',
+  CheckIfAuthorized,
+  RetrieveUserByToken,
+  CheckUserPermission,
+  products.put
+)
 
 exports.default = product
