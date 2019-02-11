@@ -9,6 +9,7 @@ const action = async (req, res) => {
   try {
     if (!(await Product.findById(id))) {
       res.status(400).json({ error: 'Product was not found' })
+      return
     }
 
     const { name, price, quantity, description } = res.body
@@ -20,6 +21,7 @@ const action = async (req, res) => {
 
     if (error) {
       res.status(400).json({ error })
+      return
     }
 
     const product = await Product.findOneAndUpdate(
