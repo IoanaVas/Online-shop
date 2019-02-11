@@ -9,7 +9,7 @@ const action = async (req, res) => {
     const result = await Product.findOne({ _id: id })
 
     if (!result) {
-      res.status(404).json(`The product with id ${id} was not found`)
+      res.status(404).json({ error: `The product with id ${id} was not found` })
       return
     }
 

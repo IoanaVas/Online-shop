@@ -9,7 +9,7 @@ const action = async (req, res) => {
     const result = await Product.find({ _id: { $in: ids } })
 
     if (result.length !== ids.length) {
-      res.status(404).json(`One or more products were not found`)
+      res.status(404).json({ error: `One or more products were not found` })
       return
     }
 
