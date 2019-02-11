@@ -33,16 +33,14 @@ const retrieveUserByToken = (User, Session) => async (req, res, next) => {
 }
 
 const routeByQueryParameter = list => (req, res, next) => {
-  const result = list.find(item => {
+  const result = list.find(item =>
     item.params.every(parameter => req.query[parameter])
-  }
   )
 
   if (result) {
     let index = 0
     const nextInList = () => {
       index++
-      console.log('index', index)
       result.actions[index](req, res, nextInList)
     }
     result.actions[index](req, res, nextInList)

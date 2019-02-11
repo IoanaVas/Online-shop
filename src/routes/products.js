@@ -21,8 +21,9 @@ product.get(
   '/products',
   routeByQueryParameter([
     { params: ['ids'], actions: [products.getProducts] },
-    { params: [''], actions: [products.get] }
+    { params: [], actions: [products.get] }
   ]))
+product.get('/products/:id', products.getProduct)
 product.post(
   '/products',
   CheckIfAuthorized,
