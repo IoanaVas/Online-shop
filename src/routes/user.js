@@ -16,7 +16,6 @@ const user = Router()
 
 const CheckIfAuthorized = checkIfAuthorized(Session)
 const RetrieveUserByToken = retrieveUserByToken(User, Session)
-const CheckUserPermission = checkUserPermission(User, Session)
 
 user.get('/users', users.get)
 user.get('/users/:id', users.getById)
@@ -45,7 +44,7 @@ user.delete(
   '/users',
   CheckIfAuthorized,
   RetrieveUserByToken,
-  CheckUserPermission,
+  checkUserPermission,
   users.deleteUsersByIds
 )
 user.post('/users/resets', users.resets.post)

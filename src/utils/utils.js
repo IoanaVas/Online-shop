@@ -59,7 +59,7 @@ const checkUsersAreEqual = async (req, res, next) => {
   }
 }
 
-const checkUserPermission = (User, Session) => async (req, res, next) => {
+const checkUserPermission = async (req, res, next) => {
   const { user } = req
 
   if (user.permission === 'admin') next()
