@@ -21,6 +21,10 @@ const schema = new mongoose.Schema({
   description: {
     type: String,
     default: 'No description.'
+  },
+  media: {
+    type: Array,
+    default: []
   }
 })
 
