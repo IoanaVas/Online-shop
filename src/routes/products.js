@@ -51,5 +51,12 @@ product.delete(
   checkUserPermission,
   products.delete
 )
+product.delete(
+  '/products/:id/media',
+  CheckIfAuthorized,
+  RetrieveUserByToken,
+  checkUserPermission,
+  products.media.delete
+)
 
 exports.default = product
