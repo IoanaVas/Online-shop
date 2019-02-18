@@ -75,10 +75,10 @@ const action = async (req, res) => {
   let index = 1
   let multipartMap = { Parts: [] }
 
-  // if (error) {
-  //   res.status(400).json({ error: 'File name not provided' })
-  //   return
-  // }
+  if (error) {
+    res.status(400).json({ error: 'File name not provided' })
+    return
+  }
 
   try {
     if (!(await Product.findById(id))) {
@@ -95,8 +95,6 @@ const action = async (req, res) => {
           Body: bigChunk.slice(),
           PartNumber: index
         }
-
-        // res.write(`${index}`)
 
         try {
           const eTag = uploadPart(s3, updatePartParams, index)
