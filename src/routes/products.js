@@ -15,7 +15,6 @@ const product = Router()
 
 const CheckIfAuthorized = checkIfAuthorized(Session)
 const RetrieveUserByToken = retrieveUserByToken(User, Session)
-const CheckUserPermission = checkUserPermission(User, Session)
 
 product.get(
   '/products',
@@ -28,21 +27,28 @@ product.post(
   '/products',
   CheckIfAuthorized,
   RetrieveUserByToken,
-  CheckUserPermission,
+  checkUserPermission,
   products.post
+)
+product.post(
+  '/products/:id/media',
+  CheckIfAuthorized,
+  RetrieveUserByToken,
+  checkUserPermission,
+  products.media.post
 )
 product.put(
   '/products/:id',
   CheckIfAuthorized,
   RetrieveUserByToken,
-  CheckUserPermission,
+  checkUserPermission,
   products.put
 )
 product.delete(
   '/products/:id',
   CheckIfAuthorized,
   RetrieveUserByToken,
-  CheckUserPermission,
+  checkUserPermission,
   products.delete
 )
 
