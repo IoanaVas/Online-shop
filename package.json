@@ -4,7 +4,7 @@
   "description": "A shop app based on a microservice architecture. Every microservice runs containerised",
   "main": "index.js",
   "scripts": {
-    "test": "envgit  mocha tests/",
+    "test": "mocha tests/",
     "lint": "standard --fix /src",
     "start": "node .",
     "develop": "nodemon ."
@@ -24,8 +24,11 @@
   },
   "homepage": "https://github.com/MihaiBojescu/Online-shop#readme",
   "dependencies": {
+    "aws-sdk": "^2.401.0",
     "axios": "^0.18.0",
     "body-parser": "^1.18.3",
+    "busboy": "^0.3.0",
+    "connect-busboy": "0.0.2",
     "express": "^4.16.4",
     "mongoose": "^5.4.7",
     "nodemailer": "^5.1.1",
