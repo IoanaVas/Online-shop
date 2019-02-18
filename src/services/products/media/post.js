@@ -20,11 +20,6 @@ const s3 = new AWS.S3({
   region: AWS_REGION
 })
 
-// let params = {
-//   Bucket: S3_BUCKET_NAME,
-//   Key: 'updatedMedia'
-// }
-
 const createMultipartUpload = async (s3, fileName) => {
   const extension = fileName.match(extensionRegex)[0]
   const params = {
