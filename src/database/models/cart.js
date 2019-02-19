@@ -6,6 +6,14 @@ const schema = new mongoose.Schema({
   products: {
     type: Array,
     default: []
+  },
+  payment: {
+    type: String,
+    default: '0'
+  },
+  userId: {
+    type: String,
+    required: true
   }
 })
 
