@@ -3,7 +3,6 @@
 const emailRegex = /^[a-zA-Z0-9]+([_.-][a-zA-Z0-9]+)*[@][a-z]+[.][a-z]+$/
 const databasePasswordRegex = /^[a-z0-9]{64}$/
 const clientPasswordRegex = /^[a-zA-Z0-9._]{8,}$/
-const priceRegex = /^(0|[1-9][0-9]{0,2})(,[0-9]{3})*([.][0-9]{1,2})*[ ]([$€£]|RON)$/
 const extensionRegex = /\.[0-9a-z]+$/
 
 const checkIfAuthorized = Session => async (req, res, next) => {
@@ -126,7 +125,6 @@ const calculatePrice = async (cart, Product) => {
       sum += product.price * product.quantity
     })
 
-    console.log({ sum })
     return sum
   } catch (error) {
     console.error(error)
@@ -137,7 +135,6 @@ exports.default = {
   emailRegex,
   databasePasswordRegex,
   clientPasswordRegex,
-  priceRegex,
   extensionRegex,
   checkIfAuthorized,
   retrieveUserByToken,
