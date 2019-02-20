@@ -115,6 +115,24 @@ const checkProduct = (Product) => async (req, res, next) => {
   }
 }
 
+const calculatePrice = async (cart, Product) => {
+  let sum = 0
+
+  const productsId = cart.products.map(product => product.id)
+
+  try {
+    const products = await Product.find({ _id: { $in: productsId } })
+    products.map(product => {
+      sum += product.price * product.quantity
+    })
+
+    console.log({ sum })
+    return sum
+  } catch (error) {
+    console.error(error)
+  }
+}
+
 exports.default = {
   emailRegex,
   databasePasswordRegex,
@@ -129,5 +147,6 @@ exports.default = {
   routeNotFound,
   stripProperties,
   validate,
-  checkProduct
+  checkProduct,
+  calculatePrice
 }

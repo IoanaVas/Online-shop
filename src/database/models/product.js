@@ -2,17 +2,14 @@
 
 const mongoose = require('mongoose')
 
-const { priceRegex } = require('../../utils').default
-
 const schema = new mongoose.Schema({
   name: {
     type: String,
     required: true
   },
   price: {
-    type: String,
-    required: true,
-    match: priceRegex
+    type: Number,
+    required: true
   },
   quantity: {
     type: Number,

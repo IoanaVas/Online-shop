@@ -1,7 +1,6 @@
 'use strict'
 
 const { Product } = require('../../database/models').default
-const { validate, priceRegex } = require('../../utils').default
 
 const action = async (req, res) => {
   const {
@@ -11,21 +10,15 @@ const action = async (req, res) => {
     description
   } = req.body
 
-  const error = validate('Price', price, priceRegex)
-
   try {
-    if (error) {
-      res.status(400).json({ error })
-    } else {
-      const product = await Product.create({
-        name,
-        price,
-        quantity,
-        description
-      })
+    const product = await Product.create({
+      name,
+      price,
+      quantity,
+      description
+    })
 
-      res.status(201).json({ data: product })
-    }
+    res.status(201).json({ data: product })
   } catch (error) {
     console.error(error)
 

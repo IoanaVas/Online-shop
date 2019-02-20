@@ -29,5 +29,11 @@ cart.post(
   CheckProduct,
   carts.postProduct
 )
+cart.get(
+  '/cart/:cartId',
+  CheckIfAuthorized,
+  RetrieveUserByToken,
+  carts.get
+)
 
 exports.default = cart
