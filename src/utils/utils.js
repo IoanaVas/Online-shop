@@ -92,6 +92,29 @@ const validate = (variabileName, value, regex) => {
   return ''
 }
 
+const checkProduct = (Product) => async (req, res, next) => {
+  const product = req.body
+
+  try {
+    const result = await Product.findOne({ _id: product.id })
+
+    if (result) {
+      if (result.quantity >= product.quantity) {
+        next()
+        return
+      }
+      res.status(400).json({ error: 'Not enough products in the inventory.' })
+      return
+    }
+  } catch (error) {
+    if (error.name === 'CastError') {
+      res.status(403).json({ error: `The product with the id ${product.id} was not found.` })
+      return
+    }
+    res.status(500).json({ error })
+  }
+}
+
 exports.default = {
   emailRegex,
   databasePasswordRegex,
@@ -105,5 +128,6 @@ exports.default = {
   checkUserPermission,
   routeNotFound,
   stripProperties,
-  validate
+  validate,
+  checkProduct
 }
