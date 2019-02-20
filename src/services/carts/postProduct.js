@@ -19,7 +19,6 @@ const action = async (req, res) => {
       res.status(500).json({ error })
     }
   } catch (error) {
-    console.error(error)
     if (error.name === 'CastError') {
       res.status(403).json({ error: `The cart ${cartId} donesn't exist.` })
       return

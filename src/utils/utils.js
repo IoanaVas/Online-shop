@@ -107,7 +107,11 @@ const checkProduct = (Product) => async (req, res, next) => {
       return
     }
   } catch (error) {
-    res.status(403).json({ error: `The product with the id ${product.id} was not found.` })
+    if (error.name === 'CastError') {
+      res.status(403).json({ error: `The product with the id ${product.id} was not found.` })
+      return
+    }
+    res.status(500).json({ error })
   }
 }
 
