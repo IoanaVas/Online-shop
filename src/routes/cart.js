@@ -35,5 +35,11 @@ cart.get(
   RetrieveUserByToken,
   carts.get
 )
+cart.delete(
+  '/cart/:cartId',
+  CheckIfAuthorized,
+  RetrieveUserByToken,
+  carts.delete
+)
 
 exports.default = cart
