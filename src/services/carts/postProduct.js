@@ -1,6 +1,6 @@
 'use strict'
 
-const { Cart } = require('../../database/models').default
+const { Product, Cart } = require('../../database/models').default
 
 const action = async (req, res) => {
   const product = req.body
@@ -18,6 +18,9 @@ const action = async (req, res) => {
 
       res.status(201).json({ data: 'Updated!' })
     } else {
+      const result = await Product.findOne({ _id: product.id }, 'price')
+      product['price'] = result.price
+
       try {
         cart.products.push(product)
         await cart.save()

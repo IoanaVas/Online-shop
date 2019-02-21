@@ -114,21 +114,15 @@ const checkProduct = (Product) => async (req, res, next) => {
   }
 }
 
-const calculatePrice = async (cart, Product) => {
-  let sum = 0
+const calculatePrice = async (cartId, Cart) => {
+  let total = 0
+  const cart = await Cart.findOne({ _id: cartId })
 
-  const productsId = cart.products.map(product => product.id)
+  cart.products.map(product => {
+    total += product.price * product.quantity
+  })
 
-  try {
-    const products = await Product.find({ _id: { $in: productsId } })
-    products.map(product => {
-      sum += product.price * product.quantity
-    })
-
-    return sum
-  } catch (error) {
-    console.error(error)
-  }
+  return total
 }
 
 exports.default = {
