@@ -99,16 +99,24 @@ const checkProduct = (Product, Cart) => async (req, res, next) => {
     const result = await Product.findOne({ _id: product.id })
 
     if (result) {
-      const cart = await Cart.findOne({ _id: cartId })
-      const item = cart.products.find(item => item.id === product.id)
-      const total = product.quantity + item.quantity
+      try {
+        const cart = await Cart.findById(cartId)
+        const item = cart.products.find(item => item.id === product.id)
 
-      if (result.quantity > total) {
-        next()
+        const total = item ? (product.quantity + item.quantity) : product.quantity
+
+        if (result.quantity > total) {
+          next()
+          return
+        }
+        res.status(400).json({ error: 'Not enough products in the inventory.' })
+        return
+      } catch (error) {
+        console.error(error)
+        res.status(400).json({ error: `The cart with the id ${cartId} was not found.` })
+
         return
       }
-      res.status(400).json({ error: 'Not enough products in the inventory.' })
-      return
     }
   } catch (error) {
     if (error.name === 'CastError') {
