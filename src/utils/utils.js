@@ -91,14 +91,19 @@ const validate = (variabileName, value, regex) => {
   return ''
 }
 
-const checkProduct = (Product) => async (req, res, next) => {
+const checkProduct = (Product, Cart) => async (req, res, next) => {
   const product = req.body
+  const { cartId } = req.params
 
   try {
     const result = await Product.findOne({ _id: product.id })
 
     if (result) {
-      if (result.quantity >= product.quantity) {
+      const cart = await Cart.findOne({ _id: cartId })
+      const item = cart.products.find(item => item.id === product.id)
+      const total = product.quantity + item.quantity
+
+      if (result.quantity > total) {
         next()
         return
       }
