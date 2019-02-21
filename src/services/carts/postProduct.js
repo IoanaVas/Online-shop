@@ -1,6 +1,6 @@
 'use strict'
 
-const { Cart } = require('../../database/models').default
+const { Product, Cart } = require('../../database/models').default
 
 const action = async (req, res) => {
   const product = req.body
@@ -9,20 +9,35 @@ const action = async (req, res) => {
   try {
     const cart = await Cart.findOne({ _id: cartId })
 
-    try {
-      cart.products.push(product)
-      await cart.save()
+    const item = cart.products.find(item => item.id === product.id)
+
+    if (item) {
+      await Cart.update({ 'products.id': product.id },
+        { $set: { 'products.$.quantity': item.quantity + 1 } }
+      )
 
       res.status(201).json({ data: 'Updated!' })
-    } catch (error) {
-      console.error(error)
-      res.status(500).json({ error })
+    } else {
+      const result = await Product.findOne({ _id: product.id }, 'price')
+      product['price'] = result.price
+
+      try {
+        cart.products.push(product)
+        await cart.save()
+
+        res.status(201).json({ data: 'Updated!' })
+      } catch (error) {
+        console.error(error)
+        res.status(500).json({ error })
+      }
     }
   } catch (error) {
     if (error.name === 'CastError') {
-      res.status(403).json({ error: `The cart ${cartId} donesn't exist.` })
+      console.error(error)
+      res.status(403).json({ error: `The cart ${cartId} doesn't exist.` })
       return
     }
+    console.error(error)
     res.status(500).json({ error })
   }
 }

@@ -8,8 +8,8 @@ const schema = new mongoose.Schema({
     default: []
   },
   payment: {
-    type: String,
-    default: '0'
+    type: Number,
+    default: 0
   },
   userId: {
     type: String,

@@ -3,7 +3,7 @@
 const { Router } = require('express')
 
 const { carts } = require('../services').default
-const { User, Session, Product } = require('../database/models').default
+const { User, Session, Product, Cart } = require('../database/models').default
 const {
   checkIfAuthorized,
   retrieveUserByToken,
@@ -14,7 +14,7 @@ const cart = Router()
 
 const CheckIfAuthorized = checkIfAuthorized(Session)
 const RetrieveUserByToken = retrieveUserByToken(User, Session)
-const CheckProduct = checkProduct(Product)
+const CheckProduct = checkProduct(Product, Cart)
 
 cart.post(
   '/cart',
@@ -28,6 +28,12 @@ cart.post(
   RetrieveUserByToken,
   CheckProduct,
   carts.postProduct
+)
+cart.get(
+  '/cart/:cartId',
+  CheckIfAuthorized,
+  RetrieveUserByToken,
+  carts.get
 )
 
 exports.default = cart

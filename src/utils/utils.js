@@ -3,7 +3,6 @@
 const emailRegex = /^[a-zA-Z0-9]+([_.-][a-zA-Z0-9]+)*[@][a-z]+[.][a-z]+$/
 const databasePasswordRegex = /^[a-z0-9]{64}$/
 const clientPasswordRegex = /^[a-zA-Z0-9._]{8,}$/
-const priceRegex = /^(0|[1-9][0-9]{0,2})(,[0-9]{3})*([.][0-9]{1,2})*[ ]([$€£]|RON)$/
 const extensionRegex = /\.[0-9a-z]+$/
 
 const checkIfAuthorized = Session => async (req, res, next) => {
@@ -92,14 +91,19 @@ const validate = (variabileName, value, regex) => {
   return ''
 }
 
-const checkProduct = (Product) => async (req, res, next) => {
+const checkProduct = (Product, Cart) => async (req, res, next) => {
   const product = req.body
+  const { cartId } = req.params
 
   try {
     const result = await Product.findOne({ _id: product.id })
 
     if (result) {
-      if (result.quantity >= product.quantity) {
+      const cart = await Cart.findOne({ _id: cartId })
+      const item = cart.products.find(item => item.id === product.id)
+      const total = product.quantity + item.quantity
+
+      if (result.quantity > total) {
         next()
         return
       }
@@ -115,11 +119,21 @@ const checkProduct = (Product) => async (req, res, next) => {
   }
 }
 
+const calculatePrice = async (cartId, Cart) => {
+  let total = 0
+  const cart = await Cart.findOne({ _id: cartId })
+
+  cart.products.map(product => {
+    total += product.price * product.quantity
+  })
+
+  return total
+}
+
 exports.default = {
   emailRegex,
   databasePasswordRegex,
   clientPasswordRegex,
-  priceRegex,
   extensionRegex,
   checkIfAuthorized,
   retrieveUserByToken,
@@ -129,5 +143,6 @@ exports.default = {
   routeNotFound,
   stripProperties,
   validate,
-  checkProduct
+  checkProduct,
+  calculatePrice
 }
