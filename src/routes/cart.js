@@ -5,6 +5,7 @@ const { Router } = require('express')
 const { carts } = require('../services').default
 const { User, Session, Product, Cart } = require('../database/models').default
 const {
+  routeByQueryParameter,
   checkIfAuthorized,
   retrieveUserByToken,
   checkProduct
@@ -39,7 +40,10 @@ cart.delete(
   '/cart/:cartId',
   CheckIfAuthorized,
   RetrieveUserByToken,
-  carts.delete
+  routeByQueryParameter([
+    { params: ['id'], actions: [carts.deleteProduct] },
+    { params: [], actions: [carts.delete] }
+  ])
 )
 
 exports.default = cart
