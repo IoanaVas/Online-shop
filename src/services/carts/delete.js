@@ -3,21 +3,13 @@
 const { Cart } = require('../../database/models').default
 
 const action = async (req, res) => {
-  const { cartId } = req.params
+  const { cart } = req
 
   try {
-    const cart = await Cart.findOneAndRemove({ _id: cartId })
-    if (cart) {
-      res.status(200).end('Cart deleted!')
-      return
-    }
-    res.status(403).json({ error: `The cart with the Id ${cartId} doesn't exist.` })
-  } catch (error) {
-    if (error.name === 'CastError') {
-      res.status(403).json({ error: 'Incorrect cart Id format.' })
-      return
-    }
+    await Cart.findByIdAndRemove(cart._id)
 
+    res.status(200).end('Cart deleted!')
+  } catch (error) {
     res.status(500).json({ error })
   }
 }

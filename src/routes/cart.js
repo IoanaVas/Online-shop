@@ -8,14 +8,16 @@ const {
   routeByQueryParameter,
   checkIfAuthorized,
   retrieveUserByToken,
-  checkProduct
+  checkProduct,
+  getCart
 } = require('../utils').default
 
 const cart = Router()
 
 const CheckIfAuthorized = checkIfAuthorized(Session)
 const RetrieveUserByToken = retrieveUserByToken(User, Session)
-const CheckProduct = checkProduct(Product, Cart)
+const CheckProduct = checkProduct(Product)
+const GetCart = getCart(Cart)
 
 cart.post(
   '/cart',
@@ -27,6 +29,7 @@ cart.post(
   '/cart/:cartId',
   CheckIfAuthorized,
   RetrieveUserByToken,
+  GetCart,
   CheckProduct,
   carts.postProduct
 )
@@ -34,12 +37,14 @@ cart.get(
   '/cart/:cartId',
   CheckIfAuthorized,
   RetrieveUserByToken,
+  GetCart,
   carts.get
 )
 cart.delete(
   '/cart/:cartId',
   CheckIfAuthorized,
   RetrieveUserByToken,
+  GetCart,
   routeByQueryParameter([
     { params: ['id'], actions: [carts.deleteProduct] },
     { params: [], actions: [carts.delete] }

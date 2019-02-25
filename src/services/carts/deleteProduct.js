@@ -1,23 +1,32 @@
 'use strict'
 
 const { Cart, Product } = require('../../database/models').default
+const { eventEmitter } = require('../../events').default
 
 const action = async (req, res) => {
-  const { cartId } = req.params
+  const { cart } = req
   const productId = req.query.id
 
   try {
-    const cart = await Cart.findById(cartId)
-    const product = await Product.findById(productId)
+    await Product.findById(productId)
 
-    if (cart && product) {
-      const products = cart.products.filter(product => product.id !== productId)
-      await Cart.update({ products })
-      res.status(200).end('Product removed!')
+    const products = cart.products.filter(product => product.id !== productId)
+
+    if (products !== cart.products) {
+      const result = await Cart.findByIdAndUpdate(
+        { _id: cart._id },
+        { products },
+        { new: true, fields: 'products' })
+
+      eventEmitter.emit('updatePayment', result)
+
+      res.status(200).json({ data: result })
+      return
     }
+    res.status(404).json({ error: `The product with the id ${productId} doesn't exist in the shopping cart.` })
   } catch (error) {
     if (error.name === 'CastError') {
-      res.status(403).json({ error: 'Incorrect cart or product Id.' })
+      res.status(403).json({ error: 'Incorrect product Id.' })
       return
     }
 

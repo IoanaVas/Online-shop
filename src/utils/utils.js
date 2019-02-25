@@ -91,33 +91,25 @@ const validate = (variabileName, value, regex) => {
   return ''
 }
 
-const checkProduct = (Product, Cart) => async (req, res, next) => {
-  const product = req.body
-  const { cartId } = req.params
+const checkProduct = (Product) => async (req, res, next) => {
+  let product = req.body
+  const { cart } = req
 
   try {
-    const result = await Product.findOne({ _id: product.id })
+    const productFromInventory = await Product.findById(product.id)
+    req.productFromInventory = productFromInventory
 
-    if (result) {
-      try {
-        const cart = await Cart.findById(cartId)
-        const item = cart.products.find(item => item.id === product.id)
+    const cartProduct = cart.products.find(item => item.id === product.id)
 
-        const total = item ? (product.quantity + item.quantity) : product.quantity
+    const totalQuantity = cartProduct ? (product.quantity + cartProduct.quantity) : product.quantity
 
-        if (result.quantity > total) {
-          next()
-          return
-        }
-        res.status(400).json({ error: 'Not enough products in the inventory.' })
-        return
-      } catch (error) {
-        console.error(error)
-        res.status(400).json({ error: `The cart with the id ${cartId} was not found.` })
-
-        return
-      }
+    if (productFromInventory.quantity >= totalQuantity) {
+      product.quantity = totalQuantity
+      next()
+      return
     }
+
+    res.status(400).json({ error: 'Not enough products in the inventory.' })
   } catch (error) {
     if (error.name === 'CastError') {
       res.status(403).json({ error: `The product with the id ${product.id} was not found.` })
@@ -127,15 +119,29 @@ const checkProduct = (Product, Cart) => async (req, res, next) => {
   }
 }
 
-const calculatePrice = async (cartId, Cart) => {
+const calculatePrice = (cart) => {
   let total = 0
-  const cart = await Cart.findOne({ _id: cartId })
 
   cart.products.map(product => {
     total += product.price * product.quantity
   })
 
   return total
+}
+
+const getCart = (Cart) => async (req, res, next) => {
+  const { cartId } = req.params
+
+  try {
+    const result = await Cart.findById(cartId)
+    req.cart = result
+    next()
+  } catch (error) {
+    if (error.name === 'CastError') {
+      res.status(404).json({ Error: `The cart with the id ${cartId} doesn't exist.` })
+    }
+    res.status(500).json({ Error: `Oops, something went wrong...` })
+  }
 }
 
 exports.default = {
@@ -152,5 +158,6 @@ exports.default = {
   stripProperties,
   validate,
   checkProduct,
-  calculatePrice
+  calculatePrice,
+  getCart
 }

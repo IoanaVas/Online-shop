@@ -4,21 +4,18 @@ const { Cart } = require('../../database/models').default
 const { calculatePrice } = require('../../utils').default
 
 const action = async (req, res) => {
-  const { cartId } = req.params
+  const { cart } = req
 
   try {
-    const price = await calculatePrice(cartId, Cart)
+    const payment = calculatePrice(cart)
 
-    const cart = await Cart.findOneAndUpdate(
-      { _id: cartId }, { payment: price })
+    const result = await Cart.findOneAndUpdate(
+      { _id: cart._id },
+      { payment },
+      { new: true })
 
-    res.status(200).json({ data: cart })
+    res.status(200).json({ data: result })
   } catch (error) {
-    if (error.name === 'CastError') {
-      res.status(403).json({ error: `The cart ${cartId} doesn't exist.` })
-      return
-    }
-    console.error(error)
     res.status(500).json({ error })
   }
 }

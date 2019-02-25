@@ -15,12 +15,8 @@ const action = async (req, res) => {
 
     res.setHeader('Location', `/cart/${result._id}`)
     res.status(201).json({ data: result })
-    return result
   } catch (error) {
-    console.error(error)
-
     res.status(500).json({ error: 'Oops, something went wrong...' })
-    return error
   }
 }
 

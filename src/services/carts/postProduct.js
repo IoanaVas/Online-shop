@@ -1,44 +1,43 @@
 'use strict'
 
-const { Product, Cart } = require('../../database/models').default
+const { Cart } = require('../../database/models').default
+const { eventEmitter } = require('../../events').default
 
 const action = async (req, res) => {
   const product = req.body
-  const { cartId } = req.params
+  const { productFromInventory } = req
+  const { cart } = req
 
-  try {
-    const cart = await Cart.findOne({ _id: cartId })
+  if (cart.products.find(productFromCart => productFromCart.id === product.id)) {
+    try {
+      const result = await Cart.findOneAndUpdate(
+        { '_id': cart._id, 'products.id': product.id },
+        { $set: { 'products.$.quantity': product.quantity } },
+        { new: true, fields: 'products' })
 
-    const item = cart.products.find(item => item.id === product.id)
+      eventEmitter.emit('updatePayment', result)
 
-    if (item) {
-      await Cart.update({ 'products.id': product.id },
-        { $set: { 'products.$.quantity': item.quantity + 1 } }
-      )
-
-      res.status(201).json({ data: 'Updated!' })
-    } else {
-      const result = await Product.findOne({ _id: product.id }, 'price')
-      product['price'] = result.price
-
-      try {
-        cart.products.push(product)
-        await cart.save()
-
-        res.status(201).json({ data: 'Updated!' })
-      } catch (error) {
-        console.error(error)
-        res.status(500).json({ error })
-      }
+      res.status(201).json({ data: result })
+    } catch (error) {
+      res.status(500).json({ error: 'Oops, something went wrong.' })
     }
-  } catch (error) {
-    if (error.name === 'CastError') {
-      console.error(error)
-      res.status(403).json({ error: `The cart ${cartId} doesn't exist.` })
-      return
+  } else {
+    product['price'] = productFromInventory.price
+
+    try {
+      cart.products.push(product)
+
+      let result = await Cart.findOneAndUpdate(
+        { '_id': cart._id },
+        { products: cart.products },
+        { new: true, fields: 'products' })
+
+      eventEmitter.emit('updatePayment', result)
+
+      res.status(201).json({ data: result })
+    } catch (error) {
+      res.status(500).json({ error })
     }
-    console.error(error)
-    res.status(500).json({ error })
   }
 }
 

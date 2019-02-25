@@ -7,3 +7,4 @@ exports.default = {
 require('./handleChangedPassword')
 require('./handleOAuthUser')
 require('./deleteUsersSessions')
+require('./updatePayment')
