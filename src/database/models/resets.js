@@ -2,7 +2,7 @@
 
 const mongoose = require('mongoose')
 
-const { emailRegex } = require('../../utils').default
+const { emailRegex } = require('../../utils')
 
 const schema = new mongoose.Schema({
   resetToken: {

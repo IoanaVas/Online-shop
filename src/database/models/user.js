@@ -2,7 +2,7 @@
 
 const mongoose = require('mongoose')
 
-const { emailRegex, databasePasswordRegex } = require('../../utils').default
+const { emailRegex, databasePasswordRegex } = require('../../utils')
 
 const schema = new mongoose.Schema({
   email: {
@@ -41,6 +41,10 @@ const schema = new mongoose.Schema({
     type: String,
     required: true,
     default: 'user'
+  },
+  stripeId: {
+    type: String,
+    default: ''
   }
 })
 

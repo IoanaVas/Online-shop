@@ -4,5 +4,6 @@ exports.default = {
   session: require('./session').default,
   user: require('./user').default,
   product: require('./product').default,
-  cart: require('./cart').default
+  cart: require('./cart').default,
+  payment: require('./payment').default
 }

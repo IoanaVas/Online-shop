@@ -130,15 +130,15 @@ const calculatePrice = (cart) => {
 }
 
 const getCart = (Cart) => async (req, res, next) => {
-  const { cartId } = req.params
+  const { user } = req
 
   try {
-    const result = await Cart.findById(cartId)
+    const result = await Cart.findOne({ userId: user._id })
     req.cart = result
     next()
   } catch (error) {
     if (error.name === 'CastError') {
-      res.status(404).json({ Error: `The cart with the id ${cartId} doesn't exist.` })
+      res.status(404).json({ Error: `The cart with the id given doesn't exist.` })
     }
     res.status(500).json({ Error: `Oops, something went wrong...` })
   }

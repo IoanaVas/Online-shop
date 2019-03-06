@@ -20,13 +20,13 @@ const CheckProduct = checkProduct(Product)
 const GetCart = getCart(Cart)
 
 cart.post(
-  '/cart',
+  '/cartToCreate',
   CheckIfAuthorized,
   RetrieveUserByToken,
   carts.post
 )
 cart.post(
-  '/cart/:cartId',
+  '/cart',
   CheckIfAuthorized,
   RetrieveUserByToken,
   GetCart,
@@ -34,14 +34,14 @@ cart.post(
   carts.postProduct
 )
 cart.get(
-  '/cart/:cartId',
+  '/cart',
   CheckIfAuthorized,
   RetrieveUserByToken,
   GetCart,
   carts.get
 )
 cart.delete(
-  '/cart/:cartId',
+  '/cart',
   CheckIfAuthorized,
   RetrieveUserByToken,
   GetCart,

@@ -16,6 +16,7 @@ const action = async (req, res) => {
         { new: true, fields: 'products' })
 
       eventEmitter.emit('updatePayment', result)
+      eventEmitter.emit('emptyCart', cart)
 
       res.status(201).json({ data: result })
     } catch (error) {
